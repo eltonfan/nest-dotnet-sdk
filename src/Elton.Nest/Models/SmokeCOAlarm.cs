@@ -25,9 +25,9 @@ using System.Text;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * SmokeCOAlarm represents and contains all properties of a Nest smoke+CO alarm device.
-     */
+    /// <summary>
+    /// SmokeCOAlarm represents and contains all properties of a Nest smoke+CO alarm device.
+    /// </summary>
     [DataContract]
     public class SmokeCOAlarm : Device, IEquatable<SmokeCOAlarm>, IValidatableObject
     {
@@ -48,60 +48,60 @@ namespace Elton.Nest.Models
             this.UiColorState = UiColorState;
         }
 
-        /**
-         * Returns the battery life/health, an estimate of remaining battery power level.
-         * <p/>
-         * Values: "ok", "replace"
-         *
-         * @return the battery life/health, an estimate of remaining battery power level.
-         */
+        /// <summary>
+        /// Returns the battery life/health, an estimate of remaining battery power level.
+        /// <p/>
+        /// Values: "ok", "replace"
+        ///
+        /// @return the battery life/health, an estimate of remaining battery power level.
+        /// </summary>
         [DataMember(Name = "battery_health")]
         public string BatteryHealth { get; set; }
 
-        /**
-         * Returns the CO alarm status.
-         * <p/>
-         * Values: "ok", "warning", "emergency"
-         *
-         * @return the CO alarm status.
-         */
+        /// <summary>
+        /// Returns the CO alarm status.
+        /// <p/>
+        /// Values: "ok", "warning", "emergency"
+        ///
+        /// @return the CO alarm status.
+        /// </summary>
         [DataMember(Name = "co_alarm_state")]
         public string CoAlarmState { get; set; }
 
-        /**
-         * Returns the smoke alarm status.
-         * <p/>
-         * Values: "ok", "warning", "emergency"
-         *
-         * @return the smoke alarm status.
-         */
+        /// <summary>
+        /// Returns the smoke alarm status.
+        /// <p/>
+        /// Values: "ok", "warning", "emergency"
+        ///
+        /// @return the smoke alarm status.
+        /// </summary>
         [DataMember(Name = "smoke_alarm_state")]
         public string SmokeAlarmState { get; set; }
 
-        /**
-         * Returns the state of the manual smoke and CO alarm test.
-         *
-         * @return the state of the manual smoke and CO alarm test.
-         */
+        /// <summary>
+        /// Returns the state of the manual smoke and CO alarm test.
+        ///
+        /// @return the state of the manual smoke and CO alarm test.
+        /// </summary>
         [DataMember(Name = "is_manual_test_active")]
         public bool IsManualTestActive { get; set; }
 
-        /**
-         * Returns the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
-         *
-         * @return the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
-         */
+        /// <summary>
+        /// Returns the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
+        ///
+        /// @return the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
+        /// </summary>
         [DataMember(Name = "last_manual_test_time")]
         public string LastManualTestTime { get; set; }
 
-        /**
-         * Returns the device status by color in the Nest app UI. It is an aggregate condition for
-         * battery+smoke+co states, and reflects the actual color indicators displayed in the Nest app.
-         * <p/>
-         * Values: "gray", "green", "yellow", "red"
-         *
-         * @return the device status by color in the Nest app UI.
-         */
+        /// <summary>
+        /// Returns the device status by color in the Nest app UI. It is an aggregate condition for
+        /// battery+smoke+co states, and reflects the actual color indicators displayed in the Nest app.
+        /// <p/>
+        /// Values: "gray", "green", "yellow", "red"
+        ///
+        /// @return the device status by color in the Nest app UI.
+        /// </summary>
         [DataMember(Name = "ui_color_state")]
         public string UiColorState { get; set; }
 

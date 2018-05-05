@@ -16,6 +16,7 @@
 
 #endregion
 
+using Elton.Nest.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,47 +24,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Elton.Nest.Models
+namespace Elton.Nest.Rest.Parsers
 {
-    /// <summary>
-    /// NestToken contains the access token and expiry duration associated with an authenticated user.
-    /// </summary>
     [DataContract]
-    public class NestToken : IEquatable<NestToken>, IValidatableObject
+    public class ErrorMessage : IEquatable<ErrorMessage>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Device" /> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
         [JsonConstructor]
-        protected NestToken() { }
+        protected ErrorMessage() { }
 
-        /// <summary>
-        /// Returns the access token. Use the access token to authenticate with the WWN API.
-        ///
-        /// @return the access token.
-        /// </summary>
-        [DataMember(Name = "access_token")]
-        public string Token { get; set; }
+        [DataMember(Name = "error", EmitDefaultValue = false)]
+        public string Error { get; set; }
 
-        /// <summary>
-        /// Returns the number of seconds until the token expires.
-        ///
-        /// @return the number of seconds until the token expires.
-        /// </summary>
-        [DataMember(Name = "expires_in")]
-        public long ExpiresInSecs { get; set; }
+        [DataMember(Name = "type", EmitDefaultValue = false)]
+        public string Type { get; set; }
 
-        /// <summary>
-        /// Create a new NestToken.
-        ///
-        /// @param token     the access token.
-        /// @param expiresIn the number of seconds until the token expires.
-        /// </summary>
-        public NestToken(string token = default, long expiresIn = default)
-        {
-            this.Token = token;
-            this.ExpiresInSecs = expiresIn;
-        }
+        [DataMember(Name = "message", EmitDefaultValue = false)]
+        public string Message { get; set; }
 
         public override string ToString()
         {
@@ -77,10 +56,10 @@ namespace Elton.Nest.Models
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as NestToken);
+            return this.Equals(obj as ErrorMessage);
         }
 
-        public bool Equals(NestToken other)
+        public bool Equals(ErrorMessage other)
         {
             return Utils.AreEqual(this, other);
         }

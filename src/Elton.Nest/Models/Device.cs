@@ -27,10 +27,10 @@ using System.Threading.Tasks;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * Device represents any Nest device. All devices (e.g. {@link Thermostat}, {@link Camera}, {@link
-     * SmokeCOAlarm}) should extend Device and thus will contain all properties that Device contains.
-     */
+    /// <summary>
+    /// Device represents any Nest device. All devices (e.g. {@link Thermostat}, {@link Camera}, {@link
+    /// SmokeCOAlarm}) should extend Device and thus will contain all properties that Device contains.
+    /// </summary>
     [DataContract]
     public class Device : IEquatable<Device>, IValidatableObject
     {
@@ -53,75 +53,75 @@ namespace Elton.Nest.Models
             this.IsOnline = IsOnline;
         }
 
-        /**
-         * Returns the unique identifier of this device.
-         *
-         * @return the unique identifier of this device.
-         */
+        /// <summary>
+        /// Returns the unique identifier of this device.
+        ///
+        /// @return the unique identifier of this device.
+        /// </summary>
         [DataMember(Name = "device_id")]
         public string DeviceId { get; set; }
 
-        /**
-         * Returns the locale for this device, if set.
-         *
-         * @return the locale for this device, if set.
-         */
+        /// <summary>
+        /// Returns the locale for this device, if set.
+        ///
+        /// @return the locale for this device, if set.
+        /// </summary>
         [DataMember(Name = "locale")]
         public string Locale { get; set; }
 
-        /**
-         * Returns the current software version that this device has installed.
-         *
-         * @return the current software version that this device has installed.
-         */
+        /// <summary>
+        /// Returns the current software version that this device has installed.
+        ///
+        /// @return the current software version that this device has installed.
+        /// </summary>
         [DataMember(Name = "software_version")]
         public string SoftwareVersion { get; set; }
 
-        /**
-         * Returns the id of the structure that this device is contained in.
-         *
-         * @return the id of the structure that this device is contained in.
-         */
+        /// <summary>
+        /// Returns the id of the structure that this device is contained in.
+        ///
+        /// @return the id of the structure that this device is contained in.
+        /// </summary>
         [DataMember(Name = "structure_id")]
         public string StructureId { get; set; }
 
-        /**
-         * Returns an abbreviated version of the user's name for this device.
-         *
-         * @return an abbreviated version of the user's name for this device.
-         */
+        /// <summary>
+        /// Returns an abbreviated version of the user's name for this device.
+        ///
+        /// @return an abbreviated version of the user's name for this device.
+        /// </summary>
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
-        /**
-         * Returns a verbose version of the user's name for this device.
-         *
-         * @return a verbose version of the user's name for this device.
-         */
+        /// <summary>
+        /// Returns a verbose version of the user's name for this device.
+        ///
+        /// @return a verbose version of the user's name for this device.
+        /// </summary>
         [DataMember(Name = "name_long")]
         public string NameLong { get; set; }
 
-        /**
-         * Returns the timestamp (in ISO-8601 format) when the device last connected to the Nest.
-         *
-         * @return the timestamp (in ISO-8601 format) when the device last connected to the Nest.
-         */
+        /// <summary>
+        /// Returns the timestamp (in ISO-8601 format) when the device last connected to the Nest.
+        ///
+        /// @return the timestamp (in ISO-8601 format) when the device last connected to the Nest.
+        /// </summary>
         [DataMember(Name = "last_connection")]
         public string LastConnection { get; set; }
 
-        /**
-         * Returns whether the device is online.
-         *
-         * @return whether the device is online.
-         */
+        /// <summary>
+        /// Returns whether the device is online.
+        ///
+        /// @return whether the device is online.
+        /// </summary>
         [DataMember(Name = "is_online")]
         public bool IsOnline { get; set; }
 
-        /**
-         * Returns a unique, Nest-generated identifier that represents the display name of the device.
-         *
-         * @return a unique, Nest-generated identifier that represents the display name of the device.
-         */
+        /// <summary>
+        /// Returns a unique, Nest-generated identifier that represents the display name of the device.
+        ///
+        /// @return a unique, Nest-generated identifier that represents the display name of the device.
+        /// </summary>
         [DataMember(Name = "where_id")]
         public string WhereId { get; set; }
 

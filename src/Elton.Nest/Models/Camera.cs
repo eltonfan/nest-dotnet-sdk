@@ -60,75 +60,75 @@ namespace Elton.Nest.Models
         [DataMember(Name = "is_audio_input_enabled")]
         public bool IsAudioInputEnabled { get; set; }
 
-        /**
-         * Returns a timestamp of the last time that the camera changed its isOnline state.
-         *
-         * @return A timestamp of the last time that the camera changed its isOnline state.
-         */
+        /// <summary>
+        /// Returns a timestamp of the last time that the camera changed its isOnline state.
+        ///
+        /// @return A timestamp of the last time that the camera changed its isOnline state.
+        /// </summary>
         [DataMember(Name = "last_is_online_change")]
         public string LastIsOnlineChange { get; set; }
 
-        /**
-         * Returns whether video history is enabled on the camera.
-         *
-         * @return true if the camera has video history enabled, false otherwise.
-         */
+        /// <summary>
+        /// Returns whether video history is enabled on the camera.
+        ///
+        /// @return true if the camera has video history enabled, false otherwise.
+        /// </summary>
         [DataMember(Name = "is_video_history_enabled")]
         public bool IsVideoHistoryEnabled { get; set; }
 
-        /**
-         * Returns a web URL (deep link) to the live camera feed at home.nest.com.
-         *
-         * @return A web URL (deep link) to the live camera feed at home.nest.com.
-         */
+        /// <summary>
+        /// Returns a web URL (deep link) to the live camera feed at home.nest.com.
+        ///
+        /// @return A web URL (deep link) to the live camera feed at home.nest.com.
+        /// </summary>
         [DataMember(Name = "web_url")]
         public string WebUrl { get; set; }
 
-        /**
-         * Returns an app URL (deep link) to the live camera feed in the Nest app.
-         *
-         * @return An app URL (deep link) to the live camera feed in the Nest app.
-         */
+        /// <summary>
+        /// Returns an app URL (deep link) to the live camera feed in the Nest app.
+        ///
+        /// @return An app URL (deep link) to the live camera feed in the Nest app.
+        /// </summary>
         [DataMember(Name = "app_url")]
         public string AppUrl { get; set; }
 
-        /**
-         * Returns a LastEvent object containing information about the last event.
-         *
-         * @return A LastEvent object representing the data captured in the last event.
-         */
+        /// <summary>
+        /// Returns a LastEvent object containing information about the last event.
+        ///
+        /// @return A LastEvent object representing the data captured in the last event.
+        /// </summary>
         [DataMember(Name = "last_event")]
         public LastEvent LastEventValue { get; set; }
 
-        /**
-         * Returns whether public sharing is enabled on the camera.
-         *
-         * @return True if public sharing is enabled on the camera.
-         */
+        /// <summary>
+        /// Returns whether public sharing is enabled on the camera.
+        ///
+        /// @return True if public sharing is enabled on the camera.
+        /// </summary>
         [DataMember(Name = "is_public_share_enabled")]
         public bool IsPublicShareEnabled { get; set; }
 
-        /**
-         * Returns a list of HashMaps that contain an activity zone.
-         *
-         * @return ArrayList of HashMaps that contain an activity zone.
-         */
+        /// <summary>
+        /// Returns a list of HashMaps that contain an activity zone.
+        ///
+        /// @return ArrayList of HashMaps that contain an activity zone.
+        /// </summary>
         [DataMember(Name = "activity_zones")]
         public List<ActivityZone> ActivityZones { get; set; } = new List<ActivityZone>();
 
-        /**
-         * Returns a URL of the shared public stream.
-         *
-         * @return A string URL of the shared public stream.
-         */
+        /// <summary>
+        /// Returns a URL of the shared public stream.
+        ///
+        /// @return A string URL of the shared public stream.
+        /// </summary>
         [DataMember(Name = "public_share_url")]
         public string PublicShareUrl { get; set; }
 
-        /**
-         * Returns a URL to this camera's snapshots.
-         *
-         * @return A string URL to this camera's snapshots.
-         */
+        /// <summary>
+        /// Returns a URL to this camera's snapshots.
+        ///
+        /// @return A string URL to this camera's snapshots.
+        /// </summary>
         [DataMember(Name = "snapshot_url")]
         public string SnapshotUrl { get; set; }
 
@@ -157,11 +157,11 @@ namespace Elton.Nest.Models
             yield break;
         }
 
-        /**
-         * LastEvent contains information about the last event that triggered a notification. In order
-         * to capture last event data, the Nest Cam must have a Nest Aware with Video History
-         * subscription.
-         */
+        /// <summary>
+        /// LastEvent contains information about the last event that triggered a notification. In order
+        /// to capture last event data, the Nest Cam must have a Nest Aware with Video History
+        /// subscription.
+        /// </summary>
         [DataContract]
         public class LastEvent : IEquatable<LastEvent>, IValidatableObject
         {
@@ -174,69 +174,69 @@ namespace Elton.Nest.Models
                 ActivityZoneIds = new List<string>();
             }
 
-            /**
-             * Returns whether sound was detected in the last event.
-             *
-             * @return true if sound was detected, false if sound was not detected.
-             */
+            /// <summary>
+            /// Returns whether sound was detected in the last event.
+            ///
+            /// @return true if sound was detected, false if sound was not detected.
+            /// </summary>
             [DataMember(Name = "has_sound")]
             public bool HasSound { get; set; }
 
-            /**
-             * Returns whether motion was detected in the last event.
-             *
-             * @return true if motion was detected, false if motion was not detected.
-             */
+            /// <summary>
+            /// Returns whether motion was detected in the last event.
+            ///
+            /// @return true if motion was detected, false if motion was not detected.
+            /// </summary>
             [DataMember(Name = "has_motion")]
             public bool HasMotion { get; set; }
 
-            /**
-             * Returns whether person was detected in the last event.
-             *
-             * @return true if person was detected, false if motion was not detected.
-             */
+            /// <summary>
+            /// Returns whether person was detected in the last event.
+            ///
+            /// @return true if person was detected, false if motion was not detected.
+            /// </summary>
             [DataMember(Name = "has_person")]
             public bool HasPerson { get; set; }
 
-            /**
-             * Returns the time of the start of the event.
-             *
-             * @return Event start time, in ISO 8601 format.
-             */
+            /// <summary>
+            /// Returns the time of the start of the event.
+            ///
+            /// @return Event start time, in ISO 8601 format.
+            /// </summary>
             [DataMember(Name = "start_time")]
             public string StartTime { get; set; }
 
-            /**
-             * Returns the time of the end of the event.
-             *
-             * @return Event end time, in ISO 8601 format.
-             */
+            /// <summary>
+            /// Returns the time of the end of the event.
+            ///
+            /// @return Event end time, in ISO 8601 format.
+            /// </summary>
             [DataMember(Name = "end_time")]
             public string EndTime { get; set; }
 
-            /**
-             * Returns the time that the URLs expire, in ISO 8601 format.
-             *
-             * @return the time that the URLs expire, in ISO 8601 format.
-             */
+            /// <summary>
+            /// Returns the time that the URLs expire, in ISO 8601 format.
+            ///
+            /// @return the time that the URLs expire, in ISO 8601 format.
+            /// </summary>
             [DataMember(Name = "urls_expire_time")]
             public string UrlsExpireTime { get; set; }
 
-            /**
-             * Returns a web URL (deep link) to the last sound or motion event at home.nest.com. Used to
-             * display the last recorded event, and requires user to be signed in to the account.
-             *
-             * @return A web URL (deep link) to the last sound or motion event.
-             */
+            /// <summary>
+            /// Returns a web URL (deep link) to the last sound or motion event at home.nest.com. Used to
+            /// display the last recorded event, and requires user to be signed in to the account.
+            ///
+            /// @return A web URL (deep link) to the last sound or motion event.
+            /// </summary>
             [DataMember(Name = "web_url")]
             public string WebUrl { get; set; }
 
-            /**
-             * Returns a Nest app URL (deep link) to the last sound or motion event. Used to display the
-             * last recorded event, and requires user to be signed in to the account.
-             *
-             * @return An app URL (deep link) to the last sound or motion event.
-             */
+            /// <summary>
+            /// Returns a Nest app URL (deep link) to the last sound or motion event. Used to display the
+            /// last recorded event, and requires user to be signed in to the account.
+            ///
+            /// @return An app URL (deep link) to the last sound or motion event.
+            /// </summary>
             [DataMember(Name = "app_url")]
             public string AppUrl { get; set; }
 

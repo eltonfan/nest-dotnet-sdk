@@ -22,11 +22,11 @@ using System.Text;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * GlobalUpdate contains the state of all devices, structures and metadata in the Nest account when
-     * a change is detected in anything. A GlobalUpdate object is returned by {@link
-     * com.nestlabs.sdk.NestListener.GlobalListener#onUpdate(GlobalUpdate)} when an update occurs.
-     */
+    /// <summary>
+    /// GlobalUpdate contains the state of all devices, structures and metadata in the Nest account when
+    /// a change is detected in anything. A GlobalUpdate object is returned by {@link
+    /// com.nestlabs.sdk.NestListener.GlobalListener#onUpdate(GlobalUpdate)} when an update occurs.
+    /// </summary>
     public class GlobalUpdate
     {
         readonly DeviceUpdate devices;
@@ -46,39 +46,39 @@ namespace Elton.Nest.Models
 
         public DeviceUpdate Devices => devices;
 
-        /**
-         * Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link Thermostat} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link Thermostat} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<Thermostat> Thermostats => devices.Thermostats;
 
-        /**
-         * Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<SmokeCOAlarm> SmokeCOAlarms => devices.SmokeCOAlarms;
 
-        /**
-         * Returns all the {@link Camera} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link Camera} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link Camera} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link Camera} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<Camera> Cameras => devices.Cameras;
 
-        /**
-         * Returns all the {@link Structure} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link Structure} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link Structure} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link Structure} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<Structure> Structures => mStructures;
 
-        /**
-         * Returns the {@link Metadata} object in the Nest account at the time of the update.
-         *
-         * @return the {@link Metadata} object in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns the {@link Metadata} object in the Nest account at the time of the update.
+        ///
+        /// @return the {@link Metadata} object in the Nest account at the time of the update.
+        /// </summary>
         public Metadata Metadata => mMetadata;
     }
 }

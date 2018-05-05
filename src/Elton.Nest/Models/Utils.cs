@@ -51,9 +51,9 @@ namespace Elton.Nest.Models
         }
     }
 
-    /**
-     * Provides utilities methods for various common operations within this library.
-     */
+    /// <summary>
+    /// Provides utilities methods for various common operations within this library.
+    /// </summary>
     public static class Utils
     {
         static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -62,36 +62,14 @@ namespace Elton.Nest.Models
         {
             ContractResolver = new OrderedContractResolver(),
         };
-
-        /**
-         * Writes a boolean value to a Parcel.
-         *
-         * @param out   the Parcel to write to.
-         * @param value the boolean value to write.
-         */
-        //static void writeBoolean(Parcel out, boolean value)
-        //{
-        //    out.writeInt(value ? 1 : 0);
-        //}
-
-        /**
-         * Reads a boolean value from a Parcel.
-         *
-         * @param in the Parcel to read.
-         * @return the boolean value read from the Parcel.
-         */
-        //static bool readBoolean(Parcel in)
-        //{
-        //    return in.readInt() != 0;
-        //}
-
-        /**
-         * Returns the object in a JSON string representation if possible. If this fails, it will return
-         * the superclass' string representation of the object.
-         *
-         * @param obj the object to convert.
-         * @return a string representation of the object.
-         */
+        
+        /// <summary>
+        /// Returns the object in a JSON string representation if possible. If this fails, it will return
+        /// the superclass' string representation of the object.
+        ///
+        /// @param obj the object to convert.
+        /// @return a string representation of the object.
+        /// </summary>
         public static string ToString(object obj)
         {
             try
@@ -105,12 +83,12 @@ namespace Elton.Nest.Models
             }
         }
 
-        /**
-         * Returns whether any of the provided Strings are empty (null or zero-length).
-         *
-         * @param args strings to check for emptiness.
-         * @return true if any of the provided strings is null or is zero-length, false otherwise.
-         */
+        /// <summary>
+        /// Returns whether any of the provided Strings are empty (null or zero-length).
+        ///
+        /// @param args strings to check for emptiness.
+        /// @return true if any of the provided strings is null or is zero-length, false otherwise.
+        /// </summary>
         public static bool isAnyEmpty(params string[] args)
         {
             if (args == null)
@@ -132,7 +110,7 @@ namespace Elton.Nest.Models
         {
             if (object.Equals(left, null) || object.Equals(right, null))
                 return object.Equals(left, right);
-            
+
             if (object.ReferenceEquals(left, right))
                 return true;
 
@@ -159,27 +137,27 @@ namespace Elton.Nest.Models
             return hashCode;
         }
 
-        /**
-         * Builds a path incrementally.
-         */
+        /// <summary>
+        /// Builds a path incrementally.
+        /// </summary>
         public class PathBuilder
         {
             readonly StringBuilder mBuilder;
 
-            /**
-             * Creates a new PathBuilder.
-             */
+            /// <summary>
+            /// Creates a new PathBuilder.
+            /// </summary>
             public PathBuilder()
             {
                 mBuilder = new StringBuilder();
             }
 
-            /**
-             * Appends a string to the path.
-             *
-             * @param entry string to append to the path.
-             * @return the PathBuilder. Allows for chaining multiple appends.
-             */
+            /// <summary>
+            /// Appends a string to the path.
+            ///
+            /// @param entry string to append to the path.
+            /// @return the PathBuilder. Allows for chaining multiple appends.
+            /// </summary>
             public PathBuilder Append(string entry)
             {
                 mBuilder.Append("/").Append(entry);

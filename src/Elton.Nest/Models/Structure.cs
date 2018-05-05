@@ -25,9 +25,9 @@ using System.Text;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * Structure represents and contains all properties of a Nest structure.
-     */
+    /// <summary>
+    /// Structure represents and contains all properties of a Nest structure.
+    /// </summary>
     [DataContract]
     public class Structure : IEquatable<Structure>, IValidatableObject
     {
@@ -58,135 +58,135 @@ namespace Elton.Nest.Models
             this.StructureId = default;
         }
 
-        /**
-         * Returns the ID number of the structure.
-         *
-         * @return the ID number of the structure.
-         */
+        /// <summary>
+        /// Returns the ID number of the structure.
+        ///
+        /// @return the ID number of the structure.
+        /// </summary>
         [DataMember(Name = "structure_id")]
         public string StructureId { get; set; }
 
-        /**
-         * Returns the list of thermostats in the structure.
-         *
-         * @return the list of thermostats in the structure.
-         */
+        /// <summary>
+        /// Returns the list of thermostats in the structure.
+        ///
+        /// @return the list of thermostats in the structure.
+        /// </summary>
         [DataMember(Name = "thermostats")]
         public List<string> Thermostats { get; set; }
 
-        /**
-         * Returns the list of smoke+CO alarms in the structure.
-         *
-         * @return the list of smoke+CO alarms in the structure.
-         */
+        /// <summary>
+        /// Returns the list of smoke+CO alarms in the structure.
+        ///
+        /// @return the list of smoke+CO alarms in the structure.
+        /// </summary>
         [DataMember(Name = "smoke_co_alarms")]
         public List<string> SmokeCoAlarms { get; set; }
 
-        /**
-         * Returns the list of cameras in the structure.
-         *
-         * @return the list of cameras in the structure.
-         */
+        /// <summary>
+        /// Returns the list of cameras in the structure.
+        ///
+        /// @return the list of cameras in the structure.
+        /// </summary>
         [DataMember(Name = "cameras")]
         public List<string> Cameras { get; set; }
 
-        /**
-         * Returns an object containing $company and $product_type information.
-         * <p/>
-         * More info: https://developer.nest.com/documentation/api-reference/overview#devices2
-         *
-         * @return an object containing $company and $product_type information.
-         */
+        /// <summary>
+        /// Returns an object containing $company and $product_type information.
+        /// <p/>
+        /// More info: https://developer.nest.com/documentation/api-reference/overview#devices2
+        ///
+        /// @return an object containing $company and $product_type information.
+        /// </summary>
         [DataMember(Name = "devices")]
         public Dictionary<string, object> Devices { get; set; }
 
-        /**
-         * Returns the away state of the structure. In order for a structure to be in the Auto-Away
-         * state, all devices must also be in Auto-Away state. When any device leaves the Auto-Away
-         * state, then the structure also leaves the Auto-Away state.
-         * <p/>
-         * Values can be "home", "away", or "auto-away"
-         *
-         * @return the away state of the structure.
-         */
+        /// <summary>
+        /// Returns the away state of the structure. In order for a structure to be in the Auto-Away
+        /// state, all devices must also be in Auto-Away state. When any device leaves the Auto-Away
+        /// state, then the structure also leaves the Auto-Away state.
+        /// <p/>
+        /// Values can be "home", "away", or "auto-away"
+        ///
+        /// @return the away state of the structure.
+        /// </summary>
         [DataMember(Name = "away")]
         public string Away { get; set; }
 
-        /**
-         * Returns the user-defined name of the structure.
-         *
-         * @return the user-defined name of the structure.
-         */
+        /// <summary>
+        /// Returns the user-defined name of the structure.
+        ///
+        /// @return the user-defined name of the structure.
+        /// </summary>
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
-        /**
-         * Returns the country code, in ISO 3166 alpha-2 format.
-         *
-         * @return the country code, in ISO 3166 alpha-2 format.
-         */
+        /// <summary>
+        /// Returns the country code, in ISO 3166 alpha-2 format.
+        ///
+        /// @return the country code, in ISO 3166 alpha-2 format.
+        /// </summary>
         [DataMember(Name = "country_code")]
         public string CountryCode { get; set; }
 
-        /**
-         * Returns the postal or zip code, depending on the country.
-         *
-         * @return the postal or zip code.
-         */
+        /// <summary>
+        /// Returns the postal or zip code, depending on the country.
+        ///
+        /// @return the postal or zip code.
+        /// </summary>
         [DataMember(Name = "postal_code")]
         public string PostalCode { get; set; }
 
-        /**
-         * Returns the start time of the Energy rush hour event, in ISO 8601 format.
-         *
-         * @return the start time of the Energy rush hour event, in ISO 8601 format.
-         */
+        /// <summary>
+        /// Returns the start time of the Energy rush hour event, in ISO 8601 format.
+        ///
+        /// @return the start time of the Energy rush hour event, in ISO 8601 format.
+        /// </summary>
         [DataMember(Name = "peak_period_start_time")]
         public string PeakPeriodStartTime { get; set; }
 
-        /**
-         * Returns the end time of the Energy rush hour event, in ISO 8601 format.
-         *
-         * @return the end time of the Energy rush hour event, in ISO 8601 format.
-         */
+        /// <summary>
+        /// Returns the end time of the Energy rush hour event, in ISO 8601 format.
+        ///
+        /// @return the end time of the Energy rush hour event, in ISO 8601 format.
+        /// </summary>
         [DataMember(Name = "peak_period_end_time")]
         public string PeakPeriodEndTime { get; set; }
 
-        /**
-         * Returns the time zone at the structure, in IANA time zone format.
-         *
-         * @return the time zone at the structure, in IANA time zone format.
-         */
+        /// <summary>
+        /// Returns the time zone at the structure, in IANA time zone format.
+        ///
+        /// @return the time zone at the structure, in IANA time zone format.
+        /// </summary>
         [DataMember(Name = "time_zone")]
         public string TimeZone { get; set; }
 
-        /**
-         * Returns the ETA object that can be set on a structure.
-         * <p/>
-         * More info: https://developer.nest.com/documentation/cloud/eta-guide
-         *
-         * @return the ETA object that can be set on a structure.
-         */
+        /// <summary>
+        /// Returns the ETA object that can be set on a structure.
+        /// <p/>
+        /// More info: https://developer.nest.com/documentation/cloud/eta-guide
+        ///
+        /// @return the ETA object that can be set on a structure.
+        /// </summary>
         [DataMember(Name = "eta")]
         public ETA Eta { get; set; }
 
-        /**
-         * Returns the Rush Hour Rewards enrollment status.
-         * <p/>
-         * More info: http://support.nest.com/article/What-is-Rush-Hour-Rewards
-         *
-         * @return the Rush Hour Rewards enrollment status.
-         */
+        /// <summary>
+        /// Returns the Rush Hour Rewards enrollment status.
+        /// <p/>
+        /// More info: http://support.nest.com/article/What-is-Rush-Hour-Rewards
+        ///
+        /// @return the Rush Hour Rewards enrollment status.
+        /// </summary>
         [DataMember(Name = "rhr_enrollment")]
         public bool RhrEnrollment { get; set; }
 
-        /**
-         * Returns an object containing where identifiers for devices in the structure.
-         * <p/>
-         * More info: https://developer.nest.com/documentation/cloud/how-to-structures-object#wheres
-         *
-         * @return an object containing where identifiers for devices in the structure.
-         */
+        /// <summary>
+        /// Returns an object containing where identifiers for devices in the structure.
+        /// <p/>
+        /// More info: https://developer.nest.com/documentation/cloud/how-to-structures-object#wheres
+        ///
+        /// @return an object containing where identifiers for devices in the structure.
+        /// </summary>
         [DataMember(Name = "wheres")]
         public Dictionary<string, Where> Wheres { get; set; }
 
@@ -215,9 +215,9 @@ namespace Elton.Nest.Models
             yield break;
         }
 
-        /**
-         * Where is an object containing where identifiers for devices in the structure.
-         */
+        /// <summary>
+        /// Where is an object containing where identifiers for devices in the structure.
+        /// </summary>
         [DataContract]
         public class Where : IEquatable<Where>, IValidatableObject
         {
@@ -227,17 +227,17 @@ namespace Elton.Nest.Models
             [JsonConstructor]
             protected Where() { }
 
-            /**
-             * Returns the Where unique identifier.
-             *
-             * @return the Where unique identifier.
-             */
+            /// <summary>
+            /// Returns the Where unique identifier.
+            ///
+            /// @return the Where unique identifier.
+            /// </summary>
             [DataMember(Name = "where_id")]
-            /**
-             * Returns the name of the room. E.g. "Bedroom".
-             *
-             * @return the name of the room. E.g. "Bedroom".
-             */
+            /// <summary>
+            /// Returns the name of the room. E.g. "Bedroom".
+            ///
+            /// @return the name of the room. E.g. "Bedroom".
+            /// </summary>
             public string WhereId { get; set; }
             [DataMember(Name = "name")]
             public string Name { get; set; }
@@ -268,9 +268,9 @@ namespace Elton.Nest.Models
             }
         }
 
-        /**
-         * ETA is used to let Nest know that a user is expected to return home at a specific time.
-         */
+        /// <summary>
+        /// ETA is used to let Nest know that a user is expected to return home at a specific time.
+        /// </summary>
         [DataContract]
         public class ETA : IEquatable<ETA>, IValidatableObject
         {
@@ -280,27 +280,27 @@ namespace Elton.Nest.Models
             [JsonConstructor]
             protected ETA() { }
 
-            /**
-             * Returns a unique identifier for this ETA instance.
-             *
-             * @return a unique identifier for this ETA instance.
-             */
+            /// <summary>
+            /// Returns a unique identifier for this ETA instance.
+            ///
+            /// @return a unique identifier for this ETA instance.
+            /// </summary>
             [DataMember(Name = "trip_id")]
             public string TripId { get; set; }
 
-            /**
-             * Returns the beginning time of the estimated arrival window, in ISO 8601 format.
-             *
-             * @return the beginning time of the estimated arrival window, in ISO 8601 format.
-             */
+            /// <summary>
+            /// Returns the beginning time of the estimated arrival window, in ISO 8601 format.
+            ///
+            /// @return the beginning time of the estimated arrival window, in ISO 8601 format.
+            /// </summary>
             [DataMember(Name = "estimated_arrival_window_begin")]
             public string EstimatedArrivalWindowBegin { get; set; }
 
-            /**
-             * Returns the end time of the estimated arrival window, in ISO 8601 format.
-             *
-             * @return the end time of the estimated arrival window, in ISO 8601 format.
-             */
+            /// <summary>
+            /// Returns the end time of the estimated arrival window, in ISO 8601 format.
+            ///
+            /// @return the end time of the estimated arrival window, in ISO 8601 format.
+            /// </summary>
             [DataMember(Name = "estimated_arrival_window_end")]
             public string EstimatedArrivalWindowEnd { get; set; }
 

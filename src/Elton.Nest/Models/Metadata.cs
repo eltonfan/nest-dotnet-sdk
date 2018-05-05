@@ -25,9 +25,9 @@ using System.Text;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * Metadata holds the information related to your Nest client.
-     */
+    /// <summary>
+    /// Metadata holds the information related to your Nest client.
+    /// </summary>
     [DataContract]
     public class Metadata : IEquatable<Metadata>, IValidatableObject
     {
@@ -43,23 +43,23 @@ namespace Elton.Nest.Models
             this.ClientVersion = ClientVersion;
         }
 
-        /**
-         * Returns the access token associated with your Nest API connection.
-         *
-         * @return the access token associated with your Nest API connection.
-         */
+        /// <summary>
+        /// Returns the access token associated with your Nest API connection.
+        ///
+        /// @return the access token associated with your Nest API connection.
+        /// </summary>
         [DataMember(Name = "access_token")]
         public string AccessToken { get; set; }
 
-        /**
-         * Returns the last user-authorized version of a product. The client version increments every
-         * time a change is made to the permissions in a product. You can use this to make sure that a
-         * user has the right permissions for certain features.
-         * <p/>
-         * See here for more information: https://goo.gl/J4RPAc
-         *
-         * @return the last user-authorized version of a product.
-         */
+        /// <summary>
+        /// Returns the last user-authorized version of a product. The client version increments every
+        /// time a change is made to the permissions in a product. You can use this to make sure that a
+        /// user has the right permissions for certain features.
+        /// <p/>
+        /// See here for more information: https://goo.gl/J4RPAc
+        ///
+        /// @return the last user-authorized version of a product.
+        /// </summary>
         [DataMember(Name = "client_version")]
         public long ClientVersion { get; set; }
 

@@ -27,9 +27,9 @@ using System.Threading.Tasks;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * Thermostat represents and contains all properties of a Nest Thermostat.
-     */
+    /// <summary>
+    /// Thermostat represents and contains all properties of a Nest Thermostat.
+    /// </summary>
     [DataContract]
     public class Thermostat : Device, IEquatable<Device>, IValidatableObject
     {
@@ -74,257 +74,257 @@ namespace Elton.Nest.Models
             this.CanCool = CanCool;
         }
 
-        /**
-         * Returns true if this thermostat is connected to a cooling system.
-         *
-         * @return true if this thermostat is connected to a cooling system.
-         */
+        /// <summary>
+        /// Returns true if this thermostat is connected to a cooling system.
+        ///
+        /// @return true if this thermostat is connected to a cooling system.
+        /// </summary>
         [DataMember(Name = "can_cool")]
         public bool CanCool { get; set; }
 
-        /**
-         * Returns true if this thermostat is connected to a heating system.
-         *
-         * @return true if this thermostat is connected to a heating system.
-         */
+        /// <summary>
+        /// Returns true if this thermostat is connected to a heating system.
+        ///
+        /// @return true if this thermostat is connected to a heating system.
+        /// </summary>
         [DataMember(Name = "can_heat")]
         public bool CanHeat { get; set; }
 
-        /**
-         * Returns true if this thermostat is currently operating using the emergency heating system.
-         *
-         * @return true if this thermostat is currently operating using the emergency heating system.
-         */
+        /// <summary>
+        /// Returns true if this thermostat is currently operating using the emergency heating system.
+        ///
+        /// @return true if this thermostat is currently operating using the emergency heating system.
+        /// </summary>
         [DataMember(Name = "is_using_emergency_heat")]
         public bool IsUsingEmergencyHeat { get; set; }
 
-        /**
-         * Returns true if this thermostat has a connected fan.
-         *
-         * @return true if this thermostat has a connected fan.
-         */
+        /// <summary>
+        /// Returns true if this thermostat has a connected fan.
+        ///
+        /// @return true if this thermostat has a connected fan.
+        /// </summary>
         [DataMember(Name = "has_fan")]
         public bool HasFan { get; set; }
 
-        /**
-         * Returns true if the fan is currently running on a timer, false otherwise.
-         *
-         * @return true if the fan is currently running on a timer, false otherwise.
-         */
+        /// <summary>
+        /// Returns true if the fan is currently running on a timer, false otherwise.
+        ///
+        /// @return true if the fan is currently running on a timer, false otherwise.
+        /// </summary>
         [DataMember(Name = "fan_timer_active")]
         public bool FanTimerActive { get; set; }
 
-        /**
-         * If the fan is running on a timer, this provides the timestamp (in ISO-8601 format) at which
-         * the fan will stop running.
-         *
-         * @return the timestamp (in ISO-8601 format) at which the fan will stop running.
-         */
+        /// <summary>
+        /// If the fan is running on a timer, this provides the timestamp (in ISO-8601 format) at which
+        /// the fan will stop running.
+        ///
+        /// @return the timestamp (in ISO-8601 format) at which the fan will stop running.
+        /// </summary>
         [DataMember(Name = "fan_timer_timeout")]
         public string FanTimerTimeout { get; set; }
 
-        /**
-         * Returns true if the thermostat is currently displaying the leaf indicator, false otherwise.
-         *
-         * @return true if the thermostat is currently displaying the leaf indicator, false otherwise.
-         */
+        /// <summary>
+        /// Returns true if the thermostat is currently displaying the leaf indicator, false otherwise.
+        ///
+        /// @return true if the thermostat is currently displaying the leaf indicator, false otherwise.
+        /// </summary>
         [DataMember(Name = "has_leaf")]
         public bool HasLeaf { get; set; }
 
-        /**
-         * Returns the temperature scale: one of "C" (Celsius) or "F" (Fahrenheit) that this thermostat
-         * should display temperatures in.
-         *
-         * @return the temperature scale: one of "C" (Celsius) or "F" (Fahrenheit) that this thermostat
-         * should display temperatures in.
-         */
+        /// <summary>
+        /// Returns the temperature scale: one of "C" (Celsius) or "F" (Fahrenheit) that this thermostat
+        /// should display temperatures in.
+        ///
+        /// @return the temperature scale: one of "C" (Celsius) or "F" (Fahrenheit) that this thermostat
+        /// should display temperatures in.
+        /// </summary>
         [DataMember(Name = "temperature_scale")]
         public string TemperatureScale { get; set; }
 
-        /**
-         * Returns the target temperature of the thermostat in Fahrenheit. Note that this is only
-         * applicable when in Heat or Cool mode, not "Heat and Cool" mode.
-         *
-         * @return the target temperature of the thermostat in Fahrenheit.
-         */
+        /// <summary>
+        /// Returns the target temperature of the thermostat in Fahrenheit. Note that this is only
+        /// applicable when in Heat or Cool mode, not "Heat and Cool" mode.
+        ///
+        /// @return the target temperature of the thermostat in Fahrenheit.
+        /// </summary>
         [DataMember(Name = "target_temperature_f")]
         public long TargetTemperatureF { get; set; }
 
-        /**
-         * Returns the target temperature of the thermostat in Celsius. Note that this is only
-         * applicable when in Heat or Cool mode, not "Heat and Cool" mode.
-         *
-         * @return the target temperature of the thermostat in Celsius.
-         */
+        /// <summary>
+        /// Returns the target temperature of the thermostat in Celsius. Note that this is only
+        /// applicable when in Heat or Cool mode, not "Heat and Cool" mode.
+        ///
+        /// @return the target temperature of the thermostat in Celsius.
+        /// </summary>
         [DataMember(Name = "target_temperature_c")]
         public double TargetTemperatureC { get; set; }
 
-        /**
-         * Returns the target temperature of the cooling system in Fahrenheit when in "Heat and Cool"
-         * mode.
-         *
-         * @return the target temperature of the cooling system in Fahrenheit when in "Heat and Cool"
-         * mode.
-         */
+        /// <summary>
+        /// Returns the target temperature of the cooling system in Fahrenheit when in "Heat and Cool"
+        /// mode.
+        ///
+        /// @return the target temperature of the cooling system in Fahrenheit when in "Heat and Cool"
+        /// mode.
+        /// </summary>
         [DataMember(Name = "target_temperature_high_f")]
         public long TargetTemperatureHighF { get; set; }
 
-        /**
-         * Returns the target temperature of the cooling system in Celsius when in "Heat and Cool"
-         * mode.
-         *
-         * @return the target temperature of the cooling system in Celsius when in "Heat and Cool" mode.
-         */
+        /// <summary>
+        /// Returns the target temperature of the cooling system in Celsius when in "Heat and Cool"
+        /// mode.
+        ///
+        /// @return the target temperature of the cooling system in Celsius when in "Heat and Cool" mode.
+        /// </summary>
         [DataMember(Name = "target_temperature_high_c")]
         public double TargetTemperatureHighC { get; set; }
 
-        /**
-         * Returns the target temperature of the heating system in Celsius when in "Heat and Cool"
-         * mode.
-         *
-         * @return the target temperature of the heating system in Celsius when in "Heat and Cool" mode.
-         */
+        /// <summary>
+        /// Returns the target temperature of the heating system in Celsius when in "Heat and Cool"
+        /// mode.
+        ///
+        /// @return the target temperature of the heating system in Celsius when in "Heat and Cool" mode.
+        /// </summary>
         [DataMember(Name = "target_temperature_low_f")]
         public long TargetTemperatureLowF { get; set; }
 
-        /**
-         * Returns the target temperature of the heating system in Fahrenheit when in "Heat and Cool"
-         * mode.
-         *
-         * @return the target temperature of the heating system in Fahrenheit when in "Heat and Cool"
-         * mode.
-         */
+        /// <summary>
+        /// Returns the target temperature of the heating system in Fahrenheit when in "Heat and Cool"
+        /// mode.
+        ///
+        /// @return the target temperature of the heating system in Fahrenheit when in "Heat and Cool"
+        /// mode.
+        /// </summary>
         [DataMember(Name = "target_temperature_low_c")]
         public double TargetTemperatureLowC { get; set; }
 
 
-        /**
-         * Returns the temperature (in Fahrenheit) at which the cooling system will engage when in
-         * "Away" state.
-         *
-         * @return the temperature (in Fahrenheit) at which the cooling system will engage when in
-         * "Away" state.
-         */
+        /// <summary>
+        /// Returns the temperature (in Fahrenheit) at which the cooling system will engage when in
+        /// "Away" state.
+        ///
+        /// @return the temperature (in Fahrenheit) at which the cooling system will engage when in
+        /// "Away" state.
+        /// </summary>
         [DataMember(Name = "away_temperature_high_f")]
         public long AwayTemperatureHighF { get; set; }
 
-        /**
-         * Returns the temperature (in Celsius) at which the cooling system will engage when in "Away"
-         * state.
-         *
-         * @return the temperature (in Celsius) at which the cooling system will engage when in "Away"
-         * state.
-         */
+        /// <summary>
+        /// Returns the temperature (in Celsius) at which the cooling system will engage when in "Away"
+        /// state.
+        ///
+        /// @return the temperature (in Celsius) at which the cooling system will engage when in "Away"
+        /// state.
+        /// </summary>
         [DataMember(Name = "away_temperature_high_c")]
         public double AwayTemperatureHighC { get; set; }
 
-        /**
-         * Returns the temperature (in Fahrenheit) at which the heating system will engage when in
-         * "Away" state.
-         *
-         * @return the temperature (in Fahrenheit) at which the heating system will engage when in
-         * "Away" state.
-         */
+        /// <summary>
+        /// Returns the temperature (in Fahrenheit) at which the heating system will engage when in
+        /// "Away" state.
+        ///
+        /// @return the temperature (in Fahrenheit) at which the heating system will engage when in
+        /// "Away" state.
+        /// </summary>
         [DataMember(Name = "away_temperature_low_f")]
         public long AwayTemperatureLowF { get; set; }
 
-        /**
-         * Returns the temperature (in Celsius) at which the heating system will engage when in "Away"
-         * state.
-         *
-         * @return the temperature (in Celsius) at which the heating system will engage when in "Away"
-         * state.
-         */
+        /// <summary>
+        /// Returns the temperature (in Celsius) at which the heating system will engage when in "Away"
+        /// state.
+        ///
+        /// @return the temperature (in Celsius) at which the heating system will engage when in "Away"
+        /// state.
+        /// </summary>
         [DataMember(Name = "away_temperature_low_c")]
         public double AwayTemperatureLowC { get; set; }
 
-        /**
-         * Returns the current operating mode of the thermostat.
-         *
-         * @return the current operating mode of the thermostat.
-         */
+        /// <summary>
+        /// Returns the current operating mode of the thermostat.
+        ///
+        /// @return the current operating mode of the thermostat.
+        /// </summary>
         [DataMember(Name = "hvac_mode")]
         public string HvacMode { get; set; }
 
-        /**
-         * Returns the current ambient temperature in the structure in Fahrenheit.
-         *
-         * @return the current ambient temperature in the structure in Fahrenheit.
-         */
+        /// <summary>
+        /// Returns the current ambient temperature in the structure in Fahrenheit.
+        ///
+        /// @return the current ambient temperature in the structure in Fahrenheit.
+        /// </summary>
         [DataMember(Name = "ambient_temperature_f")]
         public long AmbientTemperatureF { get; set; }
 
-        /**
-         * Returns the current ambient temperature in the structure in Celsius.
-         *
-         * @return the current ambient temperature in the structure in Celsius.
-         */
+        /// <summary>
+        /// Returns the current ambient temperature in the structure in Celsius.
+        ///
+        /// @return the current ambient temperature in the structure in Celsius.
+        /// </summary>
         [DataMember(Name = "ambient_temperature_c")]
         public double AmbientTemperatureC { get; set; }
 
-        /**
-         * Returns the humidity, in percent (%) format, measured at the device.
-         *
-         * @return the humidity, in percent (%) format, measured at the device.
-         */
+        /// <summary>
+        /// Returns the humidity, in percent (%) format, measured at the device.
+        ///
+        /// @return the humidity, in percent (%) format, measured at the device.
+        /// </summary>
         [DataMember(Name = "humidity")]
         public long Humidity { get; set; }
 
-        /**
-         * Returns whether HVAC system is actively heating, cooling or is off.
-         * <p/>
-         * Values: "heating", "cooling", "off"
-         *
-         * @return whether HVAC system is actively heating, cooling or is off.
-         */
+        /// <summary>
+        /// Returns whether HVAC system is actively heating, cooling or is off.
+        /// <p/>
+        /// Values: "heating", "cooling", "off"
+        ///
+        /// @return whether HVAC system is actively heating, cooling or is off.
+        /// </summary>
         [DataMember(Name = "hvac_state")]
         public string HvacState { get; set; }
 
-        /**
-         * Returns true if the thermostat is locked.
-         *
-         * @return a boolean indicating if the thermostat is locked or not.
-         */
+        /// <summary>
+        /// Returns true if the thermostat is locked.
+        ///
+        /// @return a boolean indicating if the thermostat is locked or not.
+        /// </summary>
         [DataMember(Name = "is_locked")]
         public bool IsLocked { get; set; }
 
-        /**
-         * Returns the minimum locked temperature in Fahrenheit.
-         *
-         * @return the minimum locked temperature in Fahrenheit.
-         */
+        /// <summary>
+        /// Returns the minimum locked temperature in Fahrenheit.
+        ///
+        /// @return the minimum locked temperature in Fahrenheit.
+        /// </summary>
         [DataMember(Name = "locked_temp_min_f")]
         public string LockedTempMinF { get; set; }
 
-        /**
-         * Returns the maximum locked temperature in Fahrenheit.
-         *
-         * @return the maximum locked temperature in Fahrenheit.
-         */
+        /// <summary>
+        /// Returns the maximum locked temperature in Fahrenheit.
+        ///
+        /// @return the maximum locked temperature in Fahrenheit.
+        /// </summary>
         [DataMember(Name = "locked_temp_max_f")]
         public string LockedTempMaxF { get; set; }
 
-        /**
-         * Returns the minimum locked temperature in Celsius.
-         *
-         * @return the minimum locked temperature in Celsius.
-         */
+        /// <summary>
+        /// Returns the minimum locked temperature in Celsius.
+        ///
+        /// @return the minimum locked temperature in Celsius.
+        /// </summary>
         [DataMember(Name = "locked_temp_min_c")]
         public string LockedTempMinC { get; set; }
 
-        /**
-         * Returns the maximum locked temperature in Celsius.
-         *
-         * @return the maximum locked temperature in Celsius.
-         */
+        /// <summary>
+        /// Returns the maximum locked temperature in Celsius.
+        ///
+        /// @return the maximum locked temperature in Celsius.
+        /// </summary>
         [DataMember(Name = "locked_temp_max_c")]
         public string LockedTempMaxC { get; set; }
 
-        /**
-         * Returns the current label of the thermostat.
-         *
-         * @return the current label of the thermostat.
-         */
+        /// <summary>
+        /// Returns the current label of the thermostat.
+        ///
+        /// @return the current label of the thermostat.
+        /// </summary>
         [DataMember(Name = "label")]
         public string Label { get; set; }
 

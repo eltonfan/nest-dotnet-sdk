@@ -22,11 +22,11 @@ using System.Text;
 
 namespace Elton.Nest.Models
 {
-    /**
-     * DeviceUpdate contains the state of all devices in the Nest account when a change is detected in
-     * any device. A DeviceUpdate object is returned by {@link com.nestlabs.sdk.NestListener
-     * .DeviceListener#onUpdate(DeviceUpdate)} when an update occurs.
-     */
+    /// <summary>
+    /// DeviceUpdate contains the state of all devices in the Nest account when a change is detected in
+    /// any device. A DeviceUpdate object is returned by {@link com.nestlabs.sdk.NestListener
+    /// .DeviceListener#onUpdate(DeviceUpdate)} when an update occurs.
+    /// </summary>
     public class DeviceUpdate
     {
         readonly List<Thermostat> mThermostats;
@@ -40,23 +40,23 @@ namespace Elton.Nest.Models
             mCameras = cameras;
         }
 
-        /**
-         * Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link Thermostat} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link Thermostat} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<Thermostat> Thermostats => mThermostats;
-        /**
-         * Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<SmokeCOAlarm> SmokeCOAlarms => mSmokeCOAlarms;
-        /**
-         * Returns all the {@link Camera} objects in the Nest account at the time of the update.
-         *
-         * @return all the {@link Camera} objects in the Nest account at the time of the update.
-         */
+        /// <summary>
+        /// Returns all the {@link Camera} objects in the Nest account at the time of the update.
+        ///
+        /// @return all the {@link Camera} objects in the Nest account at the time of the update.
+        /// </summary>
         public List<Camera> Cameras => mCameras;
     }
 }
