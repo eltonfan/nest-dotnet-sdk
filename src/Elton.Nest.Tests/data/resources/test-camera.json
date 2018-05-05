@@ -1,0 +1,32 @@
+{
+  "device_id": "awJo6rH",
+  "software_version": "4.0",
+  "structure_id": "VqFabWH21nwV...",
+  "where_id": "d6reb_OZTM...",
+  "name": "Hallway (upstairs)",
+  "name_long": "Hallway Camera (upstairs)",
+  "is_online": true,
+  "is_streaming": true,
+  "is_audio_input_enabled": true,
+  "last_is_online_change": "2015-12-29T18:42:00.000Z",
+  "is_video_history_enabled": true,
+  "web_url": "https://home.nest.com/cameras/device_id?auth=access_token",
+  "app_url": "nestmobile://cameras/device_id?auth=access_token",
+  "is_public_share_enabled": true,
+  "activity_zones": [ { "name": "Walkway", "id": "244083" }, { "name": "Porch", "id": "237084" } ],
+  "public_share_url": "https://video.nest.com/live/STRING1?STRING2",
+  "snapshot_url": "STRING1/device_id/STRING2?auth=access_token",
+  "last_event": {
+    "has_sound": true,
+    "has_motion": true,
+    "has_person": true,
+    "start_time": "2015-12-29T00:00:00.000Z",
+    "end_time": "2015-12-29T18:42:00.000Z",
+    "urls_expire_time": "2015-10-31T23:59:59.000Z",
+    "web_url": "https://home.nest.com/cameras/device_id/cuepoints/STRING?auth=access_token",
+    "app_url": "nestmobile://cameras/device_id/cuepoints/STRING?auth=access_token",
+    "image_url": "STRING1/device_id/STRING2?auth=access_token",
+    "animated_image_url": "STRING1/device_id/STRING2?auth=access_token",
+    "activity_zone_ids": [ "244083", "237084" ]
+  }
+}

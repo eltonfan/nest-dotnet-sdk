@@ -1,0 +1,256 @@
+{
+  "metadata": {
+    "access_token": "c.FmDPkzyzaQe...",
+    "client_version": 1
+  },
+  "devices": {
+    "thermostats": {
+      "peyiJNo0IldT2YlIVtYaGQ": {
+        "device_id": "peyiJNo0IldT2YlIVtYaGQ",
+        "locale": "en-US",
+        "software_version": "4.0",
+        "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+        "name": "Hallway (upstairs)",
+        "name_long": "Hallway Thermostat (upstairs)",
+        "last_connection": "2016-10-31T23:59:59.000Z",
+        "is_online": true,
+        "can_cool": true,
+        "can_heat": true,
+        "is_using_emergency_heat": true,
+        "has_fan": true,
+        "fan_timer_active": true,
+        "fan_timer_timeout": "2016-10-31T23:59:59.000Z",
+        "has_leaf": true,
+        "temperature_scale": "C",
+        "target_temperature_f": 72,
+        "target_temperature_c": 21.5,
+        "target_temperature_high_f": 80,
+        "target_temperature_high_c": 24.5,
+        "target_temperature_low_f": 65,
+        "target_temperature_low_c": 19.5,
+        "eco_temperature_high_f": 80,
+        "eco_temperature_high_c": 24.5,
+        "eco_temperature_low_f": 65,
+        "eco_temperature_low_c": 19.5,
+        "away_temperature_high_f": 80,
+        "away_temperature_high_c": 24.5,
+        "away_temperature_low_f": 65,
+        "away_temperature_low_c": 19.5,
+        "hvac_mode": "heat",
+        "previous_hvac_mode": "heat",
+        "ambient_temperature_f": 72,
+        "ambient_temperature_c": 21.5,
+        "humidity": 40,
+        "hvac_state": "heating",
+        "where_id": "UNCBGUnN24...",
+        "is_locked": true,
+        "locked_temp_min_f": "65",
+        "locked_temp_max_f": "80",
+        "locked_temp_min_c": "19.5",
+        "locked_temp_max_c": "24.5",
+        "label": "Pat's room",
+        "where_name": "Hallway",
+        "sunlight_correction_enabled": true,
+        "sunlight_correction_active": true,
+        "fan_timer_duration": 15,
+        "time_to_target": "~15",
+        "time_to_target_training": "training"
+      }
+    },
+    "smoke_co_alarms": {
+      "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs": {
+        "device_id": "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs",
+        "locale": "en-US",
+        "software_version": "1.01",
+        "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+        "name": "Hallway (upstairs)",
+        "name_long": "Hallway Protect (upstairs)",
+        "last_connection": "2016-10-31T23:59:59.000Z",
+        "is_online": true,
+        "battery_health": "ok",
+        "co_alarm_state": "ok",
+        "smoke_alarm_state": "ok",
+        "is_manual_test_active": true,
+        "last_manual_test_time": "2016-10-31T23:59:59.000Z",
+        "ui_color_state": "gray",
+        "where_id": "UNCBGUnN24...",
+        "where_name": "Hallway"
+      }
+    },
+    "cameras": {
+      "awJo6rH0IldT2YlIVtYaGQ": {
+        "device_id": "awJo6rH...",
+        "software_version": "4.0",
+        "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+        "where_id": "d6reb_OZTM...",
+        "where_name": "Hallway",
+        "name": "Hallway (upstairs)",
+        "name_long": "Hallway Camera (upstairs)",
+        "is_online": true,
+        "is_streaming": true,
+        "is_audio_input_enabled": true,
+        "last_is_online_change": "2016-12-29T18:42:00.000Z",
+        "is_video_history_enabled": true,
+        "web_url": "https://home.nest.com/cameras/device_id?auth=access_token",
+        "app_url": "nestmobile://cameras/device_id?auth=access_token",
+        "is_public_share_enabled": true,
+        "activity_zones": [
+          {
+            "name": "Walkway",
+            "id": "244083"
+          }
+        ],
+        "public_share_url": "https://video.nest.com/live/STRING1?STRING2",
+        "snapshot_url": "STRING1/device_id/STRING2?auth=access_token",
+        "last_event": {
+          "has_sound": true,
+          "has_motion": true,
+          "has_person": true,
+          "start_time": "2016-12-29T00:00:00.000Z",
+          "end_time": "2016-12-29T18:42:00.000Z",
+          "urls_expire_time": "2016-10-31T23:59:59.000Z",
+          "web_url": "https://home.nest.com/cameras/device_id/cuepoints/STRING?auth=access_token",
+          "app_url": "nestmobile://cameras/device_id/cuepoints/STRING?auth=access_token",
+          "image_url": "STRING1/device_id/STRING2?auth=access_token",
+          "animated_image_url": "STRING1/device_id/STRING2?auth=access_token",
+          "activity_zone_ids": [
+            "244083"
+          ]
+        }
+      }
+    },
+    "$company": {
+      "$product_type": {
+        "CPMEMSnC48JlSAHjQIp-aHI72IjLYHK_ul_c54UFb8CmPXNj4ixLbg": {
+          "identification": {
+            "device_id": "CPMEMSnC48JlSAHjQIp-kHI72IjLYHK_ul_c54UFb8CmPXNj4ixLbg",
+            "serial_number": "1L090B50230"
+          },
+          "location": {
+            "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+            "where_id": "UNCBGUnN24..."
+          },
+          "software": {
+            "version": "1.0"
+          },
+          "resource_use": {
+            "electricity": {
+              "value": 42.789,
+              "measurement_reset_time": "2016-01-01T01:01:01.000Z",
+              "measurement_time": "2016-01-01T01:02:35.000Z"
+            },
+            "gas": {
+              "value": 0.345234545,
+              "measurement_reset_time": "2016-01-01T01:01:01.000Z",
+              "measurement_time": "2016-01-01T01:02:35.000Z"
+            },
+            "water": {
+              "value": 10000.3,
+              "measurement_reset_time": "2016-01-01T01:01:01.000Z",
+              "measurement_time": "2016-01-01T01:02:35.000Z"
+            }
+          },
+          "sensors": {
+            "temperature": {
+              "observed_value": 291.483,
+              "observed_time": "2016-12-31T23:59:59.000Z"
+            },
+            "humidity": {
+              "observed_value": 60.8,
+              "observed_time": "2016-12-31T23:59:59.000Z"
+            },
+            "pressure": {
+              "observed_value": 1021.8,
+              "observed_time": "2016-12-31T23:59:59.000Z"
+            },
+            "ambient_light": {
+              "observed_value_min": 150.8,
+              "observed_value_max": 300.88,
+              "observed_begin_time": "2016-04-01T00.00.01.000Z",
+              "observed_end_time": "2016-04-01T23.59.59.000Z"
+            },
+            "passive_ir": {
+              "observed_value_min": 2,
+              "observed_value_max": 4,
+              "observed_begin_time": "2016-04-01T00.00.01.000Z",
+              "observed_end_time": "2016-04-01T23.59.59.000Z"
+            }
+          },
+          "events": {
+            "device_interaction": {
+              "observed_time": "2016-12-31T23:59:59.000Z",
+              "probability": 0.5,
+              "actor": "Mom",
+              "action": "press",
+              "target": "button"
+            },
+            "observed_motion": {
+              "observed_time": "2016-12-31T23:59:59.000Z",
+              "probability": 0.5,
+              "actor": "Guest",
+              "action": "turn",
+              "target": "knob"
+            },
+            "occupancy_change": {
+              "observed_time": "2016-12-31T23:59:59.000Z",
+              "probability": 0.5,
+              "actor": "Spot the Dog",
+              "action": "flip",
+              "target": "switch"
+            },
+            "actor_state_change": {
+              "observed_time": "2016-12-31T23:59:59.000Z",
+              "probability": 0.5,
+              "actor": "Mom",
+              "action": "press",
+              "target": "button"
+            }
+          }
+        }
+      }
+    }
+  },
+  "structures": {
+    "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw": {
+      "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+      "thermostats": [
+        "peyiJNo0IldT2YlIVtYaGQ"
+      ],
+      "smoke_co_alarms": [
+        "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs"
+      ],
+      "cameras": [
+        "awJo6rH…"
+      ],
+      "devices": {
+        "$company": {
+          "$product_type": [
+            "CPMEMSnC48JlSAHjQIp-aHI72IjLYHK_ul_c54UFb8CmPXNj4ixLbg"
+          ]
+        }
+      },
+      "away": "home",
+      "name": "Home",
+      "country_code": "US",
+      "postal_code": "94304",
+      "peak_period_start_time": "2016-10-31T23:59:59.000Z",
+      "peak_period_end_time": "2016-10-31T23:59:59.000Z",
+      "time_zone": "America/Los_Angeles",
+      "eta": {
+        "trip_id": "myTripHome1024",
+        "estimated_arrival_window_begin": "2016-10-31T22:42:59.000Z",
+        "estimated_arrival_window_end": "2016-10-31T23:59:59.000Z"
+      },
+      "eta_begin": "2016-08-04T13:21:37-07:00",
+      "co_alarm_state": "ok",
+      "smoke_alarm_state": "ok",
+      "rhr_enrollment": true,
+      "wheres": {
+        "Fqp6wJI...": {
+          "where_id": "Fqp6wJI...",
+          "name": "Bedroom"
+        }
+      }
+    }
+  }
+}
