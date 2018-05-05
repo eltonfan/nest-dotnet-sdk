@@ -33,7 +33,10 @@ namespace Elton.Nest
     {
 
     }
+}
 
+namespace Elton.Nest.Listeners
+{
     /// <summary>
     /// Listens for updates to any objects in a user's Nest account, including all devices,
     /// structures and metadata.

@@ -35,6 +35,11 @@ namespace Elton.Nest.Rest.Parsers
         [JsonConstructor]
         protected ErrorMessage() { }
 
+        public ErrorMessage(string Error = default)
+        {
+            this.Error = Error;
+        }
+
         [DataMember(Name = "error", EmitDefaultValue = false)]
         public string Error { get; set; }
 

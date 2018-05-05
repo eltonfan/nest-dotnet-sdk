@@ -3,14 +3,14 @@ using System.IO;
 using System.Net.Http;
 using Elton.Nest.Models;
 using Elton.Nest.Rest;
+using Elton.Nest.Tests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Elton.Nest.Tests.Models
+namespace Elton.Nest.Tests
 {
     [TestClass]
-    public class RestStreamClientTest : AbstractModelTest
+    public class RestStreamClientTest
     {
-
         [TestMethod]
         [ExpectedException(typeof(MissingTokenException))]
         public void testStartWithNull_shouldThrowMissingTokenException()

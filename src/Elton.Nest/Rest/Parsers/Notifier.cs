@@ -16,6 +16,7 @@
 
 #endregion
 
+using Elton.Nest.Listeners;
 using Elton.Nest.Models;
 using System;
 using System.Collections.Generic;

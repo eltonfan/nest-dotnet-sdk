@@ -182,7 +182,7 @@ namespace Elton.Nest
             public NestConfig build()
             {
                 // Create random state value on each creation
-                SetStateValue($"app-state-" + Stopwatch.GetTimestamp() + "-" + random.Next());
+                SetStateValue($"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next());
                 return new NestConfig(this);
             }
             readonly static Random random = new Random();

@@ -144,7 +144,7 @@ namespace Elton.Nest.Rest.Parsers
                 var error = JsonConvert.DeserializeObject<ErrorMessage>(json);
                 eventHandler.handleError(error);
             }
-            catch (IOException e)
+            catch (JsonSerializationException e)
             {
                 throw new ParserException(e);
             }

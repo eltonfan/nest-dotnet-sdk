@@ -30,7 +30,7 @@ namespace Elton.Nest
         /// <summary>
         /// Constructs a new {@code NestException} that includes the current stack trace.
         /// </summary>
-        public NestException() : base() { }
+        public NestException() : base("") { }
 
         /// <summary>
         /// Constructs a new {@code NestException} with the current stack trace and the specified detail
@@ -38,7 +38,7 @@ namespace Elton.Nest
         ///
         /// @param message the detail message for this exception.
         /// </summary>
-        public NestException(String message) : base(message) { }
+        public NestException(string message) : base(message) { }
 
         /// <summary>
         /// Constructs a new {@code NestException} with the current stack trace, the specified detail
@@ -47,7 +47,7 @@ namespace Elton.Nest
         /// @param message the detail message for this exception.
         /// @param innerException     the cause of this exception.
         /// </summary>
-        public NestException(String message, Exception innerException) : base(message, innerException) { }
+        public NestException(string message, Exception innerException) : base(message, innerException) { }
 
         /// <summary>
         /// Constructs a new {@code NestException} with the current stack trace and the specified cause.

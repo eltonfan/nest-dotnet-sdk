@@ -28,7 +28,7 @@ namespace Elton.Nest.Tests.Models
         {
             var e = new NestException();
 
-            Assert.AreEqual(null, e.Message);
+            Assert.IsTrue(string.IsNullOrEmpty(e.Message));
         }
 
         [TestMethod]

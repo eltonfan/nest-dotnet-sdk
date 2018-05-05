@@ -26,7 +26,7 @@ namespace Elton.Nest.Rest
     /// Exponential {@link BackOff} implementation that starts with initial delay and follows Fibonacci sequence
     /// up to maximum delay.
     /// </summary>
-    internal sealed class FibonacciBackOff : BackOff
+    public sealed class FibonacciBackOff : BackOff
     {
         const long DEFAULT_DELAY_MILLIS = 60000;
         const long DEFAULT_INITIAL_DELAY_MILLIS = 1000;
