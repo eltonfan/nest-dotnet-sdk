@@ -20,7 +20,7 @@ namespace Elton.Nest.Tests.Models
             if (!File.Exists(fullName))
                 return null;
 
-            return File.ReadAllText(fullName, Encoding.UTF8);
+            return File.ReadAllText(fullName, Encoding.UTF8).Trim();
         }
 
         public static T Parse<T>(string jsonString)

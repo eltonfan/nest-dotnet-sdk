@@ -257,7 +257,7 @@ namespace Elton.Nest.Tests.Models
                 try
                 {
                     var json = LoadString(TEST_EMPTY_CAMERA);
-                    Assert.AreEqual(json.Trim(), c.ToString());
+                    Assert.AreEqual(json, c.ToString());
                 }
                 catch (IOException e)
                 {

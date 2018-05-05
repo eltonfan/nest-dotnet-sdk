@@ -80,7 +80,7 @@ namespace Elton.Nest.Tests.Models
             try
             {
                 string json = LoadString(TEST_EMPTY_METADATA_JSON);
-                Assert.AreEqual(json.Trim(), metadata.ToString());
+                Assert.AreEqual(json, metadata.ToString());
             }
             catch (IOException e)
             {

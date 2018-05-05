@@ -1,0 +1,10 @@
+﻿{
+  "error": "Cannot set target_temperature while mode is heat-cool",
+  "type": "https://developer.nest.com/documentation/cloud/error-messages#mode-error",
+  "message": "Cannot set target_temperature while mode is heat-cool",
+  "instance": "099902af-1a00-4210-9498-6d11d5e8cfa7",
+  "details": {
+    "fieldName": "target_temperature",
+    "mode": "heat-cool"
+  }
+}

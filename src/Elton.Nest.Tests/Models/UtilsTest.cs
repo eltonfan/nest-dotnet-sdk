@@ -14,7 +14,7 @@ namespace Elton.Nest.Tests.Models
             //Parcel mockParcel = PowerMockito.mock(Parcel.class);
             //PowerMockito.when(mockParcel.readInt()).thenReturn(1);
 
-            //boolean result = Utils.readBoolean(mockParcel);
+            //bool result = Utils.readBoolean(mockParcel);
             //assertTrue(result);
         }
 
@@ -24,7 +24,7 @@ namespace Elton.Nest.Tests.Models
             //Parcel mockParcel = PowerMockito.mock(Parcel.class);
             //PowerMockito.when(mockParcel.readInt()).thenReturn(0);
 
-            //boolean result = Utils.readBoolean(mockParcel);
+            //bool result = Utils.readBoolean(mockParcel);
             //Assert.IsFalse(result);
         }
 

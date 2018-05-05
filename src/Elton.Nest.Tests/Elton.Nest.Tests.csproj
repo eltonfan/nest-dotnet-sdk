@@ -66,12 +66,25 @@
     <Compile Include="Models\MetadataTest.cs" />
     <Compile Include="Models\UtilsTest.cs" />
     <Compile Include="NestClientTests.cs" />
+    <Compile Include="NestConfigAndroidTest.cs" />
+    <Compile Include="NestConfigTest.cs" />
+    <Compile Include="NestExceptionTest.cs" />
+    <Compile Include="NestTokenTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Rest\DummyCallback.cs" />
+    <Compile Include="Rest\DummyParser.cs" />
+    <Compile Include="Rest\FibonacciBackOffTest.cs" />
+    <Compile Include="Rest\parsers\MessageParserTest.cs" />
+    <Compile Include="Rest\parsers\NotifierTest.cs" />
+    <Compile Include="Rest\parsers\ObjectModelMapperTest.cs" />
+    <Compile Include="Rest\RestClientTest.cs" />
+    <Compile Include="Rest\RestStreamClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\error.json" />
     <None Include="packages.config" />
     <Content Include="data\resources\test-camera-unknown.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -110,7 +110,7 @@ namespace Elton.Nest.Tests.Models
             try
             {
                 var json = LoadString(TEST_EMPTY_THERMOSTAT);
-                Assert.AreEqual(json.Trim(), t.ToString());
+                Assert.AreEqual(json, t.ToString());
             }
             catch (IOException e)
             {
