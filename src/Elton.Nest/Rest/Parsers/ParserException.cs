@@ -26,6 +26,6 @@ namespace Elton.Nest.Rest.Parsers
     {
         public ParserException(string message) : base(message) { }
         public ParserException(Exception innerException) : base(innerException) { }
+        public ParserException(string message, Exception innerException) : base(message, innerException) { }
     }
-
 }

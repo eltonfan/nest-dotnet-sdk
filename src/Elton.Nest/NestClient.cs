@@ -38,7 +38,7 @@ namespace Elton.Nest
         readonly CameraSetter cameras;
         readonly ThermostatSetter thermostats;
         readonly StructureSetter structures;
-        //public readonly Oauth2FlowHandler oauth2;
+        public readonly Oauth2FlowHandler oauth2;
 
         class EmptyExceptionHandler : ExceptionHandler
         {
@@ -65,7 +65,7 @@ namespace Elton.Nest
             //.connectTimeout(10, TimeUnit.SECONDS)
             streamingHttpClient.Timeout = TimeSpan.FromSeconds(60);//.readTimeout(60, TimeUnit.SECONDS)
 
-            //oauth2 = new Oauth2FlowHandler(httpClient);
+            oauth2 = new Oauth2FlowHandler(httpClient);
             restClient = new RestClient(httpClient, restConfig, messageParser);
             streamingClient = new RestStreamClient.Builder(streamingHttpClient, restConfig, messageParser)
                     .setExceptionHandler(exceptionHandler)

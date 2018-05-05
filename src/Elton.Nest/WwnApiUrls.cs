@@ -27,13 +27,20 @@ namespace Elton.Nest
         public const string DEFAULT_PROTOCOL = "https";
         public const string DEFAULT_WWN_URL = "developer-api.nest.com";
         public const string DEFAULT_PORT = "";
-        const string BASE_AUTHORIZATION_URL = "https://home.nest.com/";
-        const string AUTHORIZATION_SERVER_URL = "https://api.home.nest.com/";
-        const string ACCESS_URL = AUTHORIZATION_SERVER_URL
+        internal const string BASE_AUTHORIZATION_URL = "https://home.nest.com/";
+        internal const string AUTHORIZATION_SERVER_URL = "https://api.home.nest.com/";
+        internal const string ACCESS_URL = AUTHORIZATION_SERVER_URL
             + "oauth2/access_token?code=%s&client_id=%s&client_secret=%s"
             + "&grant_type=authorization_code";
 
-        const string CLIENT_CODE_URL = BASE_AUTHORIZATION_URL
+        internal const string CLIENT_CODE_URL = BASE_AUTHORIZATION_URL
                 + "login/oauth2?client_id=%s&state=%s";
+
+        public static string GetAccessUrl(string clientId, string clientSecret, string code)
+        {
+            return AUTHORIZATION_SERVER_URL
+                + $"oauth2/access_token?code={code}&client_id={clientId}&client_secret={clientSecret}"
+                + "&grant_type=authorization_code";
+        }
     }
 }
