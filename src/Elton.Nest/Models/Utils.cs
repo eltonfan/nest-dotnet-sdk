@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Elton.Nest.Models
@@ -91,7 +92,7 @@ namespace Elton.Nest.Models
          * @param obj the object to convert.
          * @return a string representation of the object.
          */
-        public static string toString(object obj)
+        public static string ToString(object obj)
         {
             try
             {
@@ -127,21 +128,26 @@ namespace Elton.Nest.Models
             return false;
         }
 
-        public static bool equals(object left, object right)
+        public static bool AreEqual<T>(T left, T right)
         {
-            if (left == null)
-                return (right == null);
-
+            if (object.Equals(left, null) || object.Equals(right, null))
+                return object.Equals(left, right);
+            
             if (object.ReferenceEquals(left, right))
                 return true;
 
-            //JToken.DeepEquals(left, right)
-            return toString(left) == toString(right);
+            foreach (var property in typeof(T).GetProperties())
+            {
+                if (property.GetValue(left) != property.GetValue(right))
+                    return false;
+            }
+
+            return true;
         }
 
         public static int GetHashCode(object obj)
         {
-            if (obj == null)
+            if (object.Equals(obj, null))
                 return 0;
             int hashCode = 41;
             foreach (var property in obj.GetType().GetProperties())
@@ -180,11 +186,10 @@ namespace Elton.Nest.Models
                 return this;
             }
 
-            /**
-             * Returns the resulting path.
-             *
-             * @return the resulting path.
-             */
+            /// <summary>
+            /// Returns the resulting path.
+            /// </summary>
+            /// <returns>the resulting path.</returns>
             public string Build()
             {
                 return mBuilder.ToString();

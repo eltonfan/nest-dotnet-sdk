@@ -65,7 +65,7 @@ namespace Elton.Nest.Models
 
         public override string ToString()
         {
-            return Utils.toString(this);
+            return Utils.ToString(this);
         }
 
         public override int GetHashCode()
@@ -80,7 +80,7 @@ namespace Elton.Nest.Models
 
         public bool Equals(Metadata other)
         {
-            return Utils.equals(this, other);
+            return Utils.AreEqual(this, other);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
