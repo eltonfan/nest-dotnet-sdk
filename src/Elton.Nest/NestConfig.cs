@@ -174,6 +174,25 @@ namespace Elton.Nest
                 return this;
             }
 
+            public Builder FromJsonString(string jsonString)
+            {
+                dynamic config = new
+                {
+                    client_id = "",
+                    client_secret = "",
+                    redirect_url = "",
+                    state_value = "",
+                };
+
+                config = JsonConvert.DeserializeAnonymousType(jsonString, config);
+                this.clientID(config.client_id)
+                    .clientSecret(config.client_secret)
+                    .redirectURL(config.redirect_url);
+                    //.SetStateValue(config.state_value);
+
+                return this;
+            }
+
             /// <summary>
             /// Builds and returns the new {@link NestConfig} object.
             ///

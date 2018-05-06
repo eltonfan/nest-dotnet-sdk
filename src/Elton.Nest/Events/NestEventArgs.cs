@@ -48,7 +48,7 @@ namespace Elton.Nest
         /// </summary>
         public GlobalEventArgs(GlobalUpdate update)
         {
-
+            this.Data = update;
         }
     }
 

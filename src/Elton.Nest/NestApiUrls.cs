@@ -36,6 +36,14 @@ namespace Elton.Nest
         internal const string CLIENT_CODE_URL = BASE_AUTHORIZATION_URL
                 + "login/oauth2?client_id=%s&state=%s";
 
+        public static string GetClientCodeUrl(string clientId, string state, string redirectUri = null)
+        {
+            return BASE_AUTHORIZATION_URL
+                + $"login/oauth2?client_id={clientId}&state={state}"
+                + (redirectUri == null ? "" : "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUri, Encoding.UTF8))
+                + "&grant_type=authorization_code";
+        }
+
         public static string GetAccessUrl(string clientId, string clientSecret, string code)
         {
             return AUTHORIZATION_SERVER_URL

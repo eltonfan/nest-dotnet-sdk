@@ -23,13 +23,14 @@ using Elton.Nest.Setters;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 
 namespace Elton.Nest
 {
     public class NestClient
     {
-        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(NestClient));
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         readonly Rest.RestClient restClient;
         readonly StreamingClient streamingClient;
@@ -44,15 +45,12 @@ namespace Elton.Nest
         /// Creates a new instance of the {@link NestClient}.
         /// </summary>
 
-        public NestClient() : this(new RestConfig(), null) { }
-
-        public NestClient(ExceptionHandler exceptionHandler) : this(new RestConfig(), exceptionHandler) { }
-
+        public NestClient() : this(new RestConfig()) { }
 
         /// <summary>
         /// Creates a new instance of the {@link NestClient}.
         /// </summary>
-        public NestClient(RestConfig restConfig, ExceptionHandler exceptionHandler)
+        public NestClient(RestConfig restConfig)
         {
             var messageParser = new MessageParser(new ObjectModelMapper(notifier));
 
@@ -64,7 +62,7 @@ namespace Elton.Nest
             oauth2 = new Oauth2FlowHandler(httpClient);
             restClient = new RestClient(httpClient, restConfig, messageParser);
             streamingClient = new RestStreamClient.Builder(streamingHttpClient, restConfig, messageParser)
-                    .setExceptionHandler(exceptionHandler)
+                    .setExceptionHandler((exception) => { Error?.Invoke(exception); })
                     .build();
 
             cameras = new CameraSetter(restClient);
@@ -103,5 +101,31 @@ namespace Elton.Nest
         public StructureSetter Structures => structures;
 
         public Notifier Notifier => notifier;
+
+        internal static Version sdkVersion = null;
+        public static Version SdkVersion
+        {
+            get
+            {
+                if (sdkVersion == null)
+                {
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var attrTitle = Attribute.GetCustomAttribute(assembly, typeof(AssemblyTitleAttribute)) as AssemblyTitleAttribute;
+                    var attrCopyright = Attribute.GetCustomAttribute(assembly, typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
+                    var attrFileVersion = Attribute.GetCustomAttribute(assembly, typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
+
+                    //Print library version
+                    log.InfoFormat("{0} v{1} ({2})", attrTitle.Title, sdkVersion, Environment.MachineName);
+                    log.Info(attrCopyright.Copyright.Replace("\u00A9", "(C)"));
+
+                    if (!Version.TryParse(attrFileVersion.Version, out sdkVersion))
+                        sdkVersion = assembly.GetName().Version;
+                }
+
+                return sdkVersion;
+            }
+        }
+
+        public event ExceptionHandler Error;
     }
 }

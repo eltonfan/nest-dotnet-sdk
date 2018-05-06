@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elton.Nest", "Elton.Nest\El
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elton.Nest.Tests", "Elton.Nest.Tests\Elton.Nest.Tests.csproj", "{12500A22-6FC7-414F-9E98-DC631E1A600D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{222866AD-1962-4F56-890F-86CF44E68F28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestMonitoringConsole", "..\examples\NestMonitoringConsole\NestMonitoringConsole.csproj", "{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{12500A22-6FC7-414F-9E98-DC631E1A600D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12500A22-6FC7-414F-9E98-DC631E1A600D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12500A22-6FC7-414F-9E98-DC631E1A600D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F4DC3CB8-00D2-4DE5-A1DA-96B4B9066403} = {222866AD-1962-4F56-890F-86CF44E68F28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {063A5D8E-0EB3-446C-B7AF-99A57424D164}
