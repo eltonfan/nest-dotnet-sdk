@@ -22,7 +22,7 @@ using System.Text;
 
 namespace Elton.Nest
 {
-    public class WwnApiUrls
+    public class NestApiUrls
     {
         public const string DEFAULT_PROTOCOL = "https";
         public const string DEFAULT_WWN_URL = "developer-api.nest.com";

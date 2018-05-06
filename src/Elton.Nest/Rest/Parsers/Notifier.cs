@@ -16,7 +16,6 @@
 
 #endregion
 
-using Elton.Nest.Listeners;
 using Elton.Nest.Models;
 using System;
 using System.Collections.Generic;
@@ -26,70 +25,42 @@ namespace Elton.Nest.Rest.Parsers
 {
     public class Notifier : StreamingEventHandler
     {
-        readonly List<NestListener> listeners = new List<NestListener>();
+        public event EventHandler<GlobalEventArgs> GlobalUpdated;
+        public event EventHandler<DeviceEventArgs> DeviceUpdated;
+        public event EventHandler<StructureEventArgs> StructureUpdated;
+        public event EventHandler<ThermostatEventArgs> ThermostatUpdated;
+        public event EventHandler<CameraEventArgs> CameraUpdated;
+        public event EventHandler<SmokeCOAlarmEventArgs> SmokeCOAlarmUpdated;
+        public event EventHandler<MetadataEventArgs> MetadataUpdated;
 
-        public void addListener(NestListener listener)
-        {
-            listeners.Add(listener);
-        }
+        public event EventHandler<AuthFailureEventArgs> AuthFailure;
+        public event EventHandler<ErrorEventArgs> Error;
 
-        public void removeListener(NestListener listener)
-        {
-            listeners.Remove(listener);
-        }
-
-        public void removeAllListeners()
-        {
-            listeners.Clear();
-        }
+        public event EventHandler<AuthRevokedEventArgs> AuthRevoked;
 
         public void handleData(GlobalUpdate eventData)
         {
-            foreach (var listener in listeners)
-            {
-                if (listener is GlobalListener)
-                    ((GlobalListener)listener).onUpdate(eventData);
-                else if (listener is DeviceListener)
-                    ((DeviceListener)listener).onUpdate(eventData.Devices);
-                else if (listener is StructureListener)
-                    ((StructureListener)listener).onUpdate(eventData.Structures);
-                else if (listener is ThermostatListener)
-                    ((ThermostatListener)listener).onUpdate(eventData.Thermostats);
-                else if (listener is CameraListener)
-                    ((CameraListener)listener).onUpdate(eventData.Cameras);
-                else if (listener is SmokeCOAlarmListener)
-                    ((SmokeCOAlarmListener)listener).onUpdate(eventData.SmokeCOAlarms);
-                else if (listener is MetadataListener)
-                    ((MetadataListener)listener).onUpdate(eventData.Metadata);
-            }
+            GlobalUpdated?.Invoke(this, new GlobalEventArgs(eventData));
+            DeviceUpdated?.Invoke(this, new DeviceEventArgs(eventData.Devices));
+            StructureUpdated?.Invoke(this, new StructureEventArgs(eventData.Structures));
+            ThermostatUpdated?.Invoke(this, new ThermostatEventArgs(eventData.Thermostats));
+            CameraUpdated?.Invoke(this, new CameraEventArgs(eventData.Cameras));
+            SmokeCOAlarmUpdated?.Invoke(this, new SmokeCOAlarmEventArgs(eventData.SmokeCOAlarms));
+            MetadataUpdated?.Invoke(this, new MetadataEventArgs(eventData.Metadata));
         }
 
         public void handleError(ErrorMessage errorMessage)
         {
             bool authError = (errorMessage.Error == "unauthorized");
-
-            foreach (var listener in listeners)
-            {
-                if (listener is AuthListener && authError)
-                {
-                    ((AuthListener)listener).onAuthFailure(new NestException(errorMessage.Message));
-                }
-                else if (listener is ErrorListener && !authError)
-                {
-                    ((ErrorListener)listener).onError(errorMessage);
-                }
-            }
+            if (authError)
+                AuthFailure?.Invoke(this, new AuthFailureEventArgs(new NestException(errorMessage.Message)));
+            else
+                Error?.Invoke(this, new ErrorEventArgs(errorMessage));
         }
 
         public void handleAuthRevoked()
         {
-            foreach (var listener in listeners)
-            {
-                if (listener is AuthListener)
-                {
-                    ((AuthListener)listener).onAuthRevoked();
-                }
-            }
+            AuthRevoked?.Invoke(this, new AuthRevokedEventArgs());
         }
     }
 }

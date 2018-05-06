@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 //   Copyright 2018 Elton FAN (eltonfan@live.cn, http://elton.io)
 //
@@ -24,140 +24,177 @@ using System.Text;
 
 namespace Elton.Nest
 {
-
     /// <summary>
-    /// NestListener are listeners that receive events from the NestClient and allow a user to complete
+    /// NestEventArgs are listeners that receive events from the NestClient and allow a user to complete
     /// actions when those events occur.
     /// </summary>
-    public interface NestListener
+    public class NestEventArgs : EventArgs
     {
 
     }
-}
 
-namespace Elton.Nest.Listeners
-{
     /// <summary>
     /// Listens for updates to any objects in a user's Nest account, including all devices,
     /// structures and metadata.
     /// </summary>
-    public interface GlobalListener : NestListener
+    public class GlobalEventArgs : NestEventArgs
     {
-
+        public GlobalUpdate Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any device, structure or metadata object.
         ///
         /// @param update a {@link GlobalUpdate} object containing all values at the time of the
         ///               update.
         /// </summary>
-        void onUpdate(GlobalUpdate update);
+        public GlobalEventArgs(GlobalUpdate update)
+        {
+
+        }
     }
 
     /// <summary>
     /// Listens for updates on all devices in a user's Nest account.
     /// </summary>
-    public interface DeviceListener : NestListener
+    public class DeviceEventArgs : NestEventArgs
     {
+        public DeviceUpdate Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any device object.
         ///
         /// @param update a {@link DeviceUpdate} object containing all devices at the time of the
         ///               update.
         /// </summary>
-        void onUpdate(DeviceUpdate update);
+        public DeviceEventArgs(DeviceUpdate update)
+        {
+            this.Data = update;
+        }
     }
 
     /// <summary>
     /// Listens for updates to any {@link Camera} in a user's Nest account.
     /// </summary>
-    public interface CameraListener : NestListener
+    public class CameraEventArgs : NestEventArgs
     {
+        public List<Camera> Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any {@link Camera} device.
         ///
         /// @param cameras an {@link List} of all {@link Camera} objects in the user's account
         ///                at the time of the update.
         /// </summary>
-        void onUpdate(List<Camera> cameras);
+        public CameraEventArgs(List<Camera> cameras)
+        {
+            this.Data = cameras;
+        }
     }
 
     /// <summary>
     /// Listens for updates to any {@link Thermostat} in a user's Nest account.
     /// </summary>
-    public interface ThermostatListener : NestListener
+    public class ThermostatEventArgs : NestEventArgs
     {
+        public List<Thermostat> Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any {@link Thermostat} device.
         ///
         /// @param thermostats an {@link List} of all {@link Thermostat} objects in the user's
         ///                    account at the time of the update.
         /// </summary>
-        void onUpdate(List<Thermostat> thermostats);
+        public ThermostatEventArgs(List<Thermostat> thermostats)
+        {
+            this.Data = thermostats;
+        }
     }
 
     /// <summary>
     /// Listens for updates to any {@link Structure} in a user's Nest account.
     /// </summary>
-    public interface StructureListener : NestListener
+    public class StructureEventArgs : NestEventArgs
     {
+        public List<Structure> Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any {@link Structure} object.
         ///
         /// @param structures an {@link List} of all {@link Structure} objects in the user's
         ///                   account at the time of the update.
         /// </summary>
-        void onUpdate(List<Structure> structures);
+        public StructureEventArgs(List<Structure> structures)
+        {
+            this.Data = structures;
+        }
     }
 
     /// <summary>
     /// Listens for updates to any {@link SmokeCOAlarm} in a user's Nest account.
     /// </summary>
-    public interface SmokeCOAlarmListener : NestListener
+    public class SmokeCOAlarmEventArgs : NestEventArgs
     {
+        public List<SmokeCOAlarm> Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on any {@link SmokeCOAlarm} device.
         ///
         /// @param smokeCOAlarms an {@link List} of all {@link SmokeCOAlarm} objects in the
         ///                      user's account at the time of the update.
         /// </summary>
-        void onUpdate(List<SmokeCOAlarm> smokeCOAlarms);
+        public SmokeCOAlarmEventArgs(List<SmokeCOAlarm> smokeCOAlarms)
+        {
+            this.Data = smokeCOAlarms;
+        }
     }
 
     /// <summary>
     /// Listens for updates to the {@link Metadata} object in a user's Nest account.
     /// </summary>
-    public interface MetadataListener : NestListener
+    public class MetadataEventArgs : NestEventArgs
     {
+        public Metadata Data { get; private set; }
         /// <summary>
         /// Called when an update occurs on the {@link Metadata} object.
         ///
         /// @param metadata the {@link Metadata} object in user's account at the time of the update.
         /// </summary>
-        void onUpdate(Metadata metadata);
+        public MetadataEventArgs(Metadata metadata)
+        {
+            this.Data = metadata;
+        }
     }
 
     /// <summary>
     /// Listens for updates to the status of authentication of {@link WwnApiUrls} to the Nest service.
     /// </summary>
-    public interface AuthListener : NestListener
+    public class AuthFailureEventArgs : NestEventArgs
     {
+        public NestException Data { get; private set; }
         /// <summary>
         /// Called when the authentication with the token fails. An exception is returned that can
         /// either be thrown or read to determine the cause of the error.
         ///
         /// @param exception a {@link NestException} object containing the error that occurred.
         /// </summary>
-        void onAuthFailure(NestException exception);
+        public AuthFailureEventArgs(NestException exception)
+        {
+            this.Data = exception;
+        }
+    }
 
+    public class AuthRevokedEventArgs : NestEventArgs
+    {
         /// <summary>
         /// Called when a previously authenticated connection becomes unauthenticated. This usually
         /// occurs if the access token is revoked or has expired.
         /// </summary>
-        void onAuthRevoked();
+        public AuthRevokedEventArgs()
+        {
+        }
     }
 
-    public interface ErrorListener : NestListener
+
+    public class ErrorEventArgs : NestEventArgs
     {
-        void onError(ErrorMessage errorMessage);
+        public ErrorMessage Data { get; private set; }
+        public ErrorEventArgs(ErrorMessage errorMessage)
+        {
+            this.Data = errorMessage;
+        }
     }
 }

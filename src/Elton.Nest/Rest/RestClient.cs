@@ -35,13 +35,7 @@ namespace Elton.Nest.Rest
         readonly HttpClient httpClient;
         //static readonly MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         const string JSON = "application/json";
-        static readonly Callback callbackStub = new EmptyCallback();
-
-        class EmptyCallback : Callback
-        {
-            public void onSuccess() { }
-            public void onFailure(NestException exception) { }
-        }
+        static readonly Callback callbackStub = new Callback();
 
         public RestClient(HttpClient httpClient, RestConfig restConfig, Parser parser)
         {
@@ -102,7 +96,7 @@ namespace Elton.Nest.Rest
                     var statusCode = (int)response.StatusCode;
                     if (statusCode < 200 || statusCode >= 500)
                     {
-                        internalCallback.onFailure(new ServerException($"Unexpected server response. Error code: {statusCode}"));
+                        internalCallback.OnFailure?.Invoke(new ServerException($"Unexpected server response. Error code: {statusCode}"));
                     }
                     else
                     {
@@ -111,11 +105,11 @@ namespace Elton.Nest.Rest
                             //UTF-8
                             var responseBody = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
                             parser.parse(responseBody);
-                            internalCallback.onSuccess();
+                            internalCallback.OnSuccess();
                         }
                         catch (ParserException ex)
                         {
-                            internalCallback.onFailure(ex);
+                            internalCallback.OnFailure?.Invoke(ex);
                         }
                     }
                 }
@@ -130,11 +124,11 @@ namespace Elton.Nest.Rest
                     write(path, field, value, callback);
                     return;
                 }
-                internalCallback.onFailure(new NestException("Write request failed.", ex));
+                internalCallback.OnFailure?.Invoke(new NestException("Write request failed.", ex));
             }
             catch (Exception ex)
             {
-                internalCallback.onFailure(new NestException("Write request failed.", ex));
+                internalCallback.OnFailure?.Invoke(new NestException("Write request failed.", ex));
             }
         }
     }

@@ -27,20 +27,24 @@ namespace Elton.Nest
     /// anonymous class implementing Callback and get notified when the result of setting the value is
     /// returned.
     /// </summary>
-    public interface Callback
+    public class Callback
     {
 
         /// <summary>
         /// onSuccess is called when the action succeeded without error.
         /// </summary>
-        void onSuccess();
+        public Action OnSuccess { get; set; }
 
         /// <summary>
         /// onFailure is called when the action failed due to some error.
-        ///
-        /// @param exception the returned exception with a message describing the reason for failure.
         /// </summary>
-        void onFailure(NestException exception);
+        public ExceptionHandler OnFailure { get; set; }
+
+        public Callback(Action OnSuccess = default, ExceptionHandler OnFailure = default)
+        {
+            this.OnSuccess = OnSuccess;
+            this.OnFailure = OnFailure;
+        }
     }
 
 }

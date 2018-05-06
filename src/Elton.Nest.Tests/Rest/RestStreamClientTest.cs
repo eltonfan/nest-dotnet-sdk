@@ -27,15 +27,15 @@ namespace Elton.Nest.Tests
             client.start("");
         }
 
-        private class DummyExceptionHandler : ExceptionHandler
-        {
-            NestException exception = null;
+        //private class DummyExceptionHandler : ExceptionHandler
+        //{
+        //    NestException exception = null;
 
-            public void handle(NestException value)
-            {
-                exception = value;
-            }
-        }
+        //    public void handle(NestException value)
+        //    {
+        //        exception = value;
+        //    }
+        //}
 
         //private DummyCall makeDummySuccessCall(final String message) {
         //    return new DummyCall() {

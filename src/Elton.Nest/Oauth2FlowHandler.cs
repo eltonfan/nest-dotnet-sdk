@@ -109,24 +109,23 @@ namespace Elton.Nest
         public void revokeToken(NestToken token, Callback callback)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete,
-                requestUri: WwnApiUrls.AUTHORIZATION_SERVER_URL + REVOKE_TOKEN_PATH + token.Token);
+                requestUri: NestApiUrls.AUTHORIZATION_SERVER_URL + REVOKE_TOKEN_PATH + token.Token);
             HttpResponseMessage response = null;
             try
             {
                 response = httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false).GetAwaiter().GetResult();
                 //response.EnsureSuccessStatusCode();
 
-
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    callback.onFailure(
+                    callback.OnFailure?.Invoke(
                             new ServerException("Token revocation failed: " + response.StatusCode));
                 }
-                else callback.onSuccess();
+                else callback.OnSuccess();
             }
             catch (Exception ex)
             {
-                callback.onFailure(new NestException("Request to revoke token failed.", ex));
+                callback.OnFailure?.Invoke(new NestException("Request to revoke token failed.", ex));
             }
             finally
             {
@@ -141,7 +140,7 @@ namespace Elton.Nest
         public NestToken CreateToken(string mCode)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,
-                requestUri: WwnApiUrls.GetAccessUrl(oauth2Config.ClientID, oauth2Config.ClientSecret, mCode));
+                requestUri: NestApiUrls.GetAccessUrl(oauth2Config.ClientID, oauth2Config.ClientSecret, mCode));
             request.Content = new StringContent("", Encoding.UTF8, "application/json");
             HttpResponseMessage response = null;
 

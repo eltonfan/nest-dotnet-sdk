@@ -10,202 +10,117 @@ namespace Elton.Nest.Tests.Models
     [TestClass]
     public class NotifierTest : AbstractModelTest
     {
-        private class ErrorListener : Elton.Nest.Listeners.ErrorListener
-        {
-            internal ErrorMessage errorMessage = null;
-
-
-            public void onError(ErrorMessage errorMessage)
-            {
-                this.errorMessage = errorMessage;
-            }
-        }
-
-        private class AuthListener : Elton.Nest.Listeners.AuthListener
-        {
-            internal Boolean authFailure = false;
-            internal Boolean authRevoked = false;
-
-
-            public void onAuthFailure(NestException exception)
-            {
-                authFailure = true;
-            }
-
-
-            public void onAuthRevoked()
-            {
-                authRevoked = true;
-            }
-        }
-
         [TestMethod]
         public void testHandleError_shouldReceiveErrorNotification()
         {
+            var error = "genericError";
 
-            String error = "genericError";
-            var dummyErrorListener = new ErrorListener();
-            var dummyAuthListener = new AuthListener();
+            ErrorMessage errorMessage = null;
+            bool authFailure = false;
+            bool authRevoked = false;
+
+            EventHandler<ErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Data; };
+            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
-            notifier.addListener(dummyAuthListener);
-            notifier.addListener(dummyErrorListener);
+            notifier.AuthFailure += dummyAuthFailureHandler;
+            notifier.AuthRevoked += dummyAuthRevokedHandler;
+            notifier.Error += dummyErrorHandler;
+
             notifier.handleError(new ErrorMessage() { Error = error });
 
-            Assert.IsFalse(dummyAuthListener.authFailure);
-            Assert.IsFalse(dummyAuthListener.authRevoked);
-            Assert.AreEqual(dummyErrorListener.errorMessage.Error, error);
+            Assert.IsFalse(authFailure);
+            Assert.IsFalse(authRevoked);
+            Assert.AreEqual(errorMessage.Error, error);
         }
 
         [TestMethod]
         public void testHandleError_shouldReceiveAuthErrorNotification()
         {
+            var error = "unauthorized";
 
-            String error = "unauthorized";
-            var dummyErrorListener = new ErrorListener();
-            var dummyAuthListener = new AuthListener();
+            ErrorMessage errorMessage = null;
+            bool authFailure = false;
+            bool authRevoked = false;
+
+            EventHandler<ErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Data; };
+            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
-            notifier.addListener(dummyAuthListener);
-            notifier.addListener(dummyErrorListener);
+            notifier.AuthFailure += dummyAuthFailureHandler;
+            notifier.AuthRevoked += dummyAuthRevokedHandler;
+            notifier.Error += dummyErrorHandler;
+
             notifier.handleError(new ErrorMessage() { Error = error });
 
-            Assert.IsTrue(dummyAuthListener.authFailure);
-            Assert.IsFalse(dummyAuthListener.authRevoked);
-            Assert.IsNull(dummyErrorListener.errorMessage);
+            Assert.IsTrue(authFailure);
+            Assert.IsFalse(authRevoked);
+            Assert.IsNull(errorMessage);
 
             notifier.handleAuthRevoked();
-            Assert.IsTrue(dummyAuthListener.authRevoked);
+            Assert.IsTrue(authRevoked);
         }
 
-        class GlobalListener : Elton.Nest.Listeners.GlobalListener
-        {
-            internal GlobalUpdate update;
-
-
-            public void onUpdate(GlobalUpdate update)
-            {
-                this.update = update;
-            }
-        }
-
-        class DeviceListener : Elton.Nest.Listeners.DeviceListener
-        {
-            internal DeviceUpdate update;
-
-
-            public void onUpdate(DeviceUpdate update)
-            {
-                this.update = update;
-            }
-        }
-
-        class CameraListener : Elton.Nest.Listeners.CameraListener
-        {
-            internal List<Camera> cameras;
-
-
-            public void onUpdate(List<Camera> cameras)
-            {
-                this.cameras = cameras;
-            }
-        }
-
-        class ThermostatListener : Elton.Nest.Listeners.ThermostatListener
-        {
-            internal List<Thermostat> thermostats;
-
-
-            public void onUpdate(List<Thermostat> thermostats)
-            {
-                this.thermostats = thermostats;
-            }
-        }
-
-        class SmokeCOAlarmListener : Elton.Nest.Listeners.SmokeCOAlarmListener
-        {
-            internal List<SmokeCOAlarm> smokeCOAlarms;
-
-
-            public void onUpdate(List<SmokeCOAlarm> smokeCOAlarms)
-            {
-                this.smokeCOAlarms = smokeCOAlarms;
-            }
-        }
-
-        class StructureListener : Elton.Nest.Listeners.StructureListener
-        {
-            internal List<Structure> structures;
-
-
-            public void onUpdate(List<Structure> structures)
-            {
-                this.structures = structures;
-            }
-        }
-
-        class MetadataListener : Elton.Nest.Listeners.MetadataListener
-        {
-            internal Metadata metadata;
-
-
-            public void onUpdate(Metadata metadata)
-            {
-                this.metadata = metadata;
-            }
-        }
 
         [TestMethod]
         public void testHandleData_shouldReceiveGlobalNotification()
         {
-
-            var dummyGlobalListener = new GlobalListener();
-            var dummyDeviceListener = new DeviceListener();
-            var dummyCameraListener = new CameraListener();
-            var dummyThermostatListener = new ThermostatListener();
-            var dummySmokeCOAlarmListener = new SmokeCOAlarmListener();
-            var dummyStructureListener = new StructureListener();
-            var dummyMetadataListener = new MetadataListener();
+            GlobalUpdate globalUpdate = null;
+            DeviceUpdate deviceUpdate = null;
+            List<Camera> cameras  = null;
+            List<Thermostat> thermostats = null;
+            List<SmokeCOAlarm> smokeCOAlarms = null;
+            List<Structure> structures = null;
+            Metadata metadata = null;
 
             var notifier = new Notifier();
-            notifier.addListener(dummyGlobalListener);
-            notifier.addListener(dummyDeviceListener);
-            notifier.addListener(dummyCameraListener);
-            notifier.addListener(dummyThermostatListener);
-            notifier.addListener(dummySmokeCOAlarmListener);
-            notifier.addListener(dummyStructureListener);
-            notifier.addListener(dummyMetadataListener);
-
-            List<Thermostat> thermostats = new List<Thermostat>();
-            List<Camera> cameras = new List<Camera>();
-            List<SmokeCOAlarm> smokeAlarms = new List<SmokeCOAlarm>();
-            List<Structure> structures = new List<Structure>();
+            notifier.GlobalUpdated += (sender, args) => { globalUpdate = args.Data; };
+            notifier.DeviceUpdated += (sender, args) => { deviceUpdate = args.Data; };
+            notifier.CameraUpdated += (sender, args) => { cameras = args.Data; };
+            notifier.ThermostatUpdated += (sender, args) => { thermostats = args.Data; };
+            notifier.SmokeCOAlarmUpdated += (sender, args) => { smokeCOAlarms = args.Data; };
+            notifier.StructureUpdated += (sender, args) => { structures = args.Data; };
+            notifier.MetadataUpdated += (sender, args) => { metadata = args.Data; };
 
             notifier.handleData(new GlobalUpdate(
-                    thermostats, smokeAlarms, cameras, structures, new Metadata()));
+                    thermostats: new List<Thermostat>(),
+                    smokeCOAlarms: new List<SmokeCOAlarm>(),
+                    cameras: new List<Camera>(),
+                    structures: new List<Structure>(),
+                    metadata: new Metadata()));
 
-            Assert.IsNotNull(dummyGlobalListener.update);
-            Assert.IsNotNull(dummyDeviceListener.update);
-            Assert.IsNotNull(dummyCameraListener.cameras);
-            Assert.IsNotNull(dummyThermostatListener.thermostats);
-            Assert.IsNotNull(dummySmokeCOAlarmListener.smokeCOAlarms);
-            Assert.IsNotNull(dummyStructureListener.structures);
-            Assert.IsNotNull(dummyMetadataListener.metadata);
+            Assert.IsNotNull(globalUpdate);
+            Assert.IsNotNull(deviceUpdate);
+            Assert.IsNotNull(cameras);
+            Assert.IsNotNull(thermostats);
+            Assert.IsNotNull(smokeCOAlarms);
+            Assert.IsNotNull(structures);
+            Assert.IsNotNull(metadata);
         }
 
         [TestMethod]
         public void testRemoveListener_shouldNotReceiveNotification()
         {
             String error = "unauthorized";
-            var dummyAuthListener = new AuthListener();
+            bool authFailure = false;
+            bool authRevoked = false;
+
+            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
-            notifier.addListener(dummyAuthListener);
-            notifier.removeListener(dummyAuthListener);
+            notifier.AuthFailure += dummyAuthFailureHandler;
+            notifier.AuthRevoked += dummyAuthRevokedHandler;
+
+            notifier.AuthFailure -= dummyAuthFailureHandler;
+            notifier.AuthRevoked -= dummyAuthRevokedHandler;
+
             notifier.handleError(new ErrorMessage() { Error = error });
 
-            Assert.IsFalse(dummyAuthListener.authFailure);
-            Assert.IsFalse(dummyAuthListener.authRevoked);
+            Assert.IsFalse(authFailure);
+            Assert.IsFalse(authRevoked);
         }
     }
 }

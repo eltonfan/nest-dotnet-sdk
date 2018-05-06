@@ -40,15 +40,11 @@ namespace Elton.Nest
         readonly StructureSetter structures;
         public readonly Oauth2FlowHandler oauth2;
 
-        class EmptyExceptionHandler : ExceptionHandler
-        {
-            public void handle(NestException value) { }
-        }
         /// <summary>
         /// Creates a new instance of the {@link NestClient}.
         /// </summary>
 
-        public NestClient() : this(new RestConfig(), new EmptyExceptionHandler()) { }
+        public NestClient() : this(new RestConfig(), null) { }
 
         public NestClient(ExceptionHandler exceptionHandler) : this(new RestConfig(), exceptionHandler) { }
 
@@ -99,27 +95,13 @@ namespace Elton.Nest
 
         public void stop()
         {
-            notifier.removeAllListeners();
             streamingClient.stop();
-        }
-
-        public void addListener(NestListener listener)
-        {
-            notifier.addListener(listener);
-        }
-
-        public void removeListener(NestListener listener)
-        {
-            notifier.removeListener(listener);
-        }
-
-        public void removeAllListeners()
-        {
-            notifier.removeAllListeners();
         }
 
         public CameraSetter Cameras => cameras;
         public ThermostatSetter Thermostats => thermostats;
         public StructureSetter Structures => structures;
+
+        public Notifier Notifier => notifier;
     }
 }

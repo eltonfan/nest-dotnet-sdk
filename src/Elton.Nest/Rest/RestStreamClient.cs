@@ -138,12 +138,12 @@ namespace Elton.Nest.Rest
                                 }
                                 catch (ParserException ex)
                                 {
-                                    owner.exceptionHandler.handle(ex);
+                                    owner.exceptionHandler?.Invoke(ex);
                                 }
                                 catch (Exception ex)
                                 {
                                     //notify client and ignore downstream exceptions
-                                    owner.exceptionHandler.handle(new NestException(ex));
+                                    owner.exceptionHandler?.Invoke(new NestException(ex));
                                 }
                             }
                         }
@@ -151,7 +151,7 @@ namespace Elton.Nest.Rest
                 }
                 catch (Exception ex)
                 {
-                    owner.exceptionHandler.handle(new NestException(ex));
+                    owner.exceptionHandler?.Invoke(new NestException(ex));
                 }
                 finally
                 {

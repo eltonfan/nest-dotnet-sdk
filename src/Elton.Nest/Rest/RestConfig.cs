@@ -34,7 +34,7 @@ namespace Elton.Nest.Rest
         /// Creates instance of RestCofig with default configuration.
         /// </summary>
         public RestConfig()
-            : this(WwnApiUrls.DEFAULT_PROTOCOL, WwnApiUrls.DEFAULT_WWN_URL, WwnApiUrls.DEFAULT_PORT)
+            : this(NestApiUrls.DEFAULT_PROTOCOL, NestApiUrls.DEFAULT_WWN_URL, NestApiUrls.DEFAULT_PORT)
         {
         }
 

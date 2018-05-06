@@ -22,8 +22,10 @@ using System.Text;
 
 namespace Elton.Nest
 {
-    public interface ExceptionHandler
-    {
-        void handle(NestException value);
-    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="exception">the returned exception with a message describing the reason for failure.</param>
+    public delegate void ExceptionHandler(NestException exception);
 }
