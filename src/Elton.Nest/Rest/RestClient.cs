@@ -96,8 +96,17 @@ namespace Elton.Nest.Rest
                     {
                         internalCallback.OnFailure?.Invoke(new ServerException($"Unexpected server response. Error code: {statusCode}"));
                     }
+                    else if (statusCode == 404)
+                    {//UnknownHostException
+                     //Reset redirect url if WWN host goes offline
+                        redirectApiUrl = null;
+                        Write(path, field, value, callback);
+                        return;
+                    }
                     else
                     {
+                        //Save redirect url
+                        redirectApiUrl = response.RequestMessage.RequestUri.ToString();
                         try
                         {
                             //UTF-8
@@ -111,18 +120,6 @@ namespace Elton.Nest.Rest
                         }
                     }
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                if ((ex.InnerException is WebException webException) &&
-                    (webException.Status == WebExceptionStatus.NameResolutionFailure))
-                {//UnknownHostException
-                    //Reset redirect url if WWN host goes offline
-                    redirectApiUrl = null;
-                    Write(path, field, value, callback);
-                    return;
-                }
-                internalCallback.OnFailure?.Invoke(new NestException("Write request failed.", ex));
             }
             catch (Exception ex)
             {

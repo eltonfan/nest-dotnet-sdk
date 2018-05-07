@@ -30,7 +30,7 @@ namespace Elton.Nest
 {
     public class NestClient
     {
-        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(NestClient));
 
         readonly Rest.RestClient restClient;
         readonly StreamingClient streamingClient;
@@ -106,17 +106,16 @@ namespace Elton.Nest
             {
                 if (sdkVersion == null)
                 {
-                    var assembly = Assembly.GetExecutingAssembly();
-                    var attrTitle = Attribute.GetCustomAttribute(assembly, typeof(AssemblyTitleAttribute)) as AssemblyTitleAttribute;
-                    var attrCopyright = Attribute.GetCustomAttribute(assembly, typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
-                    var attrFileVersion = Attribute.GetCustomAttribute(assembly, typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
-
-                    //Print library version
-                    log.InfoFormat("{0} v{1} ({2})", attrTitle.Title, sdkVersion, Environment.MachineName);
-                    log.Info(attrCopyright.Copyright.Replace("\u00A9", "(C)"));
+                    var assembly = typeof(NestClient).GetTypeInfo().Assembly;
+                    var attrTitle = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+                    var attrCopyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>();
+                    var attrFileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
 
                     if (!Version.TryParse(attrFileVersion.Version, out sdkVersion))
                         sdkVersion = assembly.GetName().Version;
+
+                    //Print library version
+                    log.Debug($"{attrTitle.Title} v{sdkVersion} {attrCopyright.Copyright}");
                 }
 
                 return sdkVersion;

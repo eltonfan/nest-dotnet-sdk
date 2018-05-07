@@ -30,7 +30,7 @@ namespace Elton.Nest.Rest
 {
     public class RestStreamClient : StreamingClient
     {
-        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(RestStreamClient));
 
         const long DEFAULT_BYTE_COUNT = 2048L;
 

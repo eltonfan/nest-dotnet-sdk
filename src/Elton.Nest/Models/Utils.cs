@@ -56,7 +56,7 @@ namespace Elton.Nest.Models
     /// </summary>
     public static class Utils
     {
-        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(Utils));
 
         static readonly JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
         {

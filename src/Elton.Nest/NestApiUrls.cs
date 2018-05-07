@@ -40,7 +40,7 @@ namespace Elton.Nest
         {
             return BASE_AUTHORIZATION_URL
                 + $"login/oauth2?client_id={clientId}&state={state}"
-                + (redirectUri == null ? "" : "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUri, Encoding.UTF8))
+                + (redirectUri == null ? "" : "&redirect_uri=" + System.Net.WebUtility.UrlEncode(redirectUri))
                 + "&grant_type=authorization_code";
         }
 

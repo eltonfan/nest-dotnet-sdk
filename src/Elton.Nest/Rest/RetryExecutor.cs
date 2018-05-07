@@ -26,8 +26,8 @@ namespace Elton.Nest.Rest
 {
     internal class RetryExecutor
     {
-        readonly System.Timers.Timer timer = new System.Timers.Timer();
         readonly BackOff backOff;
+        CancellationTokenSource tokenSource = null;
 
         internal RetryExecutor(BackOff backOff)
         {
@@ -41,20 +41,28 @@ namespace Elton.Nest.Rest
 
         internal void schedule<T>(Action<T> consumer, T value)
         {
-            long delay = backOff.NextInterval();
-
-            timer.Elapsed += (sender, args) =>
+            if (tokenSource != null)
             {
-                consumer(value);
-            };
-            timer.AutoReset = true;
-            timer.Interval = delay;
-            timer.Start();
+                tokenSource.Cancel();
+                tokenSource.Dispose();
+                tokenSource = null;
+            }
+            tokenSource = new CancellationTokenSource();
+
+            long delay = backOff.NextInterval();
+            Task.Delay((int)delay, tokenSource.Token)
+                .ContinueWith(t => consumer(value))
+                .Start();
         }
 
         internal void cancel()
         {
-            timer.Stop();
+            if (tokenSource != null)
+            {
+                tokenSource.Cancel();
+                tokenSource.Dispose();
+                tokenSource = null;
+            }
         }
     }
 }
