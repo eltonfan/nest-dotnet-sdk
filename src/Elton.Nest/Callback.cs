@@ -24,8 +24,7 @@ namespace Elton.Nest
 {
     /// <summary>
     /// Callback is used when setting values using the NestClient. You can pass in a new instance of an
-    /// anonymous class implementing Callback and get notified when the result of setting the value is
-    /// returned.
+    /// anonymous class implementing Callback and get notified when the result of setting the value is returned.
     /// </summary>
     public class Callback
     {

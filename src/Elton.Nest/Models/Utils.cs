@@ -66,10 +66,9 @@ namespace Elton.Nest.Models
         /// <summary>
         /// Returns the object in a JSON string representation if possible. If this fails, it will return
         /// the superclass' string representation of the object.
-        ///
-        /// @param obj the object to convert.
-        /// @return a string representation of the object.
         /// </summary>
+        /// <param name="obj">the object to convert.</param>
+        /// <value">a string representation of the object.</value>
         public static string ToString(object obj)
         {
             try
@@ -85,10 +84,9 @@ namespace Elton.Nest.Models
 
         /// <summary>
         /// Returns whether any of the provided Strings are empty (null or zero-length).
-        ///
-        /// @param args strings to check for emptiness.
-        /// @return true if any of the provided strings is null or is zero-length, false otherwise.
         /// </summary>
+        /// <param name="args">strings to check for emptiness.</param>
+        /// <value">true if any of the provided strings is null or is zero-length, false otherwise.</value>
         public static bool IsAnyEmpty(params string[] args)
         {
             if (args == null)
@@ -154,10 +152,9 @@ namespace Elton.Nest.Models
 
             /// <summary>
             /// Appends a string to the path.
-            ///
-            /// @param entry string to append to the path.
-            /// @return the PathBuilder. Allows for chaining multiple appends.
             /// </summary>
+            /// <param name="entry">string to append to the path.</param>
+            /// <value">the PathBuilder. Allows for chaining multiple appends.</value>
             public PathBuilder Append(string entry)
             {
                 builder.Append("/").Append(entry);

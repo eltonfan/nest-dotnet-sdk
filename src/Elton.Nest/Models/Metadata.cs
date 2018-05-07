@@ -45,9 +45,8 @@ namespace Elton.Nest.Models
 
         /// <summary>
         /// Returns the access token associated with your Nest API connection.
-        ///
-        /// @return the access token associated with your Nest API connection.
         /// </summary>
+        /// <value">the access token associated with your Nest API connection.</value>
         [DataMember(Name = "access_token")]
         public string AccessToken { get; set; }
 
@@ -57,9 +56,8 @@ namespace Elton.Nest.Models
         /// user has the right permissions for certain features.
         /// <p/>
         /// See here for more information: https://goo.gl/J4RPAc
-        ///
-        /// @return the last user-authorized version of a product.
         /// </summary>
+        /// <value">the last user-authorized version of a product.</value>
         [DataMember(Name = "client_version")]
         public long ClientVersion { get; set; }
 

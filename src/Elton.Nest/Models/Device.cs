@@ -28,8 +28,8 @@ using System.Threading.Tasks;
 namespace Elton.Nest.Models
 {
     /// <summary>
-    /// Device represents any Nest device. All devices (e.g. {@link Thermostat}, {@link Camera}, {@link
-    /// SmokeCOAlarm}) should extend Device and thus will contain all properties that Device contains.
+    /// Device represents any Nest device. All devices (e.g. <see cref="Thermostat"/>, <see cref="Camera"/>,
+    /// <see cref="SmokeCOAlarm"/>) should extend Device and thus will contain all properties that Device contains.
     /// </summary>
     [DataContract]
     public class Device : IEquatable<Device>, IValidatableObject
@@ -55,73 +55,64 @@ namespace Elton.Nest.Models
 
         /// <summary>
         /// Returns the unique identifier of this device.
-        ///
-        /// @return the unique identifier of this device.
         /// </summary>
+        /// <value">the unique identifier of this device.</value>
         [DataMember(Name = "device_id")]
         public string DeviceId { get; set; }
 
         /// <summary>
         /// Returns the locale for this device, if set.
-        ///
-        /// @return the locale for this device, if set.
         /// </summary>
+        /// <value">the locale for this device, if set.</value>
         [DataMember(Name = "locale")]
         public string Locale { get; set; }
 
         /// <summary>
         /// Returns the current software version that this device has installed.
-        ///
-        /// @return the current software version that this device has installed.
         /// </summary>
+        /// <value">the current software version that this device has installed.</value>
         [DataMember(Name = "software_version")]
         public string SoftwareVersion { get; set; }
 
         /// <summary>
         /// Returns the id of the structure that this device is contained in.
-        ///
-        /// @return the id of the structure that this device is contained in.
         /// </summary>
+        /// <value">the id of the structure that this device is contained in.</value>
         [DataMember(Name = "structure_id")]
         public string StructureId { get; set; }
 
         /// <summary>
         /// Returns an abbreviated version of the user's name for this device.
-        ///
-        /// @return an abbreviated version of the user's name for this device.
         /// </summary>
+        /// <value">an abbreviated version of the user's name for this device.</value>
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Returns a verbose version of the user's name for this device.
-        ///
-        /// @return a verbose version of the user's name for this device.
         /// </summary>
+        /// <value">a verbose version of the user's name for this device.</value>
         [DataMember(Name = "name_long")]
         public string NameLong { get; set; }
 
         /// <summary>
         /// Returns the timestamp (in ISO-8601 format) when the device last connected to the Nest.
-        ///
-        /// @return the timestamp (in ISO-8601 format) when the device last connected to the Nest.
         /// </summary>
+        /// <value">the timestamp (in ISO-8601 format) when the device last connected to the Nest.</value>
         [DataMember(Name = "last_connection")]
         public string LastConnection { get; set; }
 
         /// <summary>
         /// Returns whether the device is online.
-        ///
-        /// @return whether the device is online.
         /// </summary>
+        /// <value">whether the device is online.</value>
         [DataMember(Name = "is_online")]
         public bool IsOnline { get; set; }
 
         /// <summary>
         /// Returns a unique, Nest-generated identifier that represents the display name of the device.
-        ///
-        /// @return a unique, Nest-generated identifier that represents the display name of the device.
         /// </summary>
+        /// <value">a unique, Nest-generated identifier that represents the display name of the device.</value>
         [DataMember(Name = "where_id")]
         public string WhereId { get; set; }
 

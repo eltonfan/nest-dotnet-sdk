@@ -23,7 +23,7 @@ using System.Text;
 namespace Elton.Nest
 {
     /// <summary>
-    /// An Exception for returning encountered errors in using {@link NestClient}.
+    /// An Exception for returning encountered errors in using <see cref="NestClient"/>.
     /// </summary>
     public class NestException : Exception
     {
@@ -33,27 +33,23 @@ namespace Elton.Nest
         public NestException() : base("") { }
 
         /// <summary>
-        /// Constructs a new {@code NestException} with the current stack trace and the specified detail
-        /// message.
-        ///
-        /// @param message the detail message for this exception.
+        /// Constructs a new {@code NestException} with the current stack trace and the specified detail message.
         /// </summary>
+        /// <param name="message">the detail message for this exception.</param>
         public NestException(string message) : base(message) { }
 
         /// <summary>
         /// Constructs a new {@code NestException} with the current stack trace, the specified detail
         /// message and the specified cause.
-        ///
-        /// @param message the detail message for this exception.
-        /// @param innerException     the cause of this exception.
         /// </summary>
+        /// <param name="message">the detail message for this exception.</param>
+        /// <param name="innerException">the cause of this exception.</param>
         public NestException(string message, Exception innerException) : base(message, innerException) { }
 
         /// <summary>
         /// Constructs a new {@code NestException} with the current stack trace and the specified cause.
-        ///
-        /// @param innerException the cause of this exception.
         /// </summary>
+        /// <param name="innerException">the cause of this exception.</param>
         public NestException(Exception innerException) : base(null, innerException) { }
     }
 }

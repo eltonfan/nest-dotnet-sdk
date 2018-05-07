@@ -39,26 +39,23 @@ namespace Elton.Nest.Models
 
         /// <summary>
         /// Returns the access token. Use the access token to authenticate with the WWN API.
-        ///
-        /// @return the access token.
         /// </summary>
+        /// <value">the access token.</value>
         [DataMember(Name = "access_token")]
         public string Token { get; set; }
 
         /// <summary>
         /// Returns the number of seconds until the token expires.
-        ///
-        /// @return the number of seconds until the token expires.
         /// </summary>
+        /// <value">the number of seconds until the token expires.</value>
         [DataMember(Name = "expires_in")]
         public long ExpiresInSecs { get; set; }
 
         /// <summary>
         /// Create a new NestToken.
-        ///
-        /// @param token     the access token.
-        /// @param expiresIn the number of seconds until the token expires.
         /// </summary>
+        /// <param name="token">the access token.</param>
+        /// <param name="expiresIn">the number of seconds until the token expires.</param>
         public NestToken(string token = default, long expiresIn = default)
         {
             this.Token = token;

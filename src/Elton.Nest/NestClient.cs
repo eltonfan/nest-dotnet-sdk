@@ -42,12 +42,12 @@ namespace Elton.Nest
         public readonly Oauth2FlowHandler oauth2;
 
         /// <summary>
-        /// Creates a new instance of the {@link NestClient}.
+        /// Creates a new instance of the <see cref="NestClient"/>.
         /// </summary>
         public NestClient() : this(new RestConfig()) { }
 
         /// <summary>
-        /// Creates a new instance of the {@link NestClient}.
+        /// Creates a new instance of the <see cref="NestClient"/>.
         /// </summary>
         public NestClient(RestConfig restConfig)
         {
@@ -70,10 +70,9 @@ namespace Elton.Nest
         }
 
         /// <summary>
-        /// Requests authentication with a {@link NestToken}.
-        ///
-        /// @param token    the NestToken to authenticate with
+        /// Requests authentication with a <see cref="NestToken"/>.
         /// </summary>
+        /// <param name="token">the NestToken to authenticate with</param>
         public void startWithToken(NestToken token)
         {
             startWithToken(token.Token);
@@ -81,9 +80,8 @@ namespace Elton.Nest
 
         /// <summary>
         /// Requests authentication with a raw token.
-        ///
-        /// @param token        the token string to authenticate with
         /// </summary>
+        /// <param name="token">the token string to authenticate with</param>
         public void startWithToken(string token)
         {
             restClient.SetToken(token);

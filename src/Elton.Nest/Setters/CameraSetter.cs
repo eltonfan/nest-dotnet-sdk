@@ -43,23 +43,21 @@ namespace Elton.Nest.Setters
         }
 
         /// <summary>
-        /// Sets the {@link Camera} streaming status on or off.
-        ///
-        /// @param cameraId    The unique identifier of the camera.
-        /// @param isStreaming true to turn streaming on, false to turn streaming off.
-        /// @param callback    A {@link Callback} to receive whether the change was successful.
+        /// Sets the <see cref="Camera"/> streaming status on or off.
         /// </summary>
+        /// <param name="cameraId">The unique identifier of the camera.</param>
+        /// <param name="isStreaming">true to turn streaming on, false to turn streaming off.</param>
+        /// <param name="callback">A <see cref="Callback"/> to receive whether the change was successful.</param>
         public void setIsStreaming(string cameraId, bool isStreaming, Callback callback)
         {
             restClient.WriteBoolean(getPath(cameraId), Camera.KEY_IS_STREAMING, isStreaming, callback);
         }
 
         /// <summary>
-        /// Sets the {@link Camera} streaming status on or off.
-        ///
-        /// @param cameraId    The unique identifier of the camera.
-        /// @param isStreaming true to turn streaming on, false to turn streaming off.
+        /// Sets the <see cref="Camera"/> streaming status on or off.
         /// </summary>
+        /// <param name="cameraId">The unique identifier of the camera.</param>
+        /// <param name="isStreaming">true to turn streaming on, false to turn streaming off.</param>
         public void setIsStreaming(string cameraId, bool isStreaming)
         {
             setIsStreaming(cameraId, isStreaming, null);

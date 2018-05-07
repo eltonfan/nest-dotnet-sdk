@@ -45,11 +45,10 @@ namespace Elton.Nest
 
         /// <summary>
         /// Sets the Nest configuration values used for authentication.
-        ///
-        /// @param clientId     The Nest client ID.
-        /// @param clientSecret The Nest client secret.
-        /// @param redirectUrl  The Nest redirect URL.
         /// </summary>
+        /// <param name="clientId">The Nest client ID.</param>
+        /// <param name="clientSecret">The Nest client secret.</param>
+        /// <param name="redirectUrl">The Nest redirect URL.</param>
         public void setConfig(string clientId, string clientSecret, string redirectUrl)
         {
             oauth2Config = new NestConfig.Builder().SetClientId(clientId)
@@ -59,11 +58,10 @@ namespace Elton.Nest
         }
 
         /// <summary>
-        /// Returns a {@link NestConfig} object containing the currently set credentials. If there are no
+        /// Returns a <see cref="NestConfig"/> object containing the currently set credentials. If there are no
         /// credentials set, returns null.
-        ///
-        /// @return a {@link NestConfig} object containing current config values, or null if unset.
         /// </summary>
+        /// <value">a <see cref="NestConfig"/> object containing current config values, or null if unset.</value>
         public NestConfig Config => oauth2Config;
 
         /// <summary>
@@ -75,12 +73,10 @@ namespace Elton.Nest
         }
 
         /// <summary>
-        /// Start an {@link Activity} which will guide a user through the authentication process.
-        ///
-        /// @param activity    the {@link Activity} return the result. Typically the current {@link
-        ///                    Activity}.
-        /// @param requestCode the request code for which a result will be returned.
+        /// Start an <see cref="Activity"/> which will guide a user through the authentication process.
         /// </summary>
+        /// <param name="activity">the <see cref="Activity"/> return the result. Typically the current <see cref="Activity"/>.</param>
+        /// <param name="requestCode">the request code for which a result will be returned.</param>
         //public void launchAuthFlow(Activity activity, int requestCode)
         //{
         //    final Intent authFlowIntent = new Intent(activity, NestAuthActivity.class);
@@ -89,23 +85,21 @@ namespace Elton.Nest
         //}
 
         /// <summary>
-        /// Returns a {@link NestToken} embedded in the {@link Intent} that is returned in the result
-        /// from {@link #launchAuthFlow(Activity, int)}.
-        ///
-        /// @param intent the intent to retrieve the NestToken from.
-        /// @return the {@link NestToken}, if it was contained in the {@link Intent}, otherwise null.
+        /// Returns a <see cref="NestToken"/> embedded in the <see cref="Intent"/> that is returned in the result
+        /// from <see cref="#launchAuthFlow(Activity, int)"/>.
         /// </summary>
+        /// <param name="intent">the intent to retrieve the NestToken from.</param>
+        /// <value">the <see cref="NestToken"/>, if it was contained in the <see cref="Intent"/>, otherwise null.</value>
         //public NestToken getAccessTokenFromIntent(Intent intent)
         //{
         //    return intent.getParcelableExtra(KEY_ACCESS_TOKEN);
         //}
 
         /// <summary>
-        /// Revokes a {@link NestToken} from the Nest API.
-        ///
-        /// @param token    The token to revoke.
-        /// @param callback A callback for the result of the revocation.
+        /// Revokes a <see cref="NestToken"/> from the Nest API.
         /// </summary>
+        /// <param name="token">The token to revoke.</param>
+        /// <param name="callback">A callback for the result of the revocation.</param>
         public void revokeToken(NestToken token, Callback callback)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete,

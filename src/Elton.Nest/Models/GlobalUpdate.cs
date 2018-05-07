@@ -24,8 +24,8 @@ namespace Elton.Nest.Models
 {
     /// <summary>
     /// GlobalUpdate contains the state of all devices, structures and metadata in the Nest account when
-    /// a change is detected in anything. A GlobalUpdate object is returned by {@link
-    /// com.nestlabs.sdk.NestListener.GlobalListener#onUpdate(GlobalUpdate)} when an update occurs.
+    /// a change is detected in anything. A GlobalUpdate object is returned by <see cref="GlobalListener#onUpdate(GlobalUpdate)"/>
+    /// when an update occurs.
     /// </summary>
     public class GlobalUpdate
     {
@@ -47,38 +47,33 @@ namespace Elton.Nest.Models
         public DeviceUpdate Devices => devices;
 
         /// <summary>
-        /// Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link Thermostat} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="Thermostat"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="Thermostat"/> objects in the Nest account at the time of the update.</value>
         public List<Thermostat> Thermostats => devices.Thermostats;
 
         /// <summary>
-        /// Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="SmokeCOAlarm"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="SmokeCOAlarm"/> objects in the Nest account at the time of the update.</value>
         public List<SmokeCOAlarm> SmokeCOAlarms => devices.SmokeCOAlarms;
 
         /// <summary>
-        /// Returns all the {@link Camera} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link Camera} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="Camera"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="Camera"/> objects in the Nest account at the time of the update.</value>
         public List<Camera> Cameras => devices.Cameras;
 
         /// <summary>
-        /// Returns all the {@link Structure} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link Structure} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="Structure"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="Structure"/> objects in the Nest account at the time of the update.</value>
         public List<Structure> Structures => mStructures;
 
         /// <summary>
-        /// Returns the {@link Metadata} object in the Nest account at the time of the update.
-        ///
-        /// @return the {@link Metadata} object in the Nest account at the time of the update.
+        /// Returns the <see cref="Metadata"/> object in the Nest account at the time of the update.
         /// </summary>
+        /// <value">the <see cref="Metadata"/> object in the Nest account at the time of the update.</value>
         public Metadata Metadata => mMetadata;
     }
 }

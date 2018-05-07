@@ -23,7 +23,7 @@ using System.Text;
 namespace Elton.Nest.Rest
 {
     /// <summary>
-    /// Exponential {@link BackOff} implementation that starts with initial delay and follows Fibonacci sequence
+    /// Exponential <see cref="BackOff"/> implementation that starts with initial delay and follows Fibonacci sequence
     /// up to maximum delay.
     /// </summary>
     public sealed class FibonacciBackOff : BackOff

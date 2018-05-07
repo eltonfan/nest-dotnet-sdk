@@ -60,7 +60,7 @@ namespace Elton.Nest
         public string ClientId => clientId;
 
         /// <summary>
-        /// Returns the state value. This is randomly generated for each {@link NestConfig}.
+        /// Returns the state value. This is randomly generated for each <see cref="NestConfig"/>.
         /// </summary>
         /// <value>the state value.</value>
         public string StateValue => stateValue;
@@ -112,7 +112,7 @@ namespace Elton.Nest
 
 
         /// <summary>
-        /// Builder for creating {@link NestConfig} objects.
+        /// Builder for creating <see cref="NestConfig"/> objects.
         /// </summary>
         public class Builder
         {
@@ -161,7 +161,7 @@ namespace Elton.Nest
 
             /// <summary>
             /// Sets the state value. This method be called directly, as the state value is automatically
-            /// and randomly generated when {@link Builder#build()} is called.
+            /// and randomly generated when <see cref="Builder#build()"/> is called.
             /// </summary>
             /// <param name="state">the state value.</param>
             /// <returns>the <see cref="Builder"/> instance.</returns>
@@ -191,7 +191,7 @@ namespace Elton.Nest
             }
 
             /// <summary>
-            /// Builds and returns the new {@link NestConfig} object.
+            /// Builds and returns the new <see cref="NestConfig"/> object.
             /// </summary>
             /// <returns>the new <see cref="NestConfig"/> object.</returns>
             public NestConfig Build()

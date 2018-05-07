@@ -45,11 +45,10 @@ namespace Elton.Nest.Setters
         /// Sets the state of the structure. In order for a structure to be in the Auto-Away state, all
         /// devices must also be in Auto-Away state. When any device leaves the Auto-Away state, then the
         /// structure also leaves the Auto-Away state.
-        ///
-        /// @param structureId The unique identifier for the {@link Structure}.
-        /// @param awayState   The state of the structure. Values can be "home", "away", or "auto-away".
-        /// @param callback    A {@link Callback} to receive whether the change was successful.
         /// </summary>
+        /// <param name="structureId">The unique identifier for the <see cref="Structure"/>.</param>
+        /// <param name="awayState">The state of the structure. Values can be "home", "away", or "auto-away".</param>
+        /// <param name="callback">A <see cref="Callback"/> to receive whether the change was successful.</param>
         public void setAway(string structureId, string awayState, Callback callback)
         {
             restClient.WriteString(getPath(structureId), Structure.KEY_AWAY, awayState, callback);
@@ -59,10 +58,9 @@ namespace Elton.Nest.Setters
         /// Sets the state of the structure. In order for a structure to be in the Auto-Away state, all
         /// devices must also be in Auto-Away state. When any device leaves the Auto-Away state, then the
         /// structure also leaves the Auto-Away state.
-        ///
-        /// @param structureId The unique identifier for the {@link Structure}.
-        /// @param awayState   The state of the structure. Values can be "home", "away", or "auto-away".
         /// </summary>
+        /// <param name="structureId">The unique identifier for the <see cref="Structure"/>.</param>
+        /// <param name="awayState">The state of the structure. Values can be "home", "away", or "auto-away".</param>
         public void setAway(string structureId, string awayState)
         {
             setAway(structureId, awayState, null);
@@ -71,11 +69,10 @@ namespace Elton.Nest.Setters
         /// <summary>
         /// Sets the ETA on a structure. It is used to let Nest know that a user is expected to return
         /// home at a specific time.
-        ///
-        /// @param structureId The unique identifier for the {@link Structure}.
-        /// @param eta         The {@link Structure.ETA} object containing the ETA values.
-        /// @param callback    A {@link Callback} to receive whether the change was successful.
         /// </summary>
+        /// <param name="structureId">The unique identifier for the <see cref="Structure"/>.</param>
+        /// <param name="eta">The <see cref="Structure.ETA"/> object containing the ETA values.</param>
+        /// <param name="callback">A <see cref="Callback"/> to receive whether the change was successful.</param>
         public void setEta(string structureId, Structure.ETA eta, Callback callback)
         {
             restClient.WriteString(getPath(structureId), Structure.KEY_ETA, eta.ToString(), callback);
@@ -84,10 +81,9 @@ namespace Elton.Nest.Setters
         /// <summary>
         /// Sets the ETA on a structure. It is used to let Nest know that a user is expected to return
         /// home at a specific time.
-        ///
-        /// @param structureId The unique identifier for the {@link Structure}.
-        /// @param eta         The {@link Structure.ETA} object containing the ETA values.
         /// </summary>
+        /// <param name="structureId">The unique identifier for the <see cref="Structure"/>.</param>
+        /// <param name="eta">The <see cref="Structure.ETA"/> object containing the ETA values.</param>
         public void setEta(string structureId, Structure.ETA eta)
         {
             setEta(structureId, eta, null);

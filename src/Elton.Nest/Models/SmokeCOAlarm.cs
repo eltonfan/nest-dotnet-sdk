@@ -52,9 +52,8 @@ namespace Elton.Nest.Models
         /// Returns the battery life/health, an estimate of remaining battery power level.
         /// <p/>
         /// Values: "ok", "replace"
-        ///
-        /// @return the battery life/health, an estimate of remaining battery power level.
         /// </summary>
+        /// <value">the battery life/health, an estimate of remaining battery power level.</value>
         [DataMember(Name = "battery_health")]
         public string BatteryHealth { get; set; }
 
@@ -62,9 +61,8 @@ namespace Elton.Nest.Models
         /// Returns the CO alarm status.
         /// <p/>
         /// Values: "ok", "warning", "emergency"
-        ///
-        /// @return the CO alarm status.
         /// </summary>
+        /// <value">the CO alarm status.</value>
         [DataMember(Name = "co_alarm_state")]
         public string CoAlarmState { get; set; }
 
@@ -72,25 +70,22 @@ namespace Elton.Nest.Models
         /// Returns the smoke alarm status.
         /// <p/>
         /// Values: "ok", "warning", "emergency"
-        ///
-        /// @return the smoke alarm status.
         /// </summary>
+        /// <value">the smoke alarm status.</value>
         [DataMember(Name = "smoke_alarm_state")]
         public string SmokeAlarmState { get; set; }
 
         /// <summary>
         /// Returns the state of the manual smoke and CO alarm test.
-        ///
-        /// @return the state of the manual smoke and CO alarm test.
         /// </summary>
+        /// <value">the state of the manual smoke and CO alarm test.</value>
         [DataMember(Name = "is_manual_test_active")]
         public bool IsManualTestActive { get; set; }
 
         /// <summary>
         /// Returns the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
-        ///
-        /// @return the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.
         /// </summary>
+        /// <value">the timestamp of the last successful manual smoke+CO alarm test, in ISO 8601 format.</value>
         [DataMember(Name = "last_manual_test_time")]
         public string LastManualTestTime { get; set; }
 
@@ -99,9 +94,8 @@ namespace Elton.Nest.Models
         /// battery+smoke+co states, and reflects the actual color indicators displayed in the Nest app.
         /// <p/>
         /// Values: "gray", "green", "yellow", "red"
-        ///
-        /// @return the device status by color in the Nest app UI.
         /// </summary>
+        /// <value">the device status by color in the Nest app UI.</value>
         [DataMember(Name = "ui_color_state")]
         public string UiColorState { get; set; }
 

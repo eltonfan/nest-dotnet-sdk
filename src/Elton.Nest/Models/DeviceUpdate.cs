@@ -24,8 +24,8 @@ namespace Elton.Nest.Models
 {
     /// <summary>
     /// DeviceUpdate contains the state of all devices in the Nest account when a change is detected in
-    /// any device. A DeviceUpdate object is returned by {@link com.nestlabs.sdk.NestListener
-    /// .DeviceListener#onUpdate(DeviceUpdate)} when an update occurs.
+    /// any device. A DeviceUpdate object is returned by <see cref="DeviceListener#onUpdate(DeviceUpdate)"/>
+    /// when an update occurs.
     /// </summary>
     public class DeviceUpdate
     {
@@ -41,22 +41,19 @@ namespace Elton.Nest.Models
         }
 
         /// <summary>
-        /// Returns all the {@link Thermostat} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link Thermostat} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="Thermostat"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="Thermostat"/> objects in the Nest account at the time of the update.</value>
         public List<Thermostat> Thermostats => mThermostats;
         /// <summary>
-        /// Returns all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link SmokeCOAlarm} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="SmokeCOAlarm"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="SmokeCOAlarm"/> objects in the Nest account at the time of the update.</value>
         public List<SmokeCOAlarm> SmokeCOAlarms => mSmokeCOAlarms;
         /// <summary>
-        /// Returns all the {@link Camera} objects in the Nest account at the time of the update.
-        ///
-        /// @return all the {@link Camera} objects in the Nest account at the time of the update.
+        /// Returns all the <see cref="Camera"/> objects in the Nest account at the time of the update.
         /// </summary>
+        /// <value">all the <see cref="Camera"/> objects in the Nest account at the time of the update.</value>
         public List<Camera> Cameras => mCameras;
     }
 }
