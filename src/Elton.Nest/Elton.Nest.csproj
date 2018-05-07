@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>Elton FAN</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/eltonfan/nest-dotnet-sdk</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/eltonfan/nest-dotnet-sdk/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/eltonfan/nest-dotnet-sdk</RepositoryUrl>
+    <PackageTags>nest-sdk nest-dotnet-sdk nest-thermostat nest-protect nest-cam nest-api nest-streaming-api dotnet-standard xamarin portable smart-home connected-home</PackageTags>
+    <PackageId>Elton.Nest</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
