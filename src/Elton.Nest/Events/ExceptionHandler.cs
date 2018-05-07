@@ -22,7 +22,6 @@ using System.Text;
 
 namespace Elton.Nest
 {
-
     /// <summary>
     /// 
     /// </summary>

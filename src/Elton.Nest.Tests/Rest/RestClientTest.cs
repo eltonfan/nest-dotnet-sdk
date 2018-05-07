@@ -16,7 +16,7 @@ namespace Elton.Nest.Tests
         public void testSetTokenNull_expectMissingTokenException()
         {
             var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
-            client.setToken(null);
+            client.SetToken(null);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace Elton.Nest.Tests
         public void testSetTokenEmpty_expectMissingTokenException()
         {
             var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
-            client.setToken("");
+            client.SetToken("");
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Elton.Nest.Tests
         public void testWrite_expectMissingTokenException()
         {
             var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
-            client.writeDouble("path", "field", 0f, null);
+            client.WriteDouble("path", "field", 0f, null);
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace Elton.Nest.Tests
         {
             //OkHttpClient mockedClient = PowerMockito.mock(typeof(OkHttpClient));
 
-            //final String redirectUrl = "http://127.0.0.1";
+            //final string redirectUrl = "http://127.0.0.1";
             //var dummyRedirectCall = new DummyCall() {
 
             //    public void enqueue(Callback responseCallback) {
@@ -169,7 +169,7 @@ namespace Elton.Nest.Tests
         {
             //OkHttpClient mockedClient = PowerMockito.mock(typeof(OkHttpClient));
 
-            //final String redirectUrl = "invalid_url";
+            //final string redirectUrl = "invalid_url";
             //var dummyRedirectCall = new DummyCall() {
 
             //    public void enqueue(Callback responseCallback) {
@@ -234,7 +234,7 @@ namespace Elton.Nest.Tests
 
             //var client = new RestClient(mockedClient, new RestConfig(), new Parser(){
 
-            //    public void parse(String msg){
+            //    public void parse(string msg){
             //        throw new ParserException("");
             //    }
             //});

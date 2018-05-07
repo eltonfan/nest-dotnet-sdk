@@ -22,7 +22,7 @@ namespace NestMonitoringConsole
 
             StartHttpListener();
 
-            var url = NestApiUrls.GetClientCodeUrl(nestConfig.ClientID, nestConfig.StateValue, redirectUri);
+            var url = NestApiUrls.GetClientCodeUrl(nestConfig.ClientId, nestConfig.StateValue, redirectUri);
             OpenBrowser(url);
 
             resetEvent.WaitOne();

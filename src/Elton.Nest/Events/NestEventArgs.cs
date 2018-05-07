@@ -37,7 +37,7 @@ namespace Elton.Nest
     /// Listens for updates to any objects in a user's Nest account, including all devices,
     /// structures and metadata.
     /// </summary>
-    public class GlobalEventArgs : NestEventArgs
+    public class NestGlobalEventArgs : NestEventArgs
     {
         public GlobalUpdate Data { get; private set; }
         /// <summary>
@@ -46,7 +46,7 @@ namespace Elton.Nest
         /// @param update a {@link GlobalUpdate} object containing all values at the time of the
         ///               update.
         /// </summary>
-        public GlobalEventArgs(GlobalUpdate update)
+        public NestGlobalEventArgs(GlobalUpdate update)
         {
             this.Data = update;
         }
@@ -55,7 +55,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates on all devices in a user's Nest account.
     /// </summary>
-    public class DeviceEventArgs : NestEventArgs
+    public class NestDeviceEventArgs : NestEventArgs
     {
         public DeviceUpdate Data { get; private set; }
         /// <summary>
@@ -64,7 +64,7 @@ namespace Elton.Nest
         /// @param update a {@link DeviceUpdate} object containing all devices at the time of the
         ///               update.
         /// </summary>
-        public DeviceEventArgs(DeviceUpdate update)
+        public NestDeviceEventArgs(DeviceUpdate update)
         {
             this.Data = update;
         }
@@ -73,7 +73,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to any {@link Camera} in a user's Nest account.
     /// </summary>
-    public class CameraEventArgs : NestEventArgs
+    public class NestCameraEventArgs : NestEventArgs
     {
         public List<Camera> Data { get; private set; }
         /// <summary>
@@ -82,7 +82,7 @@ namespace Elton.Nest
         /// @param cameras an {@link List} of all {@link Camera} objects in the user's account
         ///                at the time of the update.
         /// </summary>
-        public CameraEventArgs(List<Camera> cameras)
+        public NestCameraEventArgs(List<Camera> cameras)
         {
             this.Data = cameras;
         }
@@ -91,7 +91,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to any {@link Thermostat} in a user's Nest account.
     /// </summary>
-    public class ThermostatEventArgs : NestEventArgs
+    public class NestThermostatEventArgs : NestEventArgs
     {
         public List<Thermostat> Data { get; private set; }
         /// <summary>
@@ -100,7 +100,7 @@ namespace Elton.Nest
         /// @param thermostats an {@link List} of all {@link Thermostat} objects in the user's
         ///                    account at the time of the update.
         /// </summary>
-        public ThermostatEventArgs(List<Thermostat> thermostats)
+        public NestThermostatEventArgs(List<Thermostat> thermostats)
         {
             this.Data = thermostats;
         }
@@ -109,7 +109,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to any {@link Structure} in a user's Nest account.
     /// </summary>
-    public class StructureEventArgs : NestEventArgs
+    public class NestStructureEventArgs : NestEventArgs
     {
         public List<Structure> Data { get; private set; }
         /// <summary>
@@ -118,7 +118,7 @@ namespace Elton.Nest
         /// @param structures an {@link List} of all {@link Structure} objects in the user's
         ///                   account at the time of the update.
         /// </summary>
-        public StructureEventArgs(List<Structure> structures)
+        public NestStructureEventArgs(List<Structure> structures)
         {
             this.Data = structures;
         }
@@ -127,7 +127,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to any {@link SmokeCOAlarm} in a user's Nest account.
     /// </summary>
-    public class SmokeCOAlarmEventArgs : NestEventArgs
+    public class NestSmokeCOAlarmEventArgs : NestEventArgs
     {
         public List<SmokeCOAlarm> Data { get; private set; }
         /// <summary>
@@ -136,7 +136,7 @@ namespace Elton.Nest
         /// @param smokeCOAlarms an {@link List} of all {@link SmokeCOAlarm} objects in the
         ///                      user's account at the time of the update.
         /// </summary>
-        public SmokeCOAlarmEventArgs(List<SmokeCOAlarm> smokeCOAlarms)
+        public NestSmokeCOAlarmEventArgs(List<SmokeCOAlarm> smokeCOAlarms)
         {
             this.Data = smokeCOAlarms;
         }
@@ -145,7 +145,7 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to the {@link Metadata} object in a user's Nest account.
     /// </summary>
-    public class MetadataEventArgs : NestEventArgs
+    public class NestMetadataEventArgs : NestEventArgs
     {
         public Metadata Data { get; private set; }
         /// <summary>
@@ -153,7 +153,7 @@ namespace Elton.Nest
         ///
         /// @param metadata the {@link Metadata} object in user's account at the time of the update.
         /// </summary>
-        public MetadataEventArgs(Metadata metadata)
+        public NestMetadataEventArgs(Metadata metadata)
         {
             this.Data = metadata;
         }
@@ -162,39 +162,39 @@ namespace Elton.Nest
     /// <summary>
     /// Listens for updates to the status of authentication of {@link WwnApiUrls} to the Nest service.
     /// </summary>
-    public class AuthFailureEventArgs : NestEventArgs
+    public class NestAuthFailureEventArgs : NestEventArgs
     {
-        public NestException Data { get; private set; }
+        public NestException Exception { get; private set; }
         /// <summary>
         /// Called when the authentication with the token fails. An exception is returned that can
         /// either be thrown or read to determine the cause of the error.
         ///
         /// @param exception a {@link NestException} object containing the error that occurred.
         /// </summary>
-        public AuthFailureEventArgs(NestException exception)
+        public NestAuthFailureEventArgs(NestException exception)
         {
-            this.Data = exception;
+            this.Exception = exception;
         }
     }
 
-    public class AuthRevokedEventArgs : NestEventArgs
+    public class NestAuthRevokedEventArgs : NestEventArgs
     {
         /// <summary>
         /// Called when a previously authenticated connection becomes unauthenticated. This usually
         /// occurs if the access token is revoked or has expired.
         /// </summary>
-        public AuthRevokedEventArgs()
+        public NestAuthRevokedEventArgs()
         {
         }
     }
 
 
-    public class ErrorEventArgs : NestEventArgs
+    public class NestErrorEventArgs : NestEventArgs
     {
-        public ErrorMessage Data { get; private set; }
-        public ErrorEventArgs(ErrorMessage errorMessage)
+        public ErrorMessage Error { get; private set; }
+        public NestErrorEventArgs(ErrorMessage errorMessage)
         {
-            this.Data = errorMessage;
+            this.Error = errorMessage;
         }
     }
 }

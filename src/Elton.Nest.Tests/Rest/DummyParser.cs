@@ -9,12 +9,10 @@ namespace Elton.Nest.Tests.Models
     [TestClass]
     public class DummyParser : Parser
     {
-        String message = null;
-
-
-        public void parse(String msg)
+        string message = null;
+        public void Parse(string message)
         {
-            message = msg;
+            this.message = message;
         }
     }
 }

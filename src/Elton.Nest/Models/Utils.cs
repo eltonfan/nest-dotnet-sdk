@@ -89,7 +89,7 @@ namespace Elton.Nest.Models
         /// @param args strings to check for emptiness.
         /// @return true if any of the provided strings is null or is zero-length, false otherwise.
         /// </summary>
-        public static bool isAnyEmpty(params string[] args)
+        public static bool IsAnyEmpty(params string[] args)
         {
             if (args == null)
             {
@@ -142,14 +142,14 @@ namespace Elton.Nest.Models
         /// </summary>
         public class PathBuilder
         {
-            readonly StringBuilder mBuilder;
+            readonly StringBuilder builder;
 
             /// <summary>
             /// Creates a new PathBuilder.
             /// </summary>
             public PathBuilder()
             {
-                mBuilder = new StringBuilder();
+                builder = new StringBuilder();
             }
 
             /// <summary>
@@ -160,7 +160,7 @@ namespace Elton.Nest.Models
             /// </summary>
             public PathBuilder Append(string entry)
             {
-                mBuilder.Append("/").Append(entry);
+                builder.Append("/").Append(entry);
                 return this;
             }
 
@@ -170,7 +170,7 @@ namespace Elton.Nest.Models
             /// <returns>the resulting path.</returns>
             public string Build()
             {
-                return mBuilder.ToString();
+                return builder.ToString();
             }
         }
     }

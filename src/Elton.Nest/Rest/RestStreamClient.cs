@@ -49,11 +49,11 @@ namespace Elton.Nest.Rest
             this.parser = builder.Parser;
             this.httpClient = builder.HttpClient;
             this.exceptionHandler = builder.ExceptionHandler;
-            this.apiUrl = builder.RestConfig.getUrl();
+            this.apiUrl = builder.RestConfig.GetUrl();
             this.retryExecutor = new RetryExecutor(builder.BackOff);
         }
 
-        public bool start(String accessToken)
+        public bool Start(string accessToken)
         {
             if (started)
                 return false;
@@ -70,10 +70,10 @@ namespace Elton.Nest.Rest
             return true;
         }
 
-        public void stop()
+        public void Stop()
         {
             started = false;
-            retryExecutor.reset();
+            retryExecutor.Reset();
             retryExecutor.cancel();
 
             cancellationTokenSource.Cancel();
@@ -134,7 +134,7 @@ namespace Elton.Nest.Rest
                             {
                                 try
                                 {
-                                    owner.parser.parse(msg);
+                                    owner.parser.Parse(msg);
                                 }
                                 catch (ParserException ex)
                                 {
@@ -162,7 +162,7 @@ namespace Elton.Nest.Rest
                     if (owner.started)
                     {
                         owner.retryExecutor.schedule(
-                            (accessToken) => { owner.start(accessToken); },
+                            (accessToken) => { owner.Start(accessToken); },
                             owner.token);
                     }
                 }

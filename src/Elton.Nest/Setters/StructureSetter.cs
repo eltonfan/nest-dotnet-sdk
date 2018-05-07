@@ -52,7 +52,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setAway(string structureId, string awayState, Callback callback)
         {
-            restClient.writeString(getPath(structureId), Structure.KEY_AWAY, awayState, callback);
+            restClient.WriteString(getPath(structureId), Structure.KEY_AWAY, awayState, callback);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setEta(string structureId, Structure.ETA eta, Callback callback)
         {
-            restClient.writeString(getPath(structureId), Structure.KEY_ETA, eta.ToString(), callback);
+            restClient.WriteString(getPath(structureId), Structure.KEY_ETA, eta.ToString(), callback);
         }
 
         /// <summary>

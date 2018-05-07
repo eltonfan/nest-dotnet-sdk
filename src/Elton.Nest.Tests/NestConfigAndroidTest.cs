@@ -18,15 +18,15 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testNestConfigToParcel()
         {
-            String testClientId = "test-id";
-            String testClientSecret = "test-secret";
-            String testRedirectURL = "test-redirect-url";
+            string testClientId = "test-id";
+            string testClientSecret = "test-secret";
+            string testRedirectURL = "test-redirect-url";
 
             NestConfig config = new NestConfig.Builder()
-                    .clientID(testClientId)
-                    .clientSecret(testClientSecret)
-                    .redirectURL(testRedirectURL)
-                    .build();
+                    .SetClientId(testClientId)
+                    .SetClientSecret(testClientSecret)
+                    .SetRedirectUrl(testRedirectURL)
+                    .Build();
 
             //Parcel parcel = Parcel.obtain();
             //config.writeToParcel(parcel, 0);
@@ -41,10 +41,10 @@ namespace Elton.Nest.Tests.Models
         public void testToString_shouldReturnNicelyFormattedString()
         {
             NestConfig config = new NestConfig.Builder()
-                    .clientID(TEST_CLIENT_ID)
-                    .clientSecret(TEST_CLIENT_SECRET)
-                    .redirectURL(TEST_REDIRECT_URL)
-                    .build();
+                    .SetClientId(TEST_CLIENT_ID)
+                    .SetClientSecret(TEST_CLIENT_SECRET)
+                    .SetRedirectUrl(TEST_REDIRECT_URL)
+                    .Build();
 
             try
             {

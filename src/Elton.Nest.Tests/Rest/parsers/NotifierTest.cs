@@ -19,16 +19,16 @@ namespace Elton.Nest.Tests.Models
             bool authFailure = false;
             bool authRevoked = false;
 
-            EventHandler<ErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Data; };
-            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
-            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
+            EventHandler<NestErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Error; };
+            EventHandler<NestAuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<NestAuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
             notifier.AuthFailure += dummyAuthFailureHandler;
             notifier.AuthRevoked += dummyAuthRevokedHandler;
             notifier.Error += dummyErrorHandler;
 
-            notifier.handleError(new ErrorMessage() { Error = error });
+            notifier.HandleError(new ErrorMessage() { Error = error });
 
             Assert.IsFalse(authFailure);
             Assert.IsFalse(authRevoked);
@@ -44,22 +44,22 @@ namespace Elton.Nest.Tests.Models
             bool authFailure = false;
             bool authRevoked = false;
 
-            EventHandler<ErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Data; };
-            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
-            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
+            EventHandler<NestErrorEventArgs> dummyErrorHandler = (sender, args) => { errorMessage = args.Error; };
+            EventHandler<NestAuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<NestAuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
             notifier.AuthFailure += dummyAuthFailureHandler;
             notifier.AuthRevoked += dummyAuthRevokedHandler;
             notifier.Error += dummyErrorHandler;
 
-            notifier.handleError(new ErrorMessage() { Error = error });
+            notifier.HandleError(new ErrorMessage() { Error = error });
 
             Assert.IsTrue(authFailure);
             Assert.IsFalse(authRevoked);
             Assert.IsNull(errorMessage);
 
-            notifier.handleAuthRevoked();
+            notifier.HandleAuthRevoked();
             Assert.IsTrue(authRevoked);
         }
 
@@ -84,7 +84,7 @@ namespace Elton.Nest.Tests.Models
             notifier.StructureUpdated += (sender, args) => { structures = args.Data; };
             notifier.MetadataUpdated += (sender, args) => { metadata = args.Data; };
 
-            notifier.handleData(new GlobalUpdate(
+            notifier.HandleData(new GlobalUpdate(
                     thermostats: new List<Thermostat>(),
                     smokeCOAlarms: new List<SmokeCOAlarm>(),
                     cameras: new List<Camera>(),
@@ -103,12 +103,12 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testRemoveListener_shouldNotReceiveNotification()
         {
-            String error = "unauthorized";
+            string error = "unauthorized";
             bool authFailure = false;
             bool authRevoked = false;
 
-            EventHandler<AuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
-            EventHandler<AuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
+            EventHandler<NestAuthFailureEventArgs> dummyAuthFailureHandler = (sender, args) => { authFailure = true; };
+            EventHandler<NestAuthRevokedEventArgs> dummyAuthRevokedHandler = (sender, args) => { authRevoked = true; };
 
             var notifier = new Notifier();
             notifier.AuthFailure += dummyAuthFailureHandler;
@@ -117,7 +117,7 @@ namespace Elton.Nest.Tests.Models
             notifier.AuthFailure -= dummyAuthFailureHandler;
             notifier.AuthRevoked -= dummyAuthRevokedHandler;
 
-            notifier.handleError(new ErrorMessage() { Error = error });
+            notifier.HandleError(new ErrorMessage() { Error = error });
 
             Assert.IsFalse(authFailure);
             Assert.IsFalse(authRevoked);

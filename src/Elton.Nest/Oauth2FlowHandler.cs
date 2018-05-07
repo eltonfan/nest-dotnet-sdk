@@ -50,12 +50,12 @@ namespace Elton.Nest
         /// @param clientSecret The Nest client secret.
         /// @param redirectUrl  The Nest redirect URL.
         /// </summary>
-        public void setConfig(String clientId, String clientSecret, String redirectUrl)
+        public void setConfig(string clientId, string clientSecret, string redirectUrl)
         {
-            oauth2Config = new NestConfig.Builder().clientID(clientId)
-                    .clientSecret(clientSecret)
-                    .redirectURL(redirectUrl)
-                    .build();
+            oauth2Config = new NestConfig.Builder().SetClientId(clientId)
+                    .SetClientSecret(clientSecret)
+                    .SetRedirectUrl(redirectUrl)
+                    .Build();
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Elton.Nest
         public NestToken CreateToken(string mCode)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,
-                requestUri: NestApiUrls.GetAccessUrl(oauth2Config.ClientID, oauth2Config.ClientSecret, mCode));
+                requestUri: NestApiUrls.GetAccessUrl(oauth2Config.ClientId, oauth2Config.ClientSecret, mCode));
             request.Content = new StringContent("", Encoding.UTF8, "application/json");
             HttpResponseMessage response = null;
 

@@ -25,8 +25,8 @@ namespace Elton.Nest.Rest.Parsers
 {
     public interface StreamingEventHandler
     {
-        void handleData(GlobalUpdate eventData);
-        void handleError(ErrorMessage errorMessage);
-        void handleAuthRevoked();
+        void HandleData(GlobalUpdate eventData);
+        void HandleError(ErrorMessage errorMessage);
+        void HandleAuthRevoked();
     }
 }

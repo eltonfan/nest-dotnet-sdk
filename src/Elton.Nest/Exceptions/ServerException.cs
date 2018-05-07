@@ -24,6 +24,6 @@ namespace Elton.Nest
 {
     public class ServerException : NestException
     {
-        public ServerException(String message) : base(message) { }
+        public ServerException(string message) : base(message) { }
     }
 }

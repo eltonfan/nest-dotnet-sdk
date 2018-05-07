@@ -16,7 +16,7 @@ namespace Elton.Nest.Tests
         public void testStartWithNull_shouldThrowMissingTokenException()
         {
             var client = new RestStreamClient.Builder(new HttpClient(), new RestConfig(), new DummyParser()).build();
-            client.start(null);
+            client.Start(null);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace Elton.Nest.Tests
         public void testStartWithEmpty_shouldThrowMissingTokenException()
         {
             var client = new RestStreamClient.Builder(new HttpClient(), new RestConfig(), new DummyParser()).build();
-            client.start("");
+            client.Start("");
         }
 
         //private class DummyExceptionHandler : ExceptionHandler
@@ -37,7 +37,7 @@ namespace Elton.Nest.Tests
         //    }
         //}
 
-        //private DummyCall makeDummySuccessCall(final String message) {
+        //private DummyCall makeDummySuccessCall(final string message) {
         //    return new DummyCall() {
 
         //        public Response execute()
@@ -56,13 +56,13 @@ namespace Elton.Nest.Tests
         public void testStart_shouldReadSuccessfully()
         {
             //final CountDownLatch latch = new CountDownLatch(1);
-            //final String message = "{}";
+            //final string message = "{}";
             //OkHttpClient mockedClient = PowerMockito.mock(typeof(OkHttpClient));
 
             //DummyCall dummyCall = makeDummySuccessCall(message);
             //var parser = new DummyParser() {
 
-            //    public void parse(String msg){
+            //    public void parse(string msg){
             //        super.parse(msg);
             //        latch.countDown();
             //    }
@@ -88,7 +88,7 @@ namespace Elton.Nest.Tests
             //DummyCall dummyCall = makeDummySuccessCall("{}");
             //var parser = new DummyParser() {
 
-            //    public void parse(String msg){
+            //    public void parse(string msg){
             //        throw new ParserException("");
             //    }
             //};
@@ -123,7 +123,7 @@ namespace Elton.Nest.Tests
             //DummyCall dummyCall = makeDummySuccessCall("{}");
             //var parser = new DummyParser() {
 
-            //    public void parse(String msg){
+            //    public void parse(string msg){
             //        throw new IndexOutOfBoundsException("");
             //    }
             //};
@@ -201,13 +201,13 @@ namespace Elton.Nest.Tests
             //Read the stream and accumulate data until end of message marker "}" or "\n"
             //Then invoke parser.parse to process
             //final CountDownLatch latch = new CountDownLatch(1);
-            //final String message = "{message}";
+            //final string message = "{message}";
             //OkHttpClient mockedClient = PowerMockito.mock(typeof(OkHttpClient));
 
             //DummyCall dummyCall = makeDummySuccessCall(message);
             //var parser = new DummyParser() {
 
-            //    public void parse(String msg){
+            //    public void parse(string msg){
             //        super.parse(msg);
             //        latch.countDown();
             //    }
@@ -232,7 +232,7 @@ namespace Elton.Nest.Tests
         public void testStop_shouldResetBackOffStrategy()
         {
             //final CountDownLatch latch = new CountDownLatch(1);
-            //final String message = "{message}";
+            //final string message = "{message}";
             //OkHttpClient mockedClient = PowerMockito.mock(typeof(OkHttpClient));
 
             //DummyCall dummyCall = makeDummySuccessCall(message);

@@ -19,31 +19,31 @@ namespace Elton.Nest.Tests.Models
         {
 
             NestConfig config = new NestConfig.Builder()
-                    .clientID(TEST_CLIENT_ID)
-                    .clientSecret(TEST_CLIENT_SECRET)
-                    .redirectURL(TEST_REDIRECT_URL)
-                    .build();
+                    .SetClientId(TEST_CLIENT_ID)
+                    .SetClientSecret(TEST_CLIENT_SECRET)
+                    .SetRedirectUrl(TEST_REDIRECT_URL)
+                    .Build();
 
-            Assert.AreEqual(TEST_CLIENT_ID, config.ClientID);
+            Assert.AreEqual(TEST_CLIENT_ID, config.ClientId);
             Assert.AreEqual(TEST_CLIENT_SECRET, config.ClientSecret);
-            Assert.AreEqual(TEST_REDIRECT_URL, config.RedirectURL);
+            Assert.AreEqual(TEST_REDIRECT_URL, config.RedirectUrl);
         }
 
         [TestMethod]
         public void testNestConfig_shouldReturnNullValuesWhenNotSet()
         {
-            NestConfig config = new NestConfig.Builder().build();
+            NestConfig config = new NestConfig.Builder().Build();
 
-            Assert.AreEqual(null, config.ClientID);
+            Assert.AreEqual(null, config.ClientId);
             Assert.AreEqual(null, config.ClientSecret);
-            Assert.AreEqual(null, config.RedirectURL);
+            Assert.AreEqual(null, config.RedirectUrl);
         }
 
         [TestMethod]
         public void testNestConfig_setStateValue_shouldReturnCorrectlyFormattedString()
         {
             NestConfig config = new NestConfig.Builder()
-                    .build();
+                    .Build();
 
             Assert.IsTrue(new Regex("^app-state\\d+-\\d+$").IsMatch(config.StateValue));
         }
@@ -51,7 +51,7 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testDescribeContents_shouldReturnZero()
         {
-            NestConfig config = new NestConfig.Builder().build();
+            NestConfig config = new NestConfig.Builder().Build();
             //Assert.AreEqual(config.describeContents(), 0);
         }
 
@@ -68,7 +68,7 @@ namespace Elton.Nest.Tests.Models
         public void testEquals_shouldReturnFalseWithNonNestConfig()
         {
             var o = new Object();
-            NestConfig config = new NestConfig.Builder().build();
+            NestConfig config = new NestConfig.Builder().Build();
             Assert.IsFalse(config.Equals(o));
         }
     }

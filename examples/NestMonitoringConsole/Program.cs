@@ -51,7 +51,7 @@ namespace NestMonitoringConsole
             //    .build();
             nestConfig = new NestConfig.Builder()
                  .FromJsonString(settings.ReadJson("nest"))
-                 .build();
+                 .Build();
 
 
             nest = new NestClient();
@@ -61,7 +61,7 @@ namespace NestMonitoringConsole
             };
             nest.Notifier.Error += (sender, args) =>
             {
-                log.Info($"NEST ERROR: {args?.Data}");
+                log.Info($"NEST ERROR: {args?.Error}");
             };
             nest.Notifier.GlobalUpdated += (sender, args) =>
             {

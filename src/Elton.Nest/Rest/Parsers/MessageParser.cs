@@ -44,19 +44,19 @@ namespace Elton.Nest.Rest.Parsers
         /// May contain one or more events
         /// </summary>
         /// <exception cref="ParserException"></exception>
-        public void parse(string msg)
+        public void Parse(string message)
         {
-            if (string.IsNullOrEmpty(msg))
+            if (string.IsNullOrEmpty(message))
                 return;
 
-            var lines = msg.Split('\n');
+            var lines = message.Split('\n');
             int i = 0;
             while (i < lines.Length)
             {
                 var currentLine = lines[i];
                 if (currentLine.StartsWith("{\"error\":"))
                 {
-                    mapper.map(new StreamingEvent("error", currentLine));
+                    mapper.Map(new StreamingEvent("error", currentLine));
                 }
                 else if (currentLine.StartsWith("event:") && lines.Length > i + 1)
                 {
@@ -70,7 +70,7 @@ namespace Elton.Nest.Rest.Parsers
                     var eventType = currentLine.Substring(7); //7 = length of("event: ")
                     var json = nextLine.Substring(6); //6 = length of("data: ")
 
-                    mapper.map(new StreamingEvent(eventType, json));
+                    mapper.Map(new StreamingEvent(eventType, json));
                     i++;
                 }
                 i++;

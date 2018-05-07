@@ -17,7 +17,7 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testNestException_shouldAcceptAMessage()
         {
-            String testMessage = "test-message";
+            string testMessage = "test-message";
             var e = new NestException(testMessage);
 
             Assert.AreEqual(testMessage, e.Message);
@@ -43,7 +43,7 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testNestException_shouldAcceptAMessageAndThrowable()
         {
-            String testMessage = "test-message-2";
+            string testMessage = "test-message-2";
             var t = new Exception();
             var e = new NestException(testMessage, t);
 

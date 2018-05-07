@@ -28,6 +28,6 @@ namespace Elton.Nest.Rest.Parsers
         /// 
         /// </summary>
         /// <exception cref="ParserException"></exception>
-        void parse(string msg);
+        void Parse(string message);
     }
 }

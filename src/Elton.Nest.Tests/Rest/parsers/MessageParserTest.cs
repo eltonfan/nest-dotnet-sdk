@@ -11,10 +11,9 @@ namespace Elton.Nest.Tests.Models
     {
         private class DummyMapper : Mapper
         {
-
             internal StreamingEvent eventData = null;
 
-            public void map(StreamingEvent eventData)
+            public void Map(StreamingEvent eventData)
             {
                 this.eventData = eventData;
             }
@@ -26,10 +25,10 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            parser.parse(null);
+            parser.Parse(null);
             Assert.IsNull(mapper.eventData);
 
-            parser.parse("");
+            parser.Parse("");
             Assert.IsNull(mapper.eventData);
         }
 
@@ -39,13 +38,13 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            parser.parse("garbage test");
+            parser.Parse("garbage test");
             Assert.IsNull(mapper.eventData);
 
-            parser.parse("event: dummy");
+            parser.Parse("event: dummy");
             Assert.IsNull(mapper.eventData);
 
-            parser.parse("event: put");
+            parser.Parse("event: put");
             Assert.IsNull(mapper.eventData);
         }
 
@@ -56,7 +55,7 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            parser.parse("event: \ndata: {}");
+            parser.Parse("event: \ndata: {}");
         }
 
         [TestMethod]
@@ -66,7 +65,7 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            parser.parse("event: put\ndata: ");
+            parser.Parse("event: put\ndata: ");
         }
 
         [TestMethod]
@@ -75,14 +74,14 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            String data = "{data}";
+            string data = "{data}";
 
-            parser.parse("event: put\ndata: " + data);
+            parser.Parse("event: put\ndata: " + data);
             Assert.IsNotNull(mapper.eventData);
             Assert.AreEqual(mapper.eventData.EventType, "put");
             Assert.AreEqual(mapper.eventData.Message, data);
 
-            parser.parse("event: auth_revoked\ndata: " + data);
+            parser.Parse("event: auth_revoked\ndata: " + data);
             Assert.IsNotNull(mapper.eventData);
             Assert.AreEqual(mapper.eventData.EventType, "auth_revoked");
             Assert.AreEqual(mapper.eventData.Message, data);
@@ -94,9 +93,9 @@ namespace Elton.Nest.Tests.Models
             var mapper = new DummyMapper();
             var parser = new MessageParser(mapper);
 
-            String error = "{\"error\":";
+            string error = "{\"error\":";
 
-            parser.parse(error);
+            parser.Parse(error);
             Assert.IsNotNull(mapper.eventData);
             Assert.AreEqual(mapper.eventData.EventType, "error");
             Assert.AreEqual(mapper.eventData.Message, error);

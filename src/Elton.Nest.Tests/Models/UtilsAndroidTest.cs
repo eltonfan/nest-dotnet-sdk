@@ -11,19 +11,19 @@ namespace Elton.Nest.Tests.Models
         [TestMethod]
         public void testIsAnyEmptyWithNoArgs_shouldReturnFalse()
         {
-            Assert.IsFalse(Utils.isAnyEmpty());
+            Assert.IsFalse(Utils.IsAnyEmpty());
         }
 
         [TestMethod]
         public void testIsAnyEmptyWithEmptyArgs_shouldReturnTrue()
         {
-            Assert.IsTrue(Utils.isAnyEmpty("", ""));
+            Assert.IsTrue(Utils.IsAnyEmpty("", ""));
         }
 
         [TestMethod]
         public void testIsAnyEmptyWithNoEmptyArgs_shouldReturnFalse()
         {
-            Assert.IsFalse(Utils.isAnyEmpty("not-empty", "also-not-empty"));
+            Assert.IsFalse(Utils.IsAnyEmpty("not-empty", "also-not-empty"));
         }
     }
 }

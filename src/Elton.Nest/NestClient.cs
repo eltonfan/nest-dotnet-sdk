@@ -44,7 +44,6 @@ namespace Elton.Nest
         /// <summary>
         /// Creates a new instance of the {@link NestClient}.
         /// </summary>
-
         public NestClient() : this(new RestConfig()) { }
 
         /// <summary>
@@ -87,13 +86,13 @@ namespace Elton.Nest
         /// </summary>
         public void startWithToken(string token)
         {
-            restClient.setToken(token);
-            streamingClient.start(token);
+            restClient.SetToken(token);
+            streamingClient.Start(token);
         }
 
         public void stop()
         {
-            streamingClient.stop();
+            streamingClient.Stop();
         }
 
         public CameraSetter Cameras => cameras;
@@ -102,7 +101,7 @@ namespace Elton.Nest
 
         public Notifier Notifier => notifier;
 
-        internal static Version sdkVersion = null;
+        static Version sdkVersion = null;
         public static Version SdkVersion
         {
             get

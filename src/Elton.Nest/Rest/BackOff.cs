@@ -24,7 +24,7 @@ namespace Elton.Nest.Rest
 {
     public interface BackOff
     {
-        long nextInterval();
-        void reset();
+        long NextInterval();
+        void Reset();
     }
 }

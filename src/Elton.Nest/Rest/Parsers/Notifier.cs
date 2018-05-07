@@ -25,42 +25,42 @@ namespace Elton.Nest.Rest.Parsers
 {
     public class Notifier : StreamingEventHandler
     {
-        public event EventHandler<GlobalEventArgs> GlobalUpdated;
-        public event EventHandler<DeviceEventArgs> DeviceUpdated;
-        public event EventHandler<StructureEventArgs> StructureUpdated;
-        public event EventHandler<ThermostatEventArgs> ThermostatUpdated;
-        public event EventHandler<CameraEventArgs> CameraUpdated;
-        public event EventHandler<SmokeCOAlarmEventArgs> SmokeCOAlarmUpdated;
-        public event EventHandler<MetadataEventArgs> MetadataUpdated;
+        public event EventHandler<NestGlobalEventArgs> GlobalUpdated;
+        public event EventHandler<NestDeviceEventArgs> DeviceUpdated;
+        public event EventHandler<NestStructureEventArgs> StructureUpdated;
+        public event EventHandler<NestThermostatEventArgs> ThermostatUpdated;
+        public event EventHandler<NestCameraEventArgs> CameraUpdated;
+        public event EventHandler<NestSmokeCOAlarmEventArgs> SmokeCOAlarmUpdated;
+        public event EventHandler<NestMetadataEventArgs> MetadataUpdated;
 
-        public event EventHandler<AuthFailureEventArgs> AuthFailure;
-        public event EventHandler<ErrorEventArgs> Error;
+        public event EventHandler<NestAuthFailureEventArgs> AuthFailure;
+        public event EventHandler<NestErrorEventArgs> Error;
 
-        public event EventHandler<AuthRevokedEventArgs> AuthRevoked;
+        public event EventHandler<NestAuthRevokedEventArgs> AuthRevoked;
 
-        public void handleData(GlobalUpdate eventData)
+        public void HandleData(GlobalUpdate eventData)
         {
-            GlobalUpdated?.Invoke(this, new GlobalEventArgs(eventData));
-            DeviceUpdated?.Invoke(this, new DeviceEventArgs(eventData.Devices));
-            StructureUpdated?.Invoke(this, new StructureEventArgs(eventData.Structures));
-            ThermostatUpdated?.Invoke(this, new ThermostatEventArgs(eventData.Thermostats));
-            CameraUpdated?.Invoke(this, new CameraEventArgs(eventData.Cameras));
-            SmokeCOAlarmUpdated?.Invoke(this, new SmokeCOAlarmEventArgs(eventData.SmokeCOAlarms));
-            MetadataUpdated?.Invoke(this, new MetadataEventArgs(eventData.Metadata));
+            GlobalUpdated?.Invoke(this, new NestGlobalEventArgs(eventData));
+            DeviceUpdated?.Invoke(this, new NestDeviceEventArgs(eventData.Devices));
+            StructureUpdated?.Invoke(this, new NestStructureEventArgs(eventData.Structures));
+            ThermostatUpdated?.Invoke(this, new NestThermostatEventArgs(eventData.Thermostats));
+            CameraUpdated?.Invoke(this, new NestCameraEventArgs(eventData.Cameras));
+            SmokeCOAlarmUpdated?.Invoke(this, new NestSmokeCOAlarmEventArgs(eventData.SmokeCOAlarms));
+            MetadataUpdated?.Invoke(this, new NestMetadataEventArgs(eventData.Metadata));
         }
 
-        public void handleError(ErrorMessage errorMessage)
+        public void HandleError(ErrorMessage errorMessage)
         {
             bool authError = (errorMessage.Error == "unauthorized");
             if (authError)
-                AuthFailure?.Invoke(this, new AuthFailureEventArgs(new NestException(errorMessage.Message)));
+                AuthFailure?.Invoke(this, new NestAuthFailureEventArgs(new NestException(errorMessage.Message)));
             else
-                Error?.Invoke(this, new ErrorEventArgs(errorMessage));
+                Error?.Invoke(this, new NestErrorEventArgs(errorMessage));
         }
 
-        public void handleAuthRevoked()
+        public void HandleAuthRevoked()
         {
-            AuthRevoked?.Invoke(this, new AuthRevokedEventArgs());
+            AuthRevoked?.Invoke(this, new NestAuthRevokedEventArgs());
         }
     }
 }

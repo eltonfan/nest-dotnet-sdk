@@ -51,7 +51,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setIsStreaming(string cameraId, bool isStreaming, Callback callback)
         {
-            restClient.writeBoolean(getPath(cameraId), Camera.KEY_IS_STREAMING, isStreaming, callback);
+            restClient.WriteBoolean(getPath(cameraId), Camera.KEY_IS_STREAMING, isStreaming, callback);
         }
 
         /// <summary>

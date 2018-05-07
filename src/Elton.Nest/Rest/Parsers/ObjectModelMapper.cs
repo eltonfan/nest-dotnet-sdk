@@ -127,7 +127,7 @@ namespace Elton.Nest.Rest.Parsers
                 throw new ParserException(e);
             }
 
-            eventHandler.handleData(new GlobalUpdate(
+            eventHandler.HandleData(new GlobalUpdate(
                     thermostats, smokeAlarms, cameras, structures,
                     metadata.FirstOrDefault()));
         }
@@ -142,7 +142,7 @@ namespace Elton.Nest.Rest.Parsers
             try
             {
                 var error = JsonConvert.DeserializeObject<ErrorMessage>(json);
-                eventHandler.handleError(error);
+                eventHandler.HandleError(error);
             }
             catch (JsonSerializationException e)
             {
@@ -155,7 +155,7 @@ namespace Elton.Nest.Rest.Parsers
         /// 
         /// </summary>
         /// <exception cref="ParserException"></exception>
-        public void map(StreamingEvent eventData)
+        public void Map(StreamingEvent eventData)
         {
             switch (eventData.EventType)
             {
@@ -163,7 +163,7 @@ namespace Elton.Nest.Rest.Parsers
                     mapData(eventData.Message);
                     break;
                 case "auth_revoked":
-                    eventHandler.handleAuthRevoked();
+                    eventHandler.HandleAuthRevoked();
                     break;
                 case "error":
                     mapError(eventData.Message);

@@ -37,59 +37,55 @@ namespace Elton.Nest
         public const string KEY_REDIRECT_URL = "redirect_url";
         public const string KEY_STATE_VALUE = "state_value";
 
-        private String mClientID;
-        private String mStateValue;
-        private String mClientSecret;
-        private String mRedirectURL;
+        private string clientId;
+        private string clientSecret;
+        private string stateValue;
+        private string redirectUrl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NestConfig" /> class.
         /// </summary>
         private NestConfig(Builder builder)
         {
-            mClientID = builder.mBuilderClientID;
-            mStateValue = builder.mBuilderStateValue;
-            mClientSecret = builder.mBuilderClientSecret;
-            mRedirectURL = builder.mBuilderRedirectURL;
+            this.clientId = builder.ClientId;
+            this.stateValue = builder.State;
+            this.clientSecret = builder.ClientSecret;
+            this.redirectUrl = builder.RedirectUrl;
         }
 
         /// <summary>
         /// Returns the client id.
-        ///
-        /// @return the client id.
         /// </summary>
-        public String ClientID => mClientID;
+        /// <value>the client id.</value>
+        public string ClientId => clientId;
 
         /// <summary>
         /// Returns the state value. This is randomly generated for each {@link NestConfig}.
-        ///
-        /// @return the state value.
         /// </summary>
-        public String StateValue => mStateValue;
+        /// <value>the state value.</value>
+        public string StateValue => stateValue;
 
         /// <summary>
         /// Returns the client secret. Keep this secret safe.
-        ///
-        /// @return the client secret.
         /// </summary>
-        public String ClientSecret => mClientSecret;
+        /// <value>the client secret.</value>
+        public string ClientSecret => clientSecret;
 
         /// <summary>
         /// Returns the redirect URL. Must match the redirect URL set in the Nest developer portal.
-        ///
-        /// @return the redirect URL.
         /// </summary>
-        public String RedirectURL => mRedirectURL;
+        /// <value>the redirect URL.</value>
+        public string RedirectUrl => redirectUrl;
 
         public override string ToString()
         {
             try
             {
                 var json = new JObject();
-                json.Add(KEY_CLIENT_ID, mClientID);
-                json.Add(KEY_CLIENT_SECRET, mClientSecret);
-                json.Add(KEY_REDIRECT_URL, mRedirectURL);
-                json.Add(KEY_STATE_VALUE, mStateValue);
+                json.Add(KEY_CLIENT_ID, clientId);
+                json.Add(KEY_CLIENT_SECRET, clientSecret);
+                json.Add(KEY_REDIRECT_URL, redirectUrl);
+                json.Add(KEY_STATE_VALUE, stateValue);
 
                 return json.ToString();
             }
@@ -120,57 +116,58 @@ namespace Elton.Nest
         /// </summary>
         public class Builder
         {
-            internal string mBuilderClientID;
-            internal string mBuilderRedirectURL;
-            internal string mBuilderStateValue;
-            internal string mBuilderClientSecret;
+            string clientId;
+            string clientSecret;
+            string redirectUrl;
+            string stateValue;
+
+            public string ClientId => clientId;
+            public string ClientSecret => clientSecret;
+            public string RedirectUrl => redirectUrl;
+            public string State => stateValue;
 
             /// <summary>
             /// Sets the client id.
-            ///
-            /// @param id the client id.
-            /// @return the {@link Builder} instance.
             /// </summary>
-            public Builder clientID(String id)
+            /// <param name="id">the client id.</param>
+            /// <returns>the <see cref="Builder"/> instance.</returns>
+            public Builder SetClientId(string id)
             {
-                mBuilderClientID = id;
+                clientId = id;
                 return this;
             }
 
             /// <summary>
             /// Sets the client secret.
-            ///
-            /// @param secret the client secret.
-            /// @return the {@link Builder} instance.
             /// </summary>
-            public Builder clientSecret(String secret)
+            /// <param name="secret">the client secret.</param>
+            /// <returns>the <see cref="Builder"/> instance.</returns>
+            public Builder SetClientSecret(string secret)
             {
-                mBuilderClientSecret = secret;
+                clientSecret = secret;
                 return this;
             }
 
             /// <summary>
             /// Sets the redirect URL. Must match the redirect URL set in the Nest developer portal.
-            ///
-            /// @param url the redirect url.
-            /// @return the {@link Builder} instance.
             /// </summary>
-            public Builder redirectURL(String url)
+            /// <param name="url">the redirect url.</param>
+            /// <returns>the <see cref="Builder"/> instance.</returns>
+            public Builder SetRedirectUrl(string url)
             {
-                mBuilderRedirectURL = url;
+                redirectUrl = url;
                 return this;
             }
 
             /// <summary>
             /// Sets the state value. This method be called directly, as the state value is automatically
             /// and randomly generated when {@link Builder#build()} is called.
-            ///
-            /// @param state the state value.
-            /// @return the {@link Builder} instance.
             /// </summary>
-            private Builder SetStateValue(String state)
+            /// <param name="state">the state value.</param>
+            /// <returns>the <see cref="Builder"/> instance.</returns>
+            private Builder SetState(string state)
             {
-                mBuilderStateValue = state;
+                this.stateValue = state;
                 return this;
             }
 
@@ -185,7 +182,7 @@ namespace Elton.Nest
                 };
 
                 config = JsonConvert.DeserializeAnonymousType(jsonString, config);
-                this.clientID(config.client_id)
+                this.SetClientId(config.client_id)
                     .clientSecret(config.client_secret)
                     .redirectURL(config.redirect_url);
                     //.SetStateValue(config.state_value);
@@ -195,15 +192,15 @@ namespace Elton.Nest
 
             /// <summary>
             /// Builds and returns the new {@link NestConfig} object.
-            ///
-            /// @return the new {@link NestConfig} object.
             /// </summary>
-            public NestConfig build()
+            /// <returns>the new <see cref="NestConfig"/> object.</returns>
+            public NestConfig Build()
             {
                 // Create random state value on each creation
-                SetStateValue($"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next());
+                SetState($"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next());
                 return new NestConfig(this);
             }
+
             readonly static Random random = new Random();
         }
     }

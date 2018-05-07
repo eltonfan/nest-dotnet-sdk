@@ -33,45 +33,43 @@ namespace Elton.Nest.Rest
         string token = null;
         readonly Parser parser;
         readonly HttpClient httpClient;
-        //static readonly MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        const string JSON = "application/json";
         static readonly Callback callbackStub = new Callback();
 
         public RestClient(HttpClient httpClient, RestConfig restConfig, Parser parser)
         {
             this.httpClient = httpClient;
             this.parser = parser;
-            this.baseApiUrl = restConfig.getUrl();
+            this.baseApiUrl = restConfig.GetUrl();
         }
 
-        public void setToken(string token)
+        public void SetToken(string token)
         {
             if (string.IsNullOrEmpty(token))
                 throw new MissingTokenException();
             this.token = token;
         }
 
-        public void writeLong(string path, string field, long value, Callback callback)
+        public void WriteLong(string path, string field, long value, Callback callback)
         {
-            write(path, field, value.ToString(), callback);
+            Write(path, field, value.ToString(), callback);
         }
 
-        public void writeDouble(string path, string field, double value, Callback callback)
+        public void WriteDouble(string path, string field, double value, Callback callback)
         {
-            write(path, field, value.ToString(), callback);
+            Write(path, field, value.ToString(), callback);
         }
 
-        public void writeString(string path, string field, string value, Callback callback)
+        public void WriteString(string path, string field, string value, Callback callback)
         {
-            write(path, field, "\"" + value + "\"", callback);
+            Write(path, field, "\"" + value + "\"", callback);
         }
 
-        public void writeBoolean(string path, string field, bool value, Callback callback)
+        public void WriteBoolean(string path, string field, bool value, Callback callback)
         {
-            write(path, field, value.ToString(), callback);
+            Write(path, field, value.ToString(), callback);
         }
 
-        private void write(string path, string field, string value, Callback callback)
+        private void Write(string path, string field, string value, Callback callback)
         {
             if (string.IsNullOrEmpty(token))
                 throw new MissingTokenException();
@@ -85,7 +83,7 @@ namespace Elton.Nest.Rest
                 requestUri: apiUrl + path);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Authorization", "Bearer " + token);
-            request.Content = new StringContent(body, Encoding.UTF8, "application/json");
+            request.Content = new StringContent(body, Encoding.UTF8, "application/json");//"application/json; charset=utf-8"
 
             try
             {
@@ -104,7 +102,7 @@ namespace Elton.Nest.Rest
                         {
                             //UTF-8
                             var responseBody = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-                            parser.parse(responseBody);
+                            parser.Parse(responseBody);
                             internalCallback.OnSuccess();
                         }
                         catch (ParserException ex)
@@ -121,7 +119,7 @@ namespace Elton.Nest.Rest
                 {//UnknownHostException
                     //Reset redirect url if WWN host goes offline
                     redirectApiUrl = null;
-                    write(path, field, value, callback);
+                    Write(path, field, value, callback);
                     return;
                 }
                 internalCallback.OnFailure?.Invoke(new NestException("Write request failed.", ex));

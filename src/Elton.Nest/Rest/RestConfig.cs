@@ -45,7 +45,7 @@ namespace Elton.Nest.Rest
             this.Port = port;
         }
 
-        public string getUrl()
+        public string GetUrl()
         {
             return Protocol + "://" + Host + (string.IsNullOrEmpty(Port) ? "" : ":" + Port);
         }

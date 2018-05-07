@@ -43,7 +43,7 @@ namespace Elton.Nest.Rest
             initialDelayMillis = builder.InitialDelayMillis;
         }
 
-        public long nextInterval()
+        public long NextInterval()
         {
             if (lastDelay < maxDelayMillis)
             {
@@ -58,7 +58,7 @@ namespace Elton.Nest.Rest
             return lastDelay;
         }
 
-        public void reset()
+        public void Reset()
         {
             lastDelay = 0;
             f1 = 0;

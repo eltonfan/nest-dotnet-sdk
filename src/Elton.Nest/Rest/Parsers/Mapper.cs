@@ -28,6 +28,6 @@ namespace Elton.Nest.Rest.Parsers
         /// 
         /// </summary>
         /// <exception cref="ParserException"></exception>
-        void map(StreamingEvent eventData);
+        void Map(StreamingEvent eventData);
     }
 }

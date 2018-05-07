@@ -52,7 +52,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureF(string thermostatId, long temperature, Callback callback)
         {
-            restClient.writeLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_F, temperature, callback);
+            restClient.WriteLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_F, temperature, callback);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureC(string thermostatId, double temperature, Callback callback)
         {
-            restClient.writeDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_C, temperature, callback);
+            restClient.WriteDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_C, temperature, callback);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureLowF(string thermostatId, long temperature, Callback callback)
         {
-            restClient.writeLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_LOW_F, temperature, callback);
+            restClient.WriteLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_LOW_F, temperature, callback);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureLowC(string thermostatId, double temperature, Callback callback)
         {
-            restClient.writeDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_C, temperature, callback);
+            restClient.WriteDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_C, temperature, callback);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureHighF(string thermostatId, long temperature, Callback callback)
         {
-            restClient.writeLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_HIGH_F, temperature, callback);
+            restClient.WriteLong(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_HIGH_F, temperature, callback);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTargetTemperatureHighC(string thermostatId, double temperature, Callback callback)
         {
-            restClient.writeDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_HIGH_C, temperature, callback);
+            restClient.WriteDouble(getPath(thermostatId), Thermostat.KEY_TARGET_TEMP_HIGH_C, temperature, callback);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setHVACMode(string thermostatId, string mode, Callback callback)
         {
-            restClient.writeString(getPath(thermostatId), Thermostat.KEY_HVAC_MODE, mode, callback);
+            restClient.WriteString(getPath(thermostatId), Thermostat.KEY_HVAC_MODE, mode, callback);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setFanTimerActive(string thermostatId, bool isActive, Callback callback)
         {
-            restClient.writeBoolean(getPath(thermostatId), Thermostat.KEY_FAN_TIMER_ACTIVE, isActive, callback);
+            restClient.WriteBoolean(getPath(thermostatId), Thermostat.KEY_FAN_TIMER_ACTIVE, isActive, callback);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setTemperatureScale(string thermostatId, string tempScale, Callback callback)
         {
-            restClient.writeString(getPath(thermostatId), Thermostat.KEY_TEMP_SCALE, tempScale, callback);
+            restClient.WriteString(getPath(thermostatId), Thermostat.KEY_TEMP_SCALE, tempScale, callback);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Elton.Nest.Setters
         /// </summary>
         public void setLabel(string thermostatId, string label, Callback callback)
         {
-            restClient.writeString(getPath(thermostatId), Thermostat.KEY_LABEL, label, callback);
+            restClient.WriteString(getPath(thermostatId), Thermostat.KEY_LABEL, label, callback);
         }
     }
 }

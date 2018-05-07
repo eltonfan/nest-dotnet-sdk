@@ -21,14 +21,14 @@ namespace Elton.Nest.Tests.Models
             long[] values = { 1, 1, 2, 3, 5, 7 };
             foreach (long v in values)
             {
-                Assert.AreEqual(backOff.nextInterval(), v);
+                Assert.AreEqual(backOff.NextInterval(), v);
             }
 
             //Reset and retry
-            backOff.reset();
+            backOff.Reset();
             foreach (long v in values)
             {
-                Assert.AreEqual(backOff.nextInterval(), v);
+                Assert.AreEqual(backOff.NextInterval(), v);
             }
         }
     }

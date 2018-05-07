@@ -19,19 +19,19 @@ namespace Elton.Nest.Tests.Models
             internal Boolean authRevokedEvent = false;
 
 
-            public void handleData(GlobalUpdate eventData)
+            public void HandleData(GlobalUpdate eventData)
             {
                 updateEvent = eventData;
             }
 
 
-            public void handleError(ErrorMessage errorMessage)
+            public void HandleError(ErrorMessage errorMessage)
             {
                 error = errorMessage;
             }
 
 
-            public void handleAuthRevoked()
+            public void HandleAuthRevoked()
             {
                 authRevokedEvent = true;
             }
@@ -43,7 +43,7 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            mapper.map(new StreamingEvent("unknown", ""));
+            mapper.Map(new StreamingEvent("unknown", ""));
             Assert.IsNull(handler.error);
             Assert.IsNull(handler.updateEvent);
             Assert.IsFalse(handler.authRevokedEvent);
@@ -55,7 +55,7 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            mapper.map(new StreamingEvent("auth_revoked", ""));
+            mapper.Map(new StreamingEvent("auth_revoked", ""));
             Assert.IsNull(handler.error);
             Assert.IsNull(handler.updateEvent);
             Assert.IsTrue(handler.authRevokedEvent);
@@ -68,8 +68,8 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            String json = "{\"error\":\"unauthorized\",\"type\":\"auth-error\",\"message\":\"unauthorized\",\"instance\":\"2372e4af-c774-495f-b485-5e6a81aa27fe\",\"unknown\":\"ignore\"}";
-            mapper.map(new StreamingEvent("error", json));
+            string json = "{\"error\":\"unauthorized\",\"type\":\"auth-error\",\"message\":\"unauthorized\",\"instance\":\"2372e4af-c774-495f-b485-5e6a81aa27fe\",\"unknown\":\"ignore\"}";
+            mapper.Map(new StreamingEvent("error", json));
             Assert.IsNotNull(handler.error);
             Assert.AreEqual(handler.error.Error, "unauthorized");
             Assert.AreEqual(handler.error.Type, "auth-error");
@@ -84,8 +84,8 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            String json = "{\"error\":\"unauthorized\"";
-            mapper.map(new StreamingEvent("error", json));
+            string json = "{\"error\":\"unauthorized\"";
+            mapper.Map(new StreamingEvent("error", json));
         }
 
         [TestMethod]
@@ -94,9 +94,9 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            String json = LoadString(TEST_GLOBAL_UPDATE_JSON);
+            string json = LoadString(TEST_GLOBAL_UPDATE_JSON);
 
-            mapper.map(new StreamingEvent("put", json));
+            mapper.Map(new StreamingEvent("put", json));
             Assert.IsNull(handler.error);
             Assert.IsFalse(handler.authRevokedEvent);
             GlobalUpdate eventData = handler.updateEvent;
@@ -119,7 +119,7 @@ namespace Elton.Nest.Tests.Models
             var handler = new DummyEventHandler();
             var mapper = new ObjectModelMapper(handler);
 
-            mapper.map(new StreamingEvent("put", "{\"devices\":\"cameras\":{}"));
+            mapper.Map(new StreamingEvent("put", "{\"devices\":\"cameras\":{}"));
         }
     }
 }

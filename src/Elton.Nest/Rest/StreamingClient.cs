@@ -24,7 +24,7 @@ namespace Elton.Nest.Rest
 {
     public interface StreamingClient
     {
-        bool start(string accessToken);
-        void stop();
+        bool Start(string accessToken);
+        void Stop();
     }
 }

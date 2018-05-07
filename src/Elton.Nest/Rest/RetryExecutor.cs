@@ -34,14 +34,14 @@ namespace Elton.Nest.Rest
             this.backOff = backOff;
         }
 
-        internal void reset()
+        internal void Reset()
         {
-            backOff.reset();
+            backOff.Reset();
         }
 
         internal void schedule<T>(Action<T> consumer, T value)
         {
-            long delay = backOff.nextInterval();
+            long delay = backOff.NextInterval();
 
             timer.Elapsed += (sender, args) =>
             {
