@@ -182,9 +182,9 @@ namespace Elton.Nest
                 };
 
                 config = JsonConvert.DeserializeAnonymousType(jsonString, config);
-                this.SetClientId(config.client_id)
-                    .clientSecret(config.client_secret)
-                    .redirectURL(config.redirect_url);
+                this.SetClientId((string)config.client_id)
+                    .SetClientSecret((string)config.client_secret)
+                    .SetRedirectUrl((string)config.redirect_url);
                     //.SetStateValue(config.state_value);
 
                 return this;

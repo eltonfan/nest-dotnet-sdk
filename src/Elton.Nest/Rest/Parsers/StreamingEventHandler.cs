@@ -28,5 +28,9 @@ namespace Elton.Nest.Rest.Parsers
         void HandleData(GlobalUpdate eventData);
         void HandleError(ErrorMessage errorMessage);
         void HandleAuthRevoked();
+
+        void HandleValueAdded(string path, string data);
+        void HandleValueChanged(string path, string data, string oldData);
+        void HandleValueRemoved(string path);
     }
 }

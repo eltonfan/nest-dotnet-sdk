@@ -35,6 +35,18 @@ namespace Elton.Nest.Tests.Models
             {
                 authRevokedEvent = true;
             }
+
+            public void HandleValueAdded(string path, string data)
+            {
+            }
+
+            public void HandleValueChanged(string path, string data, string oldData)
+            {
+            }
+
+            public void HandleValueRemoved(string path)
+            {
+            }
         }
 
         [TestMethod]

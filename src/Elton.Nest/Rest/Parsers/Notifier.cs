@@ -38,6 +38,11 @@ namespace Elton.Nest.Rest.Parsers
 
         public event EventHandler<NestAuthRevokedEventArgs> AuthRevoked;
 
+
+        public event EventHandler<ValueAddedEventArgs> ValueAdded;
+        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+        public event EventHandler<ValueRemovedEventArgs> ValueRemoved;
+
         public void HandleData(GlobalUpdate eventData)
         {
             GlobalUpdated?.Invoke(this, new NestGlobalEventArgs(eventData));
@@ -61,6 +66,21 @@ namespace Elton.Nest.Rest.Parsers
         public void HandleAuthRevoked()
         {
             AuthRevoked?.Invoke(this, new NestAuthRevokedEventArgs());
+        }
+
+        public void HandleValueAdded(string path, string data)
+        {
+            ValueAdded?.Invoke(this, new ValueAddedEventArgs(path, data));
+        }
+
+        public void HandleValueChanged(string path, string data, string oldData)
+        {
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(path, data, oldData));
+        }
+
+        public void HandleValueRemoved(string path)
+        {
+            ValueRemoved?.Invoke(this, new ValueRemovedEventArgs(path));
         }
     }
 }

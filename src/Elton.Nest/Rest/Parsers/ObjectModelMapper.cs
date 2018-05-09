@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -29,11 +30,31 @@ using System.Text;
 
 namespace Elton.Nest.Rest.Parsers
 {
+    internal class CacheNode
+    {
+        readonly ConcurrentDictionary<string, CacheNode> dicNodes = new ConcurrentDictionary<string, CacheNode>();
+
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public CacheNode Parent { get; set; }
+        public bool Created { get; set; }
+
+        public CacheNode(CacheNode parent = null, string name = null, bool created = false)
+        {
+            this.Parent = parent;
+            this.Name = name;
+            this.Created = created;
+        }
+
+        public ConcurrentDictionary<string, CacheNode> Children => dicNodes;
+    }
 
     public class ObjectModelMapper : Mapper
     {
         readonly StreamingEventHandler eventHandler;
-
+        readonly CacheNode rootNode = new CacheNode(null, null, false);
+        readonly object lockedObj = new object();
+        readonly char[] _seperator = { '/' };
         public ObjectModelMapper(StreamingEventHandler handler)
         {
             this.eventHandler = handler;
@@ -132,7 +153,6 @@ namespace Elton.Nest.Rest.Parsers
                     metadata.FirstOrDefault()));
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -161,6 +181,18 @@ namespace Elton.Nest.Rest.Parsers
             {
                 case "put":
                     mapData(eventData.Message);
+
+                    //Updates the firebase cache.
+                    //Note that the patch event is not supported in the Nest API.
+                    using (var r = new StringReader(eventData.Message))
+                    using (var reader = new JsonTextReader(r))
+                    {
+                        ReadToNamedPropertyValue(reader, "path");
+                        reader.Read();
+
+                        string path = reader.Value.ToString();
+                        UpdateCache(path, ReadToNamedPropertyValue(reader, "data"));
+                    }
                     break;
                 case "auth_revoked":
                     eventHandler.HandleAuthRevoked();
@@ -169,6 +201,160 @@ namespace Elton.Nest.Rest.Parsers
                     mapError(eventData.Message);
                     break;
             }
+        }
+        
+        private JsonReader ReadToNamedPropertyValue(JsonReader reader, string property)
+        {
+            while (reader.Read() && reader.TokenType != JsonToken.PropertyName)
+            {
+                // skip the property
+            }
+
+            string prop = reader.Value.ToString();
+            if (property != prop)
+            {
+                throw new InvalidOperationException("Error parsing response.  Expected json property named: " + property);
+            }
+
+            return reader;
+        }
+
+        public void UpdateCache(string path, JsonReader data, bool replace = false)
+        {
+            lock (lockedObj)
+            {
+                CacheNode root = FindRoot(path);
+                UpdateChildren(root, data, replace);
+            }
+        }
+
+        internal CacheNode Root => rootNode;
+
+        CacheNode FindRoot(string path)
+        {
+            var segments = path.Split(_seperator, StringSplitOptions.RemoveEmptyEntries);
+            var root = rootNode;
+            foreach (string segment in segments)
+                root = GetNamedChild(root, segment);
+
+            return root;
+        }
+
+
+        private static CacheNode GetNamedChild(CacheNode root, string segment)
+        {
+            if (!root.Children.TryGetValue(segment, out CacheNode newRoot))
+            {
+                newRoot = new CacheNode { Name = segment, Parent = root, Created = true };
+                root.Children.TryAdd(newRoot.Name, newRoot);
+            }
+
+            return newRoot;
+        }
+
+        private void UpdateChildren(CacheNode root, JsonReader reader, bool replace = false)
+        {
+            if (replace)
+            {
+                DeleteChild(root);
+
+                // if we just deleted this, we need to wire it back up
+                root.Parent?.Children.TryAdd(root.Name, root);
+            }
+
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonToken.PropertyName:
+                        UpdateChildren(GetNamedChild(root, reader.Value.ToString()), reader);
+                        break;
+                    case JsonToken.Boolean:
+                    case JsonToken.Bytes:
+                    case JsonToken.Date:
+                    case JsonToken.Float:
+                    case JsonToken.Integer:
+                    case JsonToken.String:
+                        if (root.Created)
+                        {
+                            root.Value = reader.Value.ToString();
+                            eventHandler.HandleValueAdded(PathFromRoot(root), reader.Value.ToString());
+                            root.Created = false;
+                        }
+                        else
+                        {
+                            string oldData = root.Value;
+                            string newData = reader.Value.ToString();
+                            if (oldData != newData)
+                            {
+                                root.Value = newData;
+                                eventHandler.HandleValueChanged(PathFromRoot(root), newData, oldData);
+                            }
+                        }
+
+                        return;
+                    case JsonToken.Null:
+                        DeleteChild(root);
+                        return;
+                    default:
+                        // do nothing
+                        break;
+                }
+            }
+        }
+
+        private void DeleteChild(CacheNode root)
+        {
+            // if we're not the root, delete this from the parent
+            if (root.Parent != null)
+            {
+                if(root.Parent?.Children.TryRemove(root.Name, out _)??false)
+                {//exists
+                    eventHandler.HandleValueRemoved(PathFromRoot(root));
+                }
+            }
+            else
+            {
+                // we just cleared out the root - so delete all
+                // the children one-by-one (so events fire in proper order)
+                // we're modifying the collection, so ToArray
+                foreach (var child in root.Children.Values.ToArray())
+                {
+                    child.Parent?.Children.TryRemove(child.Name, out _);
+                    eventHandler.HandleValueRemoved(PathFromRoot(child));
+                }
+            }
+        }
+
+        // dont' need a lock since access is serialized
+        readonly LinkedList<CacheNode> _pathFromRootList = new LinkedList<CacheNode>();
+        private string PathFromRoot(CacheNode root)
+        {
+            // track the sizeso when we allocate our builder we get the right size up front
+            int size = 1;
+
+            while (root.Name != null)
+            {
+                size += root.Name.Length + 1;
+                _pathFromRootList.AddFirst(root);
+                root = root.Parent;
+
+            }
+
+            if (_pathFromRootList.Count == 0)
+            {
+                return "/";
+            }
+
+            StringBuilder sb = new StringBuilder(size);
+            foreach (CacheNode d in _pathFromRootList)
+            {
+                sb.AppendFormat("/{0}", d.Name);
+            }
+
+            _pathFromRootList.Clear();
+
+            return sb.ToString();
         }
     }
 }
