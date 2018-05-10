@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Elton.Nest
 {
-    public class Oauth2FlowHandler
+    public class Oauth2FlowHandler : IDisposable
     {
         const string KEY_ACCESS_TOKEN = "access_token_key";
         const string REVOKE_TOKEN_PATH = "oauth2/access_tokens/";
@@ -43,33 +43,10 @@ namespace Elton.Nest
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Sets the Nest configuration values used for authentication.
-        /// </summary>
-        /// <param name="clientId">The Nest client ID.</param>
-        /// <param name="clientSecret">The Nest client secret.</param>
-        /// <param name="redirectUrl">The Nest redirect URL.</param>
-        public void setConfig(string clientId, string clientSecret, string redirectUrl)
+        public NestConfig Config
         {
-            oauth2Config = new NestConfig.Builder().SetClientId(clientId)
-                    .SetClientSecret(clientSecret)
-                    .SetRedirectUrl(redirectUrl)
-                    .Build();
-        }
-
-        /// <summary>
-        /// Returns a <see cref="NestConfig"/> object containing the currently set credentials. If there are no
-        /// credentials set, returns null.
-        /// </summary>
-        /// <value">a <see cref="NestConfig"/> object containing current config values, or null if unset.</value>
-        public NestConfig Config => oauth2Config;
-
-        /// <summary>
-        /// Clears the currently stored credentials.
-        /// </summary>
-        public void clearConfig()
-        {
-            oauth2Config = null;
+            get => oauth2Config;
+            set => oauth2Config = value;
         }
 
         /// <summary>
@@ -100,7 +77,7 @@ namespace Elton.Nest
         /// </summary>
         /// <param name="token">The token to revoke.</param>
         /// <param name="callback">A callback for the result of the revocation.</param>
-        public void revokeToken(NestToken token, Callback callback)
+        public void RevokeToken(NestToken token, Callback callback)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete,
                 requestUri: NestApiUrls.AUTHORIZATION_SERVER_URL + REVOKE_TOKEN_PATH + token.Token);
@@ -165,6 +142,11 @@ namespace Elton.Nest
                 if (response != null)
                     response.Dispose();
             }
+        }
+
+        public void Dispose()
+        {
+            //do nothing.
         }
     }
 }

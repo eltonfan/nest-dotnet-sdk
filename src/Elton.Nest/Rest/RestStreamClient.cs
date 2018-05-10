@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace Elton.Nest.Rest
 {
-    public class RestStreamClient : StreamingClient
+    public class RestStreamClient : StreamingClient, IDisposable
     {
         static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(RestStreamClient));
 
@@ -37,22 +37,26 @@ namespace Elton.Nest.Rest
         private string token = null;
         bool started = false;
         readonly string apiUrl;
-        readonly Parser parser;
         readonly HttpClient httpClient;
+        readonly RestConfig restConfig;
+        readonly Parser parser;
         readonly RetryExecutor retryExecutor;
         readonly ExceptionHandler exceptionHandler;
 
         Task executorTask = null;
         CancellationTokenSource cancellationTokenSource = null;
-        private RestStreamClient(Builder builder)
+        public RestStreamClient(HttpClient httpClient, RestConfig restConfig, Parser parser,
+            BackOff backOff = default, ExceptionHandler exceptionHandler = null)
         {
-            this.parser = builder.Parser;
-            this.httpClient = builder.HttpClient;
-            this.exceptionHandler = builder.ExceptionHandler;
-            this.apiUrl = builder.RestConfig.GetUrl();
-            this.retryExecutor = new RetryExecutor(builder.BackOff);
-        }
+            this.httpClient = httpClient;
+            this.restConfig = restConfig;
+            this.parser = parser;
+            this.retryExecutor = new RetryExecutor(backOff??new FibonacciBackOff.Builder().build());
+            this.exceptionHandler = exceptionHandler;
 
+            this.apiUrl = restConfig.GetUrl();
+        }
+        
         public bool Start(string accessToken)
         {
             if (started)
@@ -78,6 +82,12 @@ namespace Elton.Nest.Rest
 
             cancellationTokenSource.Cancel();
             httpClient.CancelPendingRequests(); //httpClient.dispatcher().cancelAll();
+        }
+
+        public void Dispose()
+        {
+            Stop();
+            httpClient?.Dispose();
         }
 
         private class Reader
@@ -166,46 +176,6 @@ namespace Elton.Nest.Rest
                             owner.token);
                     }
                 }
-            }
-        }
-
-        public class Builder
-        {
-            readonly Parser parser;
-            readonly RestConfig restConfig;
-            readonly HttpClient httpClient;
-            private BackOff backOff = new FibonacciBackOff.Builder().build();
-            private ExceptionHandler exceptionHandler;
-
-            internal Parser Parser => parser;
-            internal RestConfig RestConfig => restConfig;
-            internal HttpClient HttpClient => httpClient;
-            internal BackOff BackOff => backOff;
-            internal ExceptionHandler ExceptionHandler => exceptionHandler;
-
-            public Builder setBackOff(BackOff backOff)
-            {
-                this.backOff = backOff;
-                return this;
-            }
-
-
-            public Builder setExceptionHandler(ExceptionHandler exceptionHandler)
-            {
-                this.exceptionHandler = exceptionHandler;
-                return this;
-            }
-
-            public Builder(HttpClient httpClient, RestConfig restConfig, Parser parser)
-            {
-                this.parser = parser;
-                this.restConfig = restConfig;
-                this.httpClient = httpClient;
-            }
-
-            public RestStreamClient build()
-            {
-                return new RestStreamClient(this);
             }
         }
     }

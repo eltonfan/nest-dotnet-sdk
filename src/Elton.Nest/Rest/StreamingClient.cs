@@ -22,7 +22,7 @@ using System.Text;
 
 namespace Elton.Nest.Rest
 {
-    public interface StreamingClient
+    public interface StreamingClient : IDisposable
     {
         bool Start(string accessToken);
         void Stop();

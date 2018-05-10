@@ -4,6 +4,7 @@ using Elton.Nest;
 using Elton.Nest.Models;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace NestMonitoringConsole
@@ -28,79 +29,72 @@ namespace NestMonitoringConsole
 
         static void Main(string[] args)
         {
-            var instance = new Program();
-
-            var tokenConfig = instance.settings.Read<NestToken>("nest.token");
-            if (tokenConfig == null)
-            {
-                instance.Login();
-                tokenConfig = instance.settings.Read<NestToken>("nest.token");
-            }
-
-            instance.StartMonitoring(tokenConfig);
-        }
-
-        readonly Settings settings;
-        readonly NestConfig nestConfig;
-        readonly NestClient nest;
-        public Program()
-        {
             log.Info($"Nest DotNet SDK v{NestClient.SdkVersion}");
 
-            var configPath = Path.Combine(
-                Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"data\");
-            settings = new Settings(configPath);
+            var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"data\");
+            var settings = new Settings(configPath);
 
-            //var nestConfig = new NestConfig.Builder()
-            //    .clientID("** client_id **")
-            //    .clientSecret("** client_secret **")
-            //    .redirectURL("** redirect_url **")
-            //    .build();
-            nestConfig = new NestConfig.Builder()
-                 .FromJsonString(settings.ReadJson("nest"))
-                 .Build();
+            //var nestConfig = new NestConfig(
+            //    clientId: "<client_id>",
+            //    clientSecret: "<client_secret>",
+            //    redirectUrl: "<redirect_url>");
+            var nestConfig = NestConfig.FromJson(settings.ReadJson("nest"));
 
+            using (var nest = new NestClient(nestConfig))
+            {
+                //load or create token
+                var tokenConfig = settings.Read<NestToken>("nest.token");
+                if (string.IsNullOrEmpty(tokenConfig?.Token))
+                {//
+                    tokenConfig = nest.CreateToken(nestConfig);
+                    settings.Write("nest.token", tokenConfig);
+                }
 
-            nest = new NestClient();
-            nest.oauth2.setConfig(
-               nestConfig.ClientId, nestConfig.ClientSecret, nestConfig.RedirectUrl);
-            nest.Error += (args) =>
-            {
-                log.Info($"NEST ERROR: {args?.StackTrace}");
-            };
-            nest.Notifier.Error += (sender, args) =>
-            {
-                log.Info($"NEST ERROR: {args?.Error}");
-            };
-            nest.Notifier.GlobalUpdated += (sender, args) =>
-            {
-                log.Info($"NEST UPDATE: {args?.Data}");
-            };
+                nest.StartWithToken(tokenConfig.Token);
 
-            nest.Notifier.ValueAdded += (sender, args) =>
-            {
-                log.Info($"VALUE ADDED: {args?.Path} = {args?.Data}");
-            };
-            nest.Notifier.ValueChanged += (sender, args) =>
-            {
-                log.Info($"VALUE CHANGED: {args?.Path} = {args?.OldData} -> {args?.Data}");
-            };
-            nest.Notifier.ValueRemoved += (sender, args) =>
-            {
-                log.Info($"VALUE REMOVED: {args?.Path}");
-            };
+                ExecuteExample(nest, new Example1());
+
+                ExecuteAllExamples(nest);
+            }
         }
 
-        public void StartMonitoring(NestToken tokenConfig)
+        static void ExecuteExample(NestClient client, IExample example)
         {
-            nest.startWithToken(tokenConfig.Token);
-            log.Info("Monitor running. Presss ENTER to exit.");
+            var exampleName = example.GetType().GetCustomAttribute<ExampleAttribute>()?.Name ?? example.GetType().Name;
 
-            //nest.Thermostats.setHVACMode(thermostatId_LivingRoom, "cool");
-            //nest.Thermostats.setTargetTemperatureC(thermostatId_LivingRoom, 23.5);//in half degrees Celsius (0.5℃).
+            log.Info($"--------------------------------------------------------------------------------");
+            log.Info($"---------------- EXAMPLE \"{exampleName}\" START");
 
-            Console.ReadLine();
-            log.Info("Monitor exit.");
+            try
+            {
+                example.Execute(client);
+            }
+            catch(Exception ex)
+            {
+                log.Error("Failed to execute \"{exampleName}\".", ex);
+            }
+            finally
+            {
+                log.Info($"---------------- EXAMPLE \"{exampleName}\" END");
+                log.Info($"--------------------------------------------------------------------------------");
+                log.Info($"Presss ENTER to continue.");
+
+                Console.ReadLine();
+            }
+        }
+
+        static void ExecuteAllExamples(NestClient nest)
+        {
+            foreach (var type in Assembly.GetExecutingAssembly().GetExportedTypes())
+            {
+                if (type.GetCustomAttribute<ExampleAttribute>() == null)
+                    continue;
+                var instance = Activator.CreateInstance(type) as IExample;
+                if (instance == null)
+                    continue;
+
+                ExecuteExample(nest, instance);
+            }
         }
     }
 }

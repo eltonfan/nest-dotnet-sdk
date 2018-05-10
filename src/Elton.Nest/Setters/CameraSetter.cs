@@ -27,7 +27,7 @@ namespace Elton.Nest.Setters
 {
     public class CameraSetter
     {
-        static string getPath(string cameraId)
+        static string GetPath(string cameraId)
         {
             return new Utils.PathBuilder()
                     .Append(Constants.KEY_DEVICES)
@@ -48,19 +48,9 @@ namespace Elton.Nest.Setters
         /// <param name="cameraId">The unique identifier of the camera.</param>
         /// <param name="isStreaming">true to turn streaming on, false to turn streaming off.</param>
         /// <param name="callback">A <see cref="Callback"/> to receive whether the change was successful.</param>
-        public void setIsStreaming(string cameraId, bool isStreaming, Callback callback)
+        public void SetIsStreaming(string cameraId, bool isStreaming, Callback callback = null)
         {
-            restClient.WriteBoolean(getPath(cameraId), Camera.KEY_IS_STREAMING, isStreaming, callback);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="Camera"/> streaming status on or off.
-        /// </summary>
-        /// <param name="cameraId">The unique identifier of the camera.</param>
-        /// <param name="isStreaming">true to turn streaming on, false to turn streaming off.</param>
-        public void setIsStreaming(string cameraId, bool isStreaming)
-        {
-            setIsStreaming(cameraId, isStreaming, null);
+            restClient.WriteBoolean(GetPath(cameraId), Camera.KEY_IS_STREAMING, isStreaming, callback);
         }
     }
 }

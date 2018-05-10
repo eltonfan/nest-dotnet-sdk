@@ -37,59 +37,86 @@ namespace Elton.Nest
         public const string KEY_REDIRECT_URL = "redirect_url";
         public const string KEY_STATE_VALUE = "state_value";
 
-        private string clientId;
-        private string clientSecret;
-        private string stateValue;
-        private string redirectUrl;
+        readonly static Random random = new Random();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NestConfig" /> class.
+        /// </summary>
+        public NestConfig(string clientId = default, string clientSecret = default, string redirectUrl = default)
+        {
+            this.ClientId = clientId;
+            this.ClientSecret = clientSecret;
+            this.RedirectUrl = redirectUrl;
+
+            this.StateValue = $"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next();
+        }
+
+        public static NestConfig FromJson(string jsonString)
+        {
+            dynamic config = new
+            {
+                client_id = "",
+                client_secret = "",
+                redirect_url = "",
+                state_value = "",
+            };
+
+            config = JsonConvert.DeserializeAnonymousType(jsonString, config);
+
+            return new NestConfig(
+                (string)config.client_id,
+                config.client_secret,
+                (string)config.redirect_url);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NestConfig" /> class.
         /// </summary>
         private NestConfig(Builder builder)
         {
-            this.clientId = builder.ClientId;
-            this.stateValue = builder.State;
-            this.clientSecret = builder.ClientSecret;
-            this.redirectUrl = builder.RedirectUrl;
+            this.ClientId = builder.ClientId;
+            this.StateValue = builder.State;
+            this.ClientSecret = builder.ClientSecret;
+            this.RedirectUrl = builder.RedirectUrl;
         }
 
         /// <summary>
         /// Returns the client id.
         /// </summary>
         /// <value>the client id.</value>
-        public string ClientId => clientId;
+        public string ClientId { get; private set; }
 
         /// <summary>
         /// Returns the state value. This is randomly generated for each <see cref="NestConfig"/>.
         /// </summary>
         /// <value>the state value.</value>
-        public string StateValue => stateValue;
+        public string StateValue { get; private set; }
 
         /// <summary>
         /// Returns the client secret. Keep this secret safe.
         /// </summary>
         /// <value>the client secret.</value>
-        public string ClientSecret => clientSecret;
+        public string ClientSecret { get; private set; }
 
         /// <summary>
         /// Returns the redirect URL. Must match the redirect URL set in the Nest developer portal.
         /// </summary>
         /// <value>the redirect URL.</value>
-        public string RedirectUrl => redirectUrl;
+        public string RedirectUrl { get; private set; }
 
         public override string ToString()
         {
             try
             {
                 var json = new JObject();
-                json.Add(KEY_CLIENT_ID, clientId);
-                json.Add(KEY_CLIENT_SECRET, clientSecret);
-                json.Add(KEY_REDIRECT_URL, redirectUrl);
-                json.Add(KEY_STATE_VALUE, stateValue);
+                json.Add(KEY_CLIENT_ID, ClientId);
+                json.Add(KEY_CLIENT_SECRET, ClientSecret);
+                json.Add(KEY_REDIRECT_URL, RedirectUrl);
+                json.Add(KEY_STATE_VALUE, StateValue);
 
                 return json.ToString();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return base.ToString();
             }
@@ -116,15 +143,10 @@ namespace Elton.Nest
         /// </summary>
         public class Builder
         {
-            string clientId;
-            string clientSecret;
-            string redirectUrl;
-            string stateValue;
-
-            public string ClientId => clientId;
-            public string ClientSecret => clientSecret;
-            public string RedirectUrl => redirectUrl;
-            public string State => stateValue;
+            public string ClientId { get; private set; }
+            public string ClientSecret { get; private set; }
+            public string RedirectUrl { get; private set; }
+            public string State { get; private set; }
 
             /// <summary>
             /// Sets the client id.
@@ -133,7 +155,7 @@ namespace Elton.Nest
             /// <returns>the <see cref="Builder"/> instance.</returns>
             public Builder SetClientId(string id)
             {
-                clientId = id;
+                ClientId = id;
                 return this;
             }
 
@@ -144,7 +166,7 @@ namespace Elton.Nest
             /// <returns>the <see cref="Builder"/> instance.</returns>
             public Builder SetClientSecret(string secret)
             {
-                clientSecret = secret;
+                ClientSecret = secret;
                 return this;
             }
 
@@ -155,7 +177,7 @@ namespace Elton.Nest
             /// <returns>the <see cref="Builder"/> instance.</returns>
             public Builder SetRedirectUrl(string url)
             {
-                redirectUrl = url;
+                RedirectUrl = url;
                 return this;
             }
 
@@ -167,7 +189,7 @@ namespace Elton.Nest
             /// <returns>the <see cref="Builder"/> instance.</returns>
             private Builder SetState(string state)
             {
-                this.stateValue = state;
+                this.State = state;
                 return this;
             }
 
@@ -200,8 +222,6 @@ namespace Elton.Nest
                 SetState($"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next());
                 return new NestConfig(this);
             }
-
-            readonly static Random random = new Random();
         }
     }
 }

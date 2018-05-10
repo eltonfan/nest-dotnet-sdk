@@ -26,7 +26,7 @@ using System.Text;
 
 namespace Elton.Nest.Rest
 {
-    public class RestClient
+    public class RestClient : IDisposable
     {
         readonly string baseApiUrl;
         string redirectApiUrl = null;
@@ -35,11 +35,11 @@ namespace Elton.Nest.Rest
         readonly HttpClient httpClient;
         static readonly Callback callbackStub = new Callback();
 
-        public RestClient(HttpClient httpClient, RestConfig restConfig, Parser parser)
+        public RestClient(HttpClient httpClient, string baseApiUrl, Parser parser)
         {
             this.httpClient = httpClient;
             this.parser = parser;
-            this.baseApiUrl = restConfig.GetUrl();
+            this.baseApiUrl = baseApiUrl;
         }
 
         public void SetToken(string token)
@@ -125,6 +125,11 @@ namespace Elton.Nest.Rest
             {
                 internalCallback.OnFailure?.Invoke(new NestException("Write request failed.", ex));
             }
+        }
+
+        public void Dispose()
+        {
+            httpClient?.Dispose();
         }
     }
 }

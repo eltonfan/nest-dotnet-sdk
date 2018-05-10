@@ -12,11 +12,25 @@ using System.Threading;
 
 namespace NestMonitoringConsole
 {
-    partial class Program
+    public class TokenGetter
     {
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         readonly AutoResetEvent resetEvent = new AutoResetEvent(false);
-        readonly string redirectUri = "http://localhost:6063/4818523d0d5a432487a85ef230b67b22";
-        public void Login()
+
+        readonly NestClient nestClient;
+        readonly NestConfig nestConfig;
+        readonly string redirectUri;
+        volatile NestToken nestToken;
+        public TokenGetter(NestClient nestClient, NestConfig nestConfig, string redirectUri)
+        {
+            this.nestClient = nestClient;
+            this.nestConfig = nestConfig;
+            this.redirectUri = redirectUri;
+
+            this.nestToken = null;
+        }
+
+        public NestToken GetToken()
         {
             resetEvent.Reset();
 
@@ -24,10 +38,12 @@ namespace NestMonitoringConsole
 
             var url = NestApiUrls.GetClientCodeUrl(nestConfig.ClientId, nestConfig.StateValue, redirectUri);
             OpenBrowser(url);
-
             resetEvent.WaitOne();
+
+            return this.nestToken;
         }
-        public static void OpenBrowser(string url)
+
+        static void OpenBrowser(string url)
         {
             try
             {
@@ -55,8 +71,8 @@ namespace NestMonitoringConsole
                 }
             }
         }
-        HttpListener httpListener = new HttpListener();
 
+        HttpListener httpListener = new HttpListener();
         void StartHttpListener()
         {
 
@@ -95,10 +111,9 @@ namespace NestMonitoringConsole
                         string authorizeCode = queryString["code"];
                         log.Info("authorizeCode: " + authorizeCode);
 
-                        var token = nest.oauth2.CreateToken(authorizeCode);
-                        settings.Write<NestToken>("nest.token", token);
+                        this.nestToken = nestClient.CreateToken(authorizeCode);
 
-                        log.Info("AccessToken: " + token.Token);
+                        log.Info("AccessToken: " + nestToken?.Token);
 
                         httpListenerContext.Response.StatusCode = 200;
                         title = "Finished";
@@ -131,6 +146,16 @@ namespace NestMonitoringConsole
                 .Replace("%desc%", desc);
 
             writer.Write(html);
+        }
+    }
+
+    public static class NestExtensions
+    {
+        const string REDIRECT_URI = "http://localhost:6063/4818523d0d5a432487a85ef230b67b22";
+        public static NestToken CreateToken(this NestClient nest, NestConfig config)
+        {
+            var getter = new TokenGetter(nest, config, REDIRECT_URI);
+            return getter.GetToken();
         }
     }
 }

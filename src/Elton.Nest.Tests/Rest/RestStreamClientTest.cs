@@ -15,7 +15,7 @@ namespace Elton.Nest.Tests
         [ExpectedException(typeof(MissingTokenException))]
         public void testStartWithNull_shouldThrowMissingTokenException()
         {
-            var client = new RestStreamClient.Builder(new HttpClient(), new RestConfig(), new DummyParser()).build();
+            var client = new RestStreamClient(new HttpClient(), new RestConfig(), new DummyParser());
             client.Start(null);
         }
 
@@ -23,7 +23,7 @@ namespace Elton.Nest.Tests
         [ExpectedException(typeof(MissingTokenException))]
         public void testStartWithEmpty_shouldThrowMissingTokenException()
         {
-            var client = new RestStreamClient.Builder(new HttpClient(), new RestConfig(), new DummyParser()).build();
+            var client = new RestStreamClient(new HttpClient(), new RestConfig(), new DummyParser());
             client.Start("");
         }
 

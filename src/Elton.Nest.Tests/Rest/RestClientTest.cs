@@ -15,7 +15,8 @@ namespace Elton.Nest.Tests
         [ExpectedException(typeof(MissingTokenException))]
         public void testSetTokenNull_expectMissingTokenException()
         {
-            var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
+            var baseUrl = new RestConfig().GetUrl();
+            var client = new RestClient(new HttpClient(), baseUrl, new DummyParser());
             client.SetToken(null);
         }
 
@@ -23,7 +24,8 @@ namespace Elton.Nest.Tests
         [ExpectedException(typeof(MissingTokenException))]
         public void testSetTokenEmpty_expectMissingTokenException()
         {
-            var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
+            var baseUrl = new RestConfig().GetUrl();
+            var client = new RestClient(new HttpClient(), baseUrl, new DummyParser());
             client.SetToken("");
         }
 
@@ -31,7 +33,8 @@ namespace Elton.Nest.Tests
         [ExpectedException(typeof(MissingTokenException))]
         public void testWrite_expectMissingTokenException()
         {
-            var client = new RestClient(new HttpClient(), new RestConfig(), new DummyParser());
+            var baseUrl = new RestConfig().GetUrl();
+            var client = new RestClient(new HttpClient(), baseUrl, new DummyParser());
             client.WriteDouble("path", "field", 0f, null);
         }
 
