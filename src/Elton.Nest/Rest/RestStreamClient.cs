@@ -43,7 +43,6 @@ namespace Elton.Nest.Rest
         readonly RetryExecutor retryExecutor;
         readonly ExceptionHandler exceptionHandler;
 
-        Task executorTask = null;
         CancellationTokenSource cancellationTokenSource = null;
         public RestStreamClient(HttpClient httpClient, RestConfig restConfig, Parser parser,
             BackOff backOff = default, ExceptionHandler exceptionHandler = null)

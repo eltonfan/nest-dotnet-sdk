@@ -116,7 +116,7 @@ namespace Elton.Nest
 
                 return json.ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return base.ToString();
             }
