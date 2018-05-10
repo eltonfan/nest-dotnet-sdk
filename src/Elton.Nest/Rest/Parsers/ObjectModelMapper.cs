@@ -51,6 +51,8 @@ namespace Elton.Nest.Rest.Parsers
 
     public class ObjectModelMapper : Mapper
     {
+        static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(typeof(ObjectModelMapper));
+
         readonly StreamingEventHandler eventHandler;
         readonly CacheNode rootNode = new CacheNode(null, null, false);
         readonly object lockedObj = new object();
@@ -181,18 +183,6 @@ namespace Elton.Nest.Rest.Parsers
             {
                 case "put":
                     mapData(eventData.Message);
-
-                    //Updates the firebase cache.
-                    //Note that the patch event is not supported in the Nest API.
-                    using (var r = new StringReader(eventData.Message))
-                    using (var reader = new JsonTextReader(r))
-                    {
-                        ReadToNamedPropertyValue(reader, "path");
-                        reader.Read();
-
-                        string path = reader.Value.ToString();
-                        UpdateCache(path, ReadToNamedPropertyValue(reader, "data"));
-                    }
                     break;
                 case "auth_revoked":
                     eventHandler.HandleAuthRevoked();
@@ -200,6 +190,37 @@ namespace Elton.Nest.Rest.Parsers
                 case "error":
                     mapError(eventData.Message);
                     break;
+            }
+
+            try
+            {
+                UpdateCache(eventData);
+            }
+            catch (InvalidOperationException ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        /// <summary>
+        /// Only support 'put' event. Json message format is <code>{ "path": "/", "data": { } }</code>
+        /// </summary>
+        /// <param name="eventData">The event data.</param>
+        public void UpdateCache(StreamingEvent eventData)
+        {
+            //Note that the patch event is not supported in the Nest API.
+            if (eventData.EventType != "put")
+                return;
+
+            //Updates the firebase cache.
+            using (var r = new StringReader(eventData.Message))
+            using (var reader = new JsonTextReader(r))
+            {
+                ReadToNamedPropertyValue(reader, "path");
+                reader.Read();
+
+                string path = reader.Value.ToString();
+                UpdateCache(path, ReadToNamedPropertyValue(reader, "data"));
             }
         }
         

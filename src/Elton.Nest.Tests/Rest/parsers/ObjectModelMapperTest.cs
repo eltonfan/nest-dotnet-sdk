@@ -10,6 +10,7 @@ namespace Elton.Nest.Tests.Models
     public class ObjectModelMapperTest : AbstractModelTest
     {
         const string TEST_GLOBAL_UPDATE_JSON = "/test-global-update.json";
+        const string TEST_GLOBAL_UPDATE_JSON_NEW = "/test-global-update-new.json";
 
         private class DummyEventHandler : StreamingEventHandler
         {
@@ -107,6 +108,30 @@ namespace Elton.Nest.Tests.Models
             var mapper = new ObjectModelMapper(handler);
 
             string json = LoadString(TEST_GLOBAL_UPDATE_JSON);
+
+            mapper.Map(new StreamingEvent("put", json));
+            Assert.IsNull(handler.error);
+            Assert.IsFalse(handler.authRevokedEvent);
+            GlobalUpdate eventData = handler.updateEvent;
+            Assert.IsNotNull(eventData);
+            Assert.IsNotNull(eventData.Devices);
+            Assert.IsNotNull(eventData.Metadata);
+            Assert.IsNotNull(eventData.Structures);
+            Assert.IsNotNull(eventData.Devices.Cameras);
+            Assert.IsNotNull(eventData.Devices.SmokeCOAlarms);
+            Assert.IsNotNull(eventData.Devices.Thermostats);
+            Assert.AreEqual(eventData.Devices.Cameras.Count, 1);
+            Assert.AreEqual(eventData.Devices.SmokeCOAlarms.Count, 1);
+            Assert.AreEqual(eventData.Devices.Thermostats.Count, 1);
+        }
+
+        [TestMethod]
+        public void testMap_shouldParseStructureEventWithPathNode()
+        {
+            var handler = new DummyEventHandler();
+            var mapper = new ObjectModelMapper(handler);
+
+            string json = LoadString(TEST_GLOBAL_UPDATE_JSON_NEW);
 
             mapper.Map(new StreamingEvent("put", json));
             Assert.IsNull(handler.error);

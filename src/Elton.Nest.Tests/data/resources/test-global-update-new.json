@@ -1,0 +1,266 @@
+﻿{
+  "path": "/",
+  "data": {
+    "devices": {
+      "thermostats": {
+        "peyiJNo0IldT2YlIVtYaGQ": {
+          "humidity": 60,
+          "locale": "en-US",
+          "temperature_scale": "C",
+          "is_using_emergency_heat": false,
+          "has_fan": true,
+          "software_version": "5.8-8",
+          "has_leaf": true,
+          "where_id": "Fqp6wJI...",
+          "device_id": "peyiJNo0IldT2YlIVtYaGQ",
+          "name": "Living Room",
+          "can_heat": true,
+          "can_cool": true,
+          "target_temperature_c": 21.5,
+          "target_temperature_f": 71,
+          "target_temperature_high_c": 26.0,
+          "target_temperature_high_f": 79,
+          "target_temperature_low_c": 20.0,
+          "target_temperature_low_f": 68,
+          "ambient_temperature_c": 22.0,
+          "ambient_temperature_f": 72,
+          "away_temperature_high_c": 24.0,
+          "away_temperature_high_f": 76,
+          "away_temperature_low_c": 10.0,
+          "away_temperature_low_f": 50,
+          "eco_temperature_high_c": 24.0,
+          "eco_temperature_high_f": 76,
+          "eco_temperature_low_c": 10.0,
+          "eco_temperature_low_f": 50,
+          "is_locked": false,
+          "locked_temp_min_c": 20.0,
+          "locked_temp_min_f": 68,
+          "locked_temp_max_c": 22.0,
+          "locked_temp_max_f": 72,
+          "sunlight_correction_active": false,
+          "sunlight_correction_enabled": true,
+          "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+          "fan_timer_active": false,
+          "fan_timer_timeout": "1970-01-01T00:00:00.000Z",
+          "fan_timer_duration": 15,
+          "previous_hvac_mode": "cool",
+          "hvac_mode": "eco",
+          "time_to_target": "~0",
+          "time_to_target_training": "ready",
+          "where_name": "Living Room",
+          "label": "",
+          "name_long": "Living Room Thermostat",
+          "is_online": true,
+          "last_connection": "2018-05-11T02:28:39.541Z",
+          "hvac_state": "off"
+        }
+      },
+      "smoke_co_alarms": {
+        "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs": {
+          "name": "Kitchen",
+          "locale": "en-US",
+          "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+          "software_version": "3.1.4rc3",
+          "where_id": "Fqp6wJI...",
+          "device_id": "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs",
+          "where_name": "Kitchen",
+          "name_long": "Kitchen Nest Protect",
+          "is_online": true,
+          "last_connection": "2018-05-11T02:05:46.434Z",
+          "battery_health": "ok",
+          "co_alarm_state": "ok",
+          "smoke_alarm_state": "ok",
+          "ui_color_state": "green",
+          "is_manual_test_active": false,
+          "last_manual_test_time": "2016-05-16T13:17:17.000Z"
+        }
+      },
+      "cameras": {
+        "awJo6rH0IldT2YlIVtYaGQ": {
+          "device_id": "awJo6rH...",
+          "software_version": "4.0",
+          "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+          "where_id": "d6reb_OZTM...",
+          "where_name": "Hallway",
+          "name": "Hallway (upstairs)",
+          "name_long": "Hallway Camera (upstairs)",
+          "is_online": true,
+          "is_streaming": true,
+          "is_audio_input_enabled": true,
+          "last_is_online_change": "2016-12-29T18:42:00.000Z",
+          "is_video_history_enabled": true,
+          "web_url": "https://home.nest.com/cameras/device_id?auth=access_token",
+          "app_url": "nestmobile://cameras/device_id?auth=access_token",
+          "is_public_share_enabled": true,
+          "activity_zones": [
+            {
+              "name": "Walkway",
+              "id": "244083"
+            }
+          ],
+          "public_share_url": "https://video.nest.com/live/STRING1?STRING2",
+          "snapshot_url": "STRING1/device_id/STRING2?auth=access_token",
+          "last_event": {
+            "has_sound": true,
+            "has_motion": true,
+            "has_person": true,
+            "start_time": "2016-12-29T00:00:00.000Z",
+            "end_time": "2016-12-29T18:42:00.000Z",
+            "urls_expire_time": "2016-10-31T23:59:59.000Z",
+            "web_url": "https://home.nest.com/cameras/device_id/cuepoints/STRING?auth=access_token",
+            "app_url": "nestmobile://cameras/device_id/cuepoints/STRING?auth=access_token",
+            "image_url": "STRING1/device_id/STRING2?auth=access_token",
+            "animated_image_url": "STRING1/device_id/STRING2?auth=access_token",
+            "activity_zone_ids": [
+              "244083"
+            ]
+          }
+        }
+      }
+    },
+    "structures": {
+      "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw": {
+        "smoke_co_alarms": [
+          "RTMTKxsQTCxzVcsySOHPxKoF4OyCifrs"
+        ],
+        "name": "9#606",
+        "country_code": "CN",
+        "postal_code": "315100",
+        "time_zone": "Asia/Shanghai",
+        "away": "away",
+        "thermostats": [
+          "peyiJNo0IldT2YlIVtYaGQ"
+        ],
+        "structure_id": "VqFabWH21nwVyd4RWgJgNb292wa7hG_dUwo2i2SG7j3-BOLY0BA4sw",
+        "rhr_enrollment": false,
+        "co_alarm_state": "ok",
+        "smoke_alarm_state": "ok",
+        "eta_begin": "1970-01-01T00:00:00.000Z",
+        "wwn_security_state": "ok",
+        "wheres": {
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Attic"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Back Door"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Backyard"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Basement"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Bathroom"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Bedroom"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Deck"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Den"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Dining Room"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Downstairs"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Driveway"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Entryway"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Family Room"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Front Door"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Front Yard"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Garage"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Guest House"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Guest Room"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Hallway"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Kids Room"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Kitchen"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Living Room"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Master Bedroom"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Office"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Outside"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Patio"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Shed"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Side Door"
+          },
+          "Fqp6wJI...": {
+            "where_id": "Fqp6wJI...",
+            "name": "Upstairs"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "access_token": "c.FmDPkzyzaQe...",
+      "client_version": 2,
+      "user_id": "z.1.1.MmQW..."
+    }
+  }
+}
