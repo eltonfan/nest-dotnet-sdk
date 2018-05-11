@@ -23,7 +23,7 @@ using System.Text;
 
 namespace Elton.Nest.Rest.Parsers
 {
-    public class Notifier : StreamingEventHandler
+    public class Notifier : StreamingEventHandler, IDisposable
     {
         public event EventHandler<NestGlobalEventArgs> GlobalUpdated;
         public event EventHandler<NestDeviceEventArgs> DeviceUpdated;
@@ -81,6 +81,25 @@ namespace Elton.Nest.Rest.Parsers
         public void HandleValueRemoved(string path)
         {
             ValueRemoved?.Invoke(this, new ValueRemovedEventArgs(path));
+        }
+
+        public void Dispose()
+        {
+            GlobalUpdated = null;
+            DeviceUpdated = null;
+            StructureUpdated = null;
+            ThermostatUpdated = null;
+            CameraUpdated = null;
+            SmokeCOAlarmUpdated = null;
+            MetadataUpdated = null;
+
+            AuthFailure = null;
+            Error = null;
+            AuthRevoked = null;
+
+            ValueAdded = null;
+            ValueChanged = null;
+            ValueRemoved = null;
         }
     }
 }

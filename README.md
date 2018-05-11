@@ -51,7 +51,20 @@ If you already have an access token, you can authenticate using that immediately
 This includes all devices, structures and metadata.
 
 ```csharp
-// TODO:
+//Subscribe to event
+var subscription = nest.WhenAnyUpdated().Subscribe(update =>
+{
+    Metadata metadata = update.Metadata;
+    var cameras = update.Cameras;
+    var smokeCOAlarms = update.SmokeCOAlarms;
+    var thermostats = update.Thermostats;
+    var structures = update.Structures;
+
+    // Handle updates here.
+});
+
+//Unsubscribe from event
+subscription.Dispose();
 ```
 
 ### Listen for changes to all devices
@@ -59,33 +72,60 @@ This includes all devices, structures and metadata.
 This includes all thermostats, smoke alarms and cameras.
 
 ```csharp
-// TODO:
+//Subscribe to event
+var subscription = nest.WhenDeviceUpdated().Subscribe(update =>
+{
+    var cameras = update.Cameras;
+    var smokeCOAlarms = update.SmokeCOAlarms;
+    var thermostats = update.Thermostats;
+
+    // Handle updates here.
+});
+
+//Unsubscribe from event
+subscription.Dispose();
 ```
 
 ### Listen for changes to specific device types
 
-#### All thermostats:
-
 ```csharp
-// TODO:
-```
+var listSubscriptions = new List<IDisposable>();
+IDisposable subscription;
 
-#### All smoke alarms:
+//All thermostats:
+subscription = nest.WhenThermostatUpdated().Subscribe(thermostats =>
+{
+    // Handle thermostat update...
+});
 
-```csharp
-// TODO:
-```
+//All smoke alarms:
+subscription = nest.WhenSmokeCOAlarmUpdated().Subscribe(thermostats =>
+{
+    // Handle smoke+co alarm update...
+});
 
-#### All cameras:
+//All cameras:
+subscription = nest.WhenCameraUpdated().Subscribe(thermostats =>
+{
+    // Handle camera update...
+});
 
-```csharp
-// TODO:
+//Unsubscribe from events
+foreach (var item in listSubscriptions)
+    subscription.Dispose();
 ```
 
 ### Listen to changes to all structures
 
 ```csharp
-// TODO:
+//Subscribe to event
+var subscription = nest.WhenStructureUpdated().Subscribe(structures =>
+{
+    // Handle structure update...
+});
+
+//Unsubscribe from event
+subscription.Dispose();
 ```
 
 ### Listen to metadata changes
@@ -93,21 +133,14 @@ This includes all thermostats, smoke alarms and cameras.
 This includes the access token and client version.
 
 ```csharp
-// TODO:
-```
+//Subscribe to event
+var subscription = nest.WhenMetadataUpdated().Subscribe(data =>
+{
+    // Handle metadata update... do action.
+});
 
-## Stop listening to changes
-
-Remove a specific listener.
-
-```csharp
-// TODO:
-```
-
-Remove all listeners.
-
-```csharp
-// TODO:
+//Unsubscribe from event
+subscription.Dispose();
 ```
 
 ## Set values and update devices / structures
@@ -119,7 +152,19 @@ Updating values on devices and structures is easy. Here are a few examples.
 [See the full list of possible Thermostat methods here.](https://nestlabs.github.io/android-sdk/index.html?com/nestlabs/sdk/ThermostatSetter.html)
 
 ```csharp
-// TODO:
+// Get id from Thermostat#getDeviceId
+String thermostatId = thermostat.DeviceId;
+
+// The temperature in Farhenheit to set. (Note: type long)
+long newTempF = 75;
+
+// Set thermostat target temp (in degrees F).
+nest.Thermostats.SetTargetTemperatureF(thermostatId, newTempF);
+
+float newTempC = 23.5F;
+
+//Set thermostat target temp, in half degrees Celsius
+nest.Thermostats.SetTargetTemperatureC(thermostatId, newTempC);
 ```
 
 ### Thermostat example with callback
@@ -127,7 +172,24 @@ Updating values on devices and structures is easy. Here are a few examples.
 [See the full list of possible Thermostat methods here.](https://nestlabs.github.io/android-sdk/index.html?com/nestlabs/sdk/ThermostatSetter.html)
 
 ```csharp
-// TODO:
+// Get id from Thermostat#getDeviceId
+string thermostatId = myThermostat.DeviceId;
+
+// The temperature in Celsius to set. (Note: type double)
+double newTempC = 22.5;
+
+// Set thermostat target temp (in degrees C) with an optional success callback.
+nest.Thermostats.SetTargetTemperatureC(thermostatId, newTempC, new Callback()
+{
+    OnSuccess = () =>
+    {
+        // The update to the thermostat succeeded.
+    },
+    OnFailure = (ex) =>
+    {
+        // The update to the thermostat failed.
+    },
+});
 ```
 
 ### Camera example
@@ -135,7 +197,11 @@ Updating values on devices and structures is easy. Here are a few examples.
 [See the full list of possible Camera methods here.](https://nestlabs.github.io/android-sdk/index.html?com/nestlabs/sdk/CameraSetter.html)
 
 ```csharp
-// TODO:
+// Get id from Camera#getDeviceId.
+string camId = myCamera.DeviceId;
+
+// Set camera to start streaming.
+nest.Cameras.SetIsStreaming(camId, true);
 ```
 
 ### Camera example with callback
@@ -143,7 +209,21 @@ Updating values on devices and structures is easy. Here are a few examples.
 [See the full list of possible Camera methods here.](https://nestlabs.github.io/android-sdk/index.html?com/nestlabs/sdk/CameraSetter.html)
 
 ```csharp
-// TODO:
+// Get id from Camera#getDeviceId.
+string camId = myCamera.DeviceId;
+
+// Set camera to start streaming with an optional success callback.
+nest.Cameras.SetIsStreaming(camId, true, new Callback()
+{
+    OnSuccess = () =>
+    {
+        // The update to the camera succeeded.
+    },
+    OnFailure = (ex) =>
+    {
+        // The update to the camera failed.
+    },
+});
 ```
 
 ## License
