@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Elton.Nest")]
-[assembly: AssemblyDescription(".NET Standard SDK for Nest's REST and Streaming APIs. Monitoring and control Nest Cam, Thermostat and Protect using C#.  https://nest.com")]
+[assembly: AssemblyDescription(".NET Standard SDK for Nest's REST and Streaming APIs. Monitoring and control Nest Cam, Thermostat and Protect using C#. https://nest.com")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

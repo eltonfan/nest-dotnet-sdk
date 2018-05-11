@@ -3,14 +3,22 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Authors>Elton FAN</Authors>
+    <Authors>eltonfan</Authors>
+    <Copyright>© 2018 Elton FAN (eltonfan@live.cn, http://elton.io)</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/eltonfan/nest-dotnet-sdk</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/eltonfan/nest-dotnet-sdk/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/eltonfan/nest-dotnet-sdk/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/eltonfan/nest-dotnet-sdk</RepositoryUrl>
     <PackageTags>nest-sdk nest-dotnet-sdk nest-thermostat nest-protect nest-cam nest-api nest-streaming-api dotnet-standard xamarin portable smart-home connected-home</PackageTags>
     <PackageId>Elton.Nest</PackageId>
+    <Title>Elton.Nest</Title>
+    <Version>1.0.0-alpha</Version>
+    <PackageVersion>1.0.0-alpha</PackageVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description>.NET Standard SDK for Nest's REST and Streaming APIs. Monitoring and control Nest Cam, Thermostat and Protect using C#. https://nest.com</Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
