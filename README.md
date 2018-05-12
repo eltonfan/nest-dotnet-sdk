@@ -32,8 +32,32 @@ user. This authorization is in the form of an **access token**.
 We must launch an OAuth 2.0 flow in order to get an access token initially. Then later, we can
 re-use that token.
 
+You need to implement OAuth flow to getting the authorization code, because different platforms have different ways.
+[NestMonitoringConsole](https://github.com/eltonfan/nest-dotnet-sdk/tree/master/examples/NestMonitoringConsole) is an example of Windows platform.
+
 ```csharp
-// TODO:
+// A request code you can verify later.
+string AUTH_TOKEN_REQUEST_CODE = "123";
+
+// Set the configuration values.
+var nestConfig = new NestConfig(
+    clientId: "client-id",
+    clientSecret: "client-secret",
+    redirectUrl: "https://redirect-url",
+    state: AUTH_TOKEN_REQUEST_CODE);
+var oauth2 = new Oauth2FlowHandler(nestConfig);
+
+// Launch the auth flow if you don't already have a token.
+var requestUrl = oauth2.GetClientCodeUrl();
+
+//TODO: GET requestUrl in webbrowser. different way on different platform
+// If authorized, you can receive resulting url that contains the authorization code.
+string resultingUrl = null;
+var authorizationCode = oauth2.ParseAuthorizationCode(resultingUrl);
+
+//receive the token
+var token = oauth2.CreateToken(authorizationCode);
+// Save the token to a safe place here so it can be re-used later.
 ```
 
 ### Re-using an existing access token
@@ -41,7 +65,25 @@ re-use that token.
 If you already have an access token, you can authenticate using that immediately.
 
 ```csharp
-// TODO:
+var nest = new NestClient();
+
+// Get the token string from your safe place.
+var token = "abc123";
+
+// Authenticate with an existing token.
+nest.StartWithToken(token);
+
+nest.WhenValueChanged()
+    .Subscribe(args =>
+    {
+        // Handle exceptions here.
+    });
+nest.WhenAuthRevoked()
+    .Subscribe(args =>
+    {
+        // Your previously authenticated connection has become unauthenticated.
+        // Recommendation: Relaunch an auth flow with nest.launchAuthFlow().
+    });
 ```
 
 ## Get values and listen for changes
@@ -54,7 +96,7 @@ This includes all devices, structures and metadata.
 //Subscribe to event
 var subscription = nest.WhenAnyUpdated().Subscribe(update =>
 {
-    Metadata metadata = update.Metadata;
+    var metadata = update.Metadata;
     var cameras = update.Cameras;
     var smokeCOAlarms = update.SmokeCOAlarms;
     var thermostats = update.Thermostats;
@@ -97,18 +139,21 @@ subscription = nest.WhenThermostatUpdated().Subscribe(thermostats =>
 {
     // Handle thermostat update...
 });
+listSubscriptions.Add(subscription);
 
 //All smoke alarms:
 subscription = nest.WhenSmokeCOAlarmUpdated().Subscribe(thermostats =>
 {
     // Handle smoke+co alarm update...
 });
+listSubscriptions.Add(subscription);
 
 //All cameras:
 subscription = nest.WhenCameraUpdated().Subscribe(thermostats =>
 {
     // Handle camera update...
 });
+listSubscriptions.Add(subscription);
 
 //Unsubscribe from events
 foreach (var item in listSubscriptions)
