@@ -42,13 +42,16 @@ namespace Elton.Nest
         /// <summary>
         /// Initializes a new instance of the <see cref="NestConfig" /> class.
         /// </summary>
-        public NestConfig(string clientId = default, string clientSecret = default, string redirectUrl = default)
+        public NestConfig(string clientId = default, string clientSecret = default, string redirectUrl = default, string state = null)
         {
             this.ClientId = clientId;
             this.ClientSecret = clientSecret;
             this.RedirectUrl = redirectUrl;
 
-            this.StateValue = $"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next();
+            if (state == null)
+                this.StateValue = $"app-state" + Stopwatch.GetTimestamp() + "-" + random.Next();
+            else
+                this.StateValue = state;
         }
 
         public static NestConfig FromJson(string jsonString)

@@ -6,26 +6,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
 namespace NestMonitoringConsole
 {
-    public class TokenGetter
+    public class TokenGetter : IDisposable
     {
         static readonly Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         readonly AutoResetEvent resetEvent = new AutoResetEvent(false);
 
-        readonly NestClient nestClient;
         readonly NestConfig nestConfig;
-        readonly string redirectUri;
+        readonly NestOauth2 oauth2;
         volatile NestToken nestToken;
-        public TokenGetter(NestClient nestClient, NestConfig nestConfig, string redirectUri)
+        public TokenGetter(NestConfig nestConfig)
         {
-            this.nestClient = nestClient;
+            this.oauth2 = new NestOauth2(nestConfig);
             this.nestConfig = nestConfig;
-            this.redirectUri = redirectUri;
 
             this.nestToken = null;
         }
@@ -36,7 +35,7 @@ namespace NestMonitoringConsole
 
             StartHttpListener();
 
-            var url = NestApiUrls.GetClientCodeUrl(nestConfig.ClientId, nestConfig.StateValue, redirectUri);
+            var url = oauth2.GetClientCodeUrl(nestConfig.RedirectUrl);
             OpenBrowser(url);
             resetEvent.WaitOne();
 
@@ -75,12 +74,11 @@ namespace NestMonitoringConsole
         HttpListener httpListener = new HttpListener();
         void StartHttpListener()
         {
-
-            var uriPrefix = new Uri(redirectUri).GetLeftPart(UriPartial.Authority) + "/";
+            var uriPrefix = new Uri(nestConfig.RedirectUrl).GetLeftPart(UriPartial.Authority) + "/";
             httpListener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
             httpListener.Prefixes.Add(uriPrefix);
             httpListener.Start();
-            new Thread(new ThreadStart(delegate
+            new Thread(() =>
             {
                 while (true)
                 {
@@ -88,54 +86,36 @@ namespace NestMonitoringConsole
 
                     var queryString = httpListenerContext.Request.QueryString;
 
-                    string title = "";
-                    string desc = "";
                     try
                     {
-                        if (!string.IsNullOrEmpty(queryString["error"]))
-                        {
-                            httpListenerContext.Response.StatusCode = 200;
-                            title = queryString["error"];
-                            desc = queryString["error_description"];
-                            continue;
-                        }
-
-                        if (string.IsNullOrEmpty(queryString["code"]))
-                        {
-                            httpListenerContext.Response.StatusCode = 200;
-                            title = "Failed";
-                            desc = "The code query is empty.";
-                            continue;
-                        }
-
-                        string authorizeCode = queryString["code"];
-                        log.Info("authorizeCode: " + authorizeCode);
-
-                        this.nestToken = nestClient.CreateToken(authorizeCode);
+                        var code = oauth2.ParseAuthorizationCode(httpListenerContext.Request.Url.OriginalString);
+                        this.nestToken = oauth2.CreateToken(code);
 
                         log.Info("AccessToken: " + nestToken?.Token);
 
                         httpListenerContext.Response.StatusCode = 200;
-                        title = "Finished";
-                        desc = "Well done, you now have an access token which allows you to call Web API on behalf of the user.<br />Please return to the application.";
+                        using (var writer = new StreamWriter(httpListenerContext.Response.OutputStream))
+                        {
+                            WriteHtml(writer,
+                                "Finished",
+                                "Well done, you now have an access token which allows you to call Web API on behalf of the user.<br />Please return to the application.");
+                        }
+
+                        resetEvent.Set();
+                        break;
                     }
                     catch (Exception ex)
                     {
-                        title = "Failed";
-                        desc = "Failed to create token.<br />" + ex.StackTrace;
                         log.Error("Failed to create token.", ex);
-                    }
-                    finally
-                    {
                         using (var writer = new StreamWriter(httpListenerContext.Response.OutputStream))
                         {
-                            WriteHtml(writer, title, desc);
+                            WriteHtml(writer,
+                                "Failed",
+                                "Failed to create token.<br />" + ex.StackTrace);
                         }
                     }
-
-                    resetEvent.Set();
                 }
-            })).Start();
+            }).Start();
         }
 
         readonly string templateString = Properties.Resources.HtmlTemplate;
@@ -147,15 +127,11 @@ namespace NestMonitoringConsole
 
             writer.Write(html);
         }
-    }
 
-    public static class NestExtensions
-    {
-        const string REDIRECT_URI = "http://localhost:6063/4818523d0d5a432487a85ef230b67b22";
-        public static NestToken CreateToken(this NestClient nest, NestConfig config)
+        public void Dispose()
         {
-            var getter = new TokenGetter(nest, config, REDIRECT_URI);
-            return getter.GetToken();
+            oauth2?.Dispose();
+            httpListener?.Stop();
         }
     }
 }

@@ -34,66 +34,60 @@ namespace NestMonitoringConsole
             var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"data\");
             var settings = new Settings(configPath);
 
-            //var nestConfig = new NestConfig(
-            //    clientId: "<client_id>",
-            //    clientSecret: "<client_secret>",
-            //    redirectUrl: "<redirect_url>");
-            var nestConfig = NestConfig.FromJson(settings.ReadJson("nest"));
+            var tokenConfig = settings.Read<NestToken>("nest.token");
+            if (string.IsNullOrEmpty(tokenConfig?.Token))
+            {//
+                var nestConfig = NestConfig.FromJson(settings.ReadJson("nest"));
 
-            using (var nest = new NestClient(nestConfig))
+                var getter = new TokenGetter(nestConfig);
+                tokenConfig = getter.GetToken();
+                settings.Write("nest.token", tokenConfig);
+            }
+
+            using (var nest = new NestClient())
             {
-                //load or create token
-                var tokenConfig = settings.Read<NestToken>("nest.token");
-                if (string.IsNullOrEmpty(tokenConfig?.Token))
-                {//
-                    tokenConfig = nest.CreateToken(nestConfig);
-                    settings.Write("nest.token", tokenConfig);
-                }
-
                 nest.StartWithToken(tokenConfig.Token);
 
-                ExecuteExample(nest, new Example1());
+                //string structureId = "<your structure id>";
+                //nest.Structures.SetAway(structureId, AwayState.Away);
+                //nest.Thermostats.setHVACMode(thermostatId_LivingRoom, "cool");
+                //nest.Thermostats.setTargetTemperatureC(thermostatId_LivingRoom, 23.5);//in half degrees Celsius (0.5℃).
 
-                ExecuteAllExamples(nest);
-            }
-        }
+                //ExampleExecutor.Execute(nest, new Example1());
+                //ExecuteAllExamples(nest);
 
-        static void ExecuteExample(NestClient client, IExample example)
-        {
-            var exampleName = example.GetType().GetCustomAttribute<ExampleAttribute>()?.Name ?? example.GetType().Name;
+                nest.StreamingError += (ex) => { Console.WriteLine("NEST ERROR.", ex); };
+                nest.WhenError().Subscribe(error =>
+                {
+                    log.Warn($"NEST ERROR: {error.Type} {error.Error}:{error.Message}");
+                });
+                nest.WhenAnyUpdated().Subscribe(data =>
+                {
+                    log.Info($"NEST UPDATE: {data}");
+                });
 
-            log.Info($"--------------------------------------------------------------------------------");
-            log.Info($"---------------- EXAMPLE \"{exampleName}\" START");
+                nest.WhenValueAdded()
+                    .Subscribe(e =>
+                    {
+                        log.Info($"VALUE ADDED: {e?.Path} = {e?.Data}");
+                    });
 
-            try
-            {
-                example.Execute(client);
-            }
-            catch(Exception ex)
-            {
-                log.Error("Failed to execute \"{exampleName}\".", ex);
-            }
-            finally
-            {
-                log.Info($"---------------- EXAMPLE \"{exampleName}\" END");
-                log.Info($"--------------------------------------------------------------------------------");
-                log.Info($"Presss ENTER to continue.");
+                nest.WhenValueChanged()
+                    .Subscribe(e =>
+                    {
+                        log.Info($"VALUE CHANGED: {e?.Path} = {e?.OldData} -> {e?.Data}");
+                    });
 
+                nest.WhenValueRemoved()
+                    .Subscribe(e =>
+                    {
+                        log.Info($"VALUE REMOVED: {e?.Path}");
+                    });
+
+
+                log.Info("Monitor running. Presss ENTER to exit.");
                 Console.ReadLine();
-            }
-        }
-
-        static void ExecuteAllExamples(NestClient nest)
-        {
-            foreach (var type in Assembly.GetExecutingAssembly().GetExportedTypes())
-            {
-                if (type.GetCustomAttribute<ExampleAttribute>() == null)
-                    continue;
-                var instance = Activator.CreateInstance(type) as IExample;
-                if (instance == null)
-                    continue;
-
-                ExecuteExample(nest, instance);
+                log.Info("Monitor exit.");
             }
         }
     }

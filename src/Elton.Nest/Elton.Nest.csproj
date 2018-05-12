@@ -23,10 +23,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>latest</LangVersion>
+    <DocumentationFile>bin\Release\netstandard1.3\Elton.Nest.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
+    <DocumentationFile>bin\Debug\netstandard1.3\Elton.Nest.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

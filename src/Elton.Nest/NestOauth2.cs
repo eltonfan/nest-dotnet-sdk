@@ -23,31 +23,88 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Text;
 
 namespace Elton.Nest
 {
-    public class Oauth2FlowHandler : IDisposable
+    public class NestOauth2 : IDisposable
     {
+        internal const string BASE_AUTHORIZATION_URL = "https://home.nest.com/";
+        internal const string AUTHORIZATION_SERVER_URL = "https://api.home.nest.com/";
+        internal const string ACCESS_URL = AUTHORIZATION_SERVER_URL
+            + "oauth2/access_token?code=%s&client_id=%s&client_secret=%s"
+            + "&grant_type=authorization_code";
+
+        internal const string CLIENT_CODE_URL = BASE_AUTHORIZATION_URL
+                + "login/oauth2?client_id=%s&state=%s";
+
         const string KEY_ACCESS_TOKEN = "access_token_key";
         const string REVOKE_TOKEN_PATH = "oauth2/access_tokens/";
         const string KEY_CLIENT_METADATA = "client_metadata_key";
 
+        const string QUERY_PARAM_CODE = "code";
+
         NestConfig oauth2Config;
         readonly HttpClient httpClient;
 
-        public Oauth2FlowHandler(HttpClient httpClient)
+        public NestOauth2(NestConfig config)
         {
-            this.httpClient = httpClient;
+            this.httpClient = new HttpClient();
+            this.oauth2Config = config;
+        }
+        /// <summary>
+        /// Sets the Nest configuration values used for authentication.
+        /// </summary>
+        /// <param name="clientId">The Nest client ID.</param>
+        /// <param name="clientSecret">The Nest client secret.</param>
+        /// <param name="redirectUrl">The Nest redirect URL.</param>
+        public void SetConfig(string clientId, string clientSecret, string redirectUrl)
+        {
+            this.oauth2Config = new NestConfig.Builder()
+                .SetClientId(clientId)
+                .SetClientSecret(clientSecret)
+                .SetRedirectUrl(redirectUrl)
+                .Build();
+        }
+        /// <summary>
+        /// Clears the currently stored credentials.
+        /// </summary>
+        public void ClearConfig()
+        {
+            oauth2Config = null;
         }
 
-        public NestConfig Config
+        public string GetClientCodeUrl(string redirectUri = null)
         {
-            get => oauth2Config;
-            set => oauth2Config = value;
+            string clientId = oauth2Config.ClientId;
+            string state = oauth2Config.StateValue;
+            redirectUri = redirectUri ?? oauth2Config.RedirectUrl;
+
+            return BASE_AUTHORIZATION_URL
+                + $"login/oauth2?client_id={clientId}&state={state}"
+                + (redirectUri == null ? "" : "&redirect_uri=" + System.Net.WebUtility.UrlEncode(redirectUri))
+                + "&grant_type=authorization_code";
         }
+
+        private string GetAccessUrl(string code)
+        {
+            string clientId = oauth2Config.ClientId;
+            string clientSecret = oauth2Config.ClientSecret;
+
+            return AUTHORIZATION_SERVER_URL
+                + $"oauth2/access_token?code={code}&client_id={clientId}&client_secret={clientSecret}"
+                + "&grant_type=authorization_code";
+        }
+
+        /// <summary>
+        /// Returns a <see cref="NestConfig"/> object containing the currently set credentials. If there are no
+        /// credentials set, returns null.
+        /// </summary>
+        /// <value">a <see cref="NestConfig"/> object containing current config values, or null if unset.</value>
+        public NestConfig Config => oauth2Config;
 
         /// <summary>
         /// Start an <see cref="Activity"/> which will guide a user through the authentication process.
@@ -80,7 +137,7 @@ namespace Elton.Nest
         public void RevokeToken(NestToken token, Callback callback)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete,
-                requestUri: NestApiUrls.AUTHORIZATION_SERVER_URL + REVOKE_TOKEN_PATH + token.Token);
+                requestUri: AUTHORIZATION_SERVER_URL + REVOKE_TOKEN_PATH + token.Token);
             HttpResponseMessage response = null;
             try
             {
@@ -105,13 +162,58 @@ namespace Elton.Nest
             }
         }
 
+        public static Dictionary<string, string> ParseQueryString(string requestQueryString)
+        {
+            Dictionary<string, string> rc = new Dictionary<string, string>();
+            string[] ar1 = requestQueryString.Split(new char[] { '&', '?' });
+            foreach (string row in ar1)
+            {
+                if (string.IsNullOrEmpty(row)) continue;
+                int index = row.IndexOf('=');
+                if (index < 0) continue;
+                rc[Uri.UnescapeDataString(row.Substring(0, index))] = Uri.UnescapeDataString(row.Substring(index + 1)); // use Unescape only parts          
+            }
+            return rc;
+        }
+
+        /// <summary>
+        /// Get the authorization code from the resulting URL.
+        /// </summary>
+        /// <param name="resultingUrl">The resulting URL.</param>
+        /// <returns>the authorization code</returns>
+        public string ParseAuthorizationCode(string resultingUrl)
+        {
+            if (!resultingUrl.StartsWith(oauth2Config.RedirectUrl))
+                throw new FormatException("resultingUrl do not match RedirectUrl");
+
+            var dicQuery = ParseQueryString(new Uri(resultingUrl).Query);
+            if(dicQuery.TryGetValue("error", out string error) && !string.IsNullOrEmpty(error))
+            {
+                dicQuery.TryGetValue("error_description", out string desc);
+                throw new FormatException($"{error}: {desc}");
+            }
+            if (!dicQuery.TryGetValue(QUERY_PARAM_CODE, out string authorizationCode) || string.IsNullOrEmpty(authorizationCode))
+                throw new FormatException("The code query is empty.");
+
+            if (!dicQuery.TryGetValue("state", out string state))
+                throw new FormatException("The state query is empty.");
+
+            if (state != oauth2Config.StateValue)
+            {// the state values do not match
+                //throw a 401 Unauthorized HTTP error code
+                throw new FormatException("the state values do not match");
+            }
+
+            return authorizationCode;
+        }
+
         /// <summary>
         /// Use the code to get an access token.
         /// </summary>
         public NestToken CreateToken(string mCode)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,
-                requestUri: NestApiUrls.GetAccessUrl(oauth2Config.ClientId, oauth2Config.ClientSecret, mCode));
+                requestUri: GetAccessUrl(mCode));
             request.Content = new StringContent("", Encoding.UTF8, "application/json");
             HttpResponseMessage response = null;
 
@@ -144,9 +246,12 @@ namespace Elton.Nest
             }
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            //do nothing.
+            httpClient?.Dispose();
         }
     }
 }

@@ -24,6 +24,10 @@ namespace Elton.Nest.Rest
 {
     public class RestConfig
     {
+        public const string DEFAULT_PROTOCOL = "https";
+        public const string DEFAULT_WWN_URL = "developer-api.nest.com";
+        public const string DEFAULT_PORT = "";
+
         public string Protocol { get; set; }
 
         public string Host { get; set; }
@@ -34,7 +38,7 @@ namespace Elton.Nest.Rest
         /// Creates instance of RestCofig with default configuration.
         /// </summary>
         public RestConfig()
-            : this(NestApiUrls.DEFAULT_PROTOCOL, NestApiUrls.DEFAULT_WWN_URL, NestApiUrls.DEFAULT_PORT)
+            : this(DEFAULT_PROTOCOL, DEFAULT_WWN_URL, DEFAULT_PORT)
         {
         }
 
